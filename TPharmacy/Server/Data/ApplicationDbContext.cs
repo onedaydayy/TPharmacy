@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TPharmacy.Server.Models;
+using TPharmacy.Shared.Domain;
 
 namespace TPharmacy.Server.Data
 {
@@ -17,5 +18,7 @@ namespace TPharmacy.Server.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }
