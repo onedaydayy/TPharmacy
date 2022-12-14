@@ -12,5 +12,6 @@ namespace TPharmacy.Shared.Domain
         public string ProdName { get; set; }
         public string ProdDesc { get; set; }
         public decimal ProdPrice { get; set; }
+        public virtual List<OrderItem> OrderItems { get; set; }
     }
 }

@@ -13,5 +13,6 @@ namespace TPharmacy.Shared.Domain
         public string CusAddress { get; set; }
         public string CusPassword { get; set; }
         public int CusPoints { get; set; }
+        public virtual List<Order> Orders { get; set; }
     }
 }
