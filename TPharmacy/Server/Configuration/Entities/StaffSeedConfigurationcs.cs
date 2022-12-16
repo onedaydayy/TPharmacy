@@ -24,7 +24,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         StafRole = "Pharmacist",
                         DateCreated = DateTime.Now,
                         DataUpdated = DateTime.Now,
-                        CreatedBy = "System",
+                        CreatedBy = "June",
                         UpdatedBy = "System"
                     },
                     new Staff
@@ -36,7 +36,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         StafRole = "Admin",
                         DateCreated = DateTime.Now,
                         DataUpdated = DateTime.Now,
-                        CreatedBy = "System",
+                        CreatedBy = "June",
                         UpdatedBy = "System"
                     },
                     new Staff
@@ -48,7 +48,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         StafRole = "Packer",
                         DateCreated = DateTime.Now,
                         DataUpdated = DateTime.Now,
-                        CreatedBy = "System",
+                        CreatedBy = "June",
                         UpdatedBy = "System"
                     }
                     );
