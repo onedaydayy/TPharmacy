@@ -2,14 +2,18 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using TPharmacy.Server.Data;
 using TPharmacy.Server.Models;
+using System.Security.Claims;
+using IdentityServer4.Configuration;
 
 namespace TPharmacy.Server
 {
@@ -36,10 +40,25 @@ namespace TPharmacy.Server
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options => {
+                        options.IdentityResources["openid"].UserClaims.Add("name");
+                        options.ApiResources.Single().UserClaims.Add("name");
+                        options.IdentityResources["openid"].UserClaims.Add("role");
+                        options.ApiResources.Single().UserClaims.Add("role");
+                    });
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("role");
+
+            services.PostConfigure<IdentityServerOptions>(option =>
+            {
+                option.UserInteraction.LogoutUrl = "/Idp/Logout";
+            });
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.Configure<IdentityOptions>(options =>
+                options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier);
 
             services.AddControllersWithViews();
             services.AddRazorPages();

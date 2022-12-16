@@ -131,7 +131,7 @@ namespace TPharmacy.Server.Data.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("x`")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 

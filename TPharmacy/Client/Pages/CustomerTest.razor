@@ -1,11 +1,11 @@
-﻿@page "/"
+﻿@page "/CustomerTest"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using TPharmacy.Shared
-
+@attribute [Authorize(Roles = "Customer")]
 @inject HttpClient Http
 
-<h1>Hello, world!</h1>
+<h1>Hello, world! This is Customer Page Hehe</h1>
 
 Welcome to your new app.
 
