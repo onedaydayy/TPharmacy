@@ -13,5 +13,6 @@ namespace TPharmacy.Shared.Domain
         public string StafPassword { get; set; }
         public string StafRole { get; set; }
         public virtual List<Order> Orders { get; set; }
+        public virtual List<Consultation> Consultations { get; set; }
     }
 }

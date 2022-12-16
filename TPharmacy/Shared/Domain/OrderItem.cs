@@ -13,7 +13,6 @@ namespace TPharmacy.Shared.Domain
         public int ProductID { get; set; }
         public virtual Product Product { get; set; }
         public int OrderQtny { get; set; }
-        public virtual List<OrderItem> OrderItems { get; set; }
 
     }
 }

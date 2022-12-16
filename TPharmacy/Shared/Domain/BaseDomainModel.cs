@@ -8,7 +8,7 @@ namespace TPharmacy.Shared.Domain
 {
     public abstract class BaseDomainModel
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DataUpdated { get; set; }
         public string CreatedBy { get; set; }
