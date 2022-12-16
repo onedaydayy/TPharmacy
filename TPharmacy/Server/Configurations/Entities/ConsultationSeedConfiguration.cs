@@ -6,8 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
-namespace TPharmacy.Server.Configuration.Entities
+namespace TPharmacy.Server.Configurations.Entities
 {
     public class ConsultationSeedConfiguration : IEntityTypeConfiguration<Consultation>
     {
@@ -17,6 +16,8 @@ namespace TPharmacy.Server.Configuration.Entities
                     new Consultation
                     {
                         ID = 1,
+                        CusID = 1,
+                        StaffID = 1,
                         ConDate = DateTime.Now,
                         ConStartTime = DateTime.Now,
                         ConEndTime = DateTime.Now.AddHours(+1.15),
@@ -30,6 +31,8 @@ namespace TPharmacy.Server.Configuration.Entities
                     new Consultation
                     {
                         ID = 2,
+                        CusID = 3,
+                        StaffID = 1,
                         ConDate = DateTime.Now,
                         ConStartTime = DateTime.Now,
                         ConEndTime = DateTime.Now.AddHours(+1),
@@ -42,6 +45,5 @@ namespace TPharmacy.Server.Configuration.Entities
                     }
                     );
         }
-
     }
 }

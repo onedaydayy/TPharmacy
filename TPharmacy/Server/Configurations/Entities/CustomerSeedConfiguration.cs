@@ -7,44 +7,47 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace TPharmacy.Server.Configuration.Entities
+namespace TPharmacy.Server.Configurations.Entities
 {
-    public class ProductSeedConfiguration : IEntityTypeConfiguration<Product>
+    public class CustomerSeedConfiguration : IEntityTypeConfiguration<Customer>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<Customer> builder)
         {
             builder.HasData(
-                    new Product
+                    new Customer
                     {
                         ID = 1,
-                        ProdBrand = "Blackmores",
-                        ProdName = "Vitamin C",
-                        ProdDesc = "BLACKMORES Bio 1000mg Vitamin C 120 Tablets",
-                        ProdPrice = 35.00m,
+                        CusName = "James",
+                        CusEmail = "james@gmail.com",
+                        CusAddress = "Tampines Ave 1",
+                        CusPassword = "James1234*",
+                        CusPoints = 100,
                         DateCreated = DateTime.Now,
                         DataUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "System"
                     },
-                    new Product
+                    new Customer
                     {
                         ID = 2,
-                        ProdBrand = "Swisse",
-                        ProdName = "Omega 3 Fish Oil",
-                        ProdDesc = "Omega 3 Fish Oil 1500mg 100 Tablets",
-                        ProdPrice = 58.00m,
+                        CusName = "Alice",
+                        CusEmail = "alice@gmail.com",
+                        CusAddress = "Bedok Ave 1",
+                        CusPassword = "Alice1234*",
+                        CusPoints = 50,
                         DateCreated = DateTime.Now,
                         DataUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "System"
                     },
-                    new Product
+                    new Customer
                     {
                         ID = 3,
-                        ProdBrand = "Wastons",
-                        ProdName = "Calcium",
-                        ProdDesc = "Calcium 500mg 150 Tablets",
-                        ProdPrice = 45.00m,
+                        CusName = "Grey",
+                        CusEmail = "grey@gmail.com",
+                        CusAddress = "Temasek Polytechnic",
+                        CusPassword = "Grey1234*",
+                        CusPoints = 89,
                         DateCreated = DateTime.Now,
                         DataUpdated = DateTime.Now,
                         CreatedBy = "System",

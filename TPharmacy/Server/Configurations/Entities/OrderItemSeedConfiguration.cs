@@ -24,8 +24,8 @@ namespace TPharmacy.Server.Configurations.Entities
                         CreatedBy = "System",
                         UpdatedBy = "Kate"
                     },
-                      new OrderItem
-                      {
+                    new OrderItem
+                     {
                           ID = 2,
                           OrderID = 1,
                           ProductID = 2,
@@ -34,7 +34,7 @@ namespace TPharmacy.Server.Configurations.Entities
                           DataUpdated = DateTime.Now,
                           CreatedBy = "System",
                           UpdatedBy = "Kate"
-                      },
+                     },
                     new OrderItem
                     {
                         ID = 3,

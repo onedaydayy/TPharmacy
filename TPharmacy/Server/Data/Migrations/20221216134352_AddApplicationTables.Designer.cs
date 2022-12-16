@@ -10,7 +10,7 @@ using TPharmacy.Server.Data;
 namespace TPharmacy.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221216054844_AddApplicationTables")]
+    [Migration("20221216134352_AddApplicationTables")]
     partial class AddApplicationTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -622,7 +622,7 @@ namespace TPharmacy.Server.Data.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("StafEmailAddress")
+                    b.Property<string>("StafEmail")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StafName")

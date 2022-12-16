@@ -55,7 +55,7 @@ namespace TPharmacy.Server.Data.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     StafName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    StafEmailAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StafEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StafPassword = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StafRole = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),

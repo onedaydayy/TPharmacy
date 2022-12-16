@@ -14,4 +14,5 @@ namespace TPharmacy.Shared.Domain
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
     }
+
 }

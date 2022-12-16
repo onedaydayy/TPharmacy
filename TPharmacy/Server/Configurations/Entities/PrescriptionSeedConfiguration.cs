@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace TPharmacy.Server.Configuration.Entities
+namespace TPharmacy.Server.Configurations.Entities
 {
     public class PrescriptionSeedConfiguration : IEntityTypeConfiguration<Prescription>
     {
@@ -17,7 +17,9 @@ namespace TPharmacy.Server.Configuration.Entities
                     new Prescription
                     {
                         ID = 1,
-                        PresQty = 3,
+                        PresQty = 1,
+                        ConID = 1,
+                        ProductID = 1,
                         DateCreated = DateTime.Now,
                         DataUpdated = DateTime.Now,
                         CreatedBy = "System",
@@ -27,6 +29,8 @@ namespace TPharmacy.Server.Configuration.Entities
                     {
                         ID = 2,
                         PresQty = 2,
+                        ConID = 2,
+                        ProductID = 3,
                         DateCreated = DateTime.Now,
                         DataUpdated = DateTime.Now,
                         CreatedBy = "System",
