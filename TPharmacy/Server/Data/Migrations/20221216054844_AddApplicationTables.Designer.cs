@@ -10,7 +10,7 @@ using TPharmacy.Server.Data;
 namespace TPharmacy.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221216034955_AddApplicationTables")]
+    [Migration("20221216054844_AddApplicationTables")]
     partial class AddApplicationTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -373,7 +373,7 @@ namespace TPharmacy.Server.Data.Migrations
 
                     b.HasIndex("StaffID");
 
-                    b.ToTable("Consultation");
+                    b.ToTable("Consultations");
                 });
 
             modelBuilder.Entity("TPharmacy.Shared.Domain.Customer", b =>
@@ -567,7 +567,7 @@ namespace TPharmacy.Server.Data.Migrations
 
                     b.HasIndex("ProductID");
 
-                    b.ToTable("Prescription");
+                    b.ToTable("Prescriptions");
                 });
 
             modelBuilder.Entity("TPharmacy.Shared.Domain.Product", b =>

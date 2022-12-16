@@ -371,7 +371,7 @@ namespace TPharmacy.Server.Data.Migrations
 
                     b.HasIndex("StaffID");
 
-                    b.ToTable("Consultation");
+                    b.ToTable("Consultations");
                 });
 
             modelBuilder.Entity("TPharmacy.Shared.Domain.Customer", b =>
@@ -565,7 +565,7 @@ namespace TPharmacy.Server.Data.Migrations
 
                     b.HasIndex("ProductID");
 
-                    b.ToTable("Prescription");
+                    b.ToTable("Prescriptions");
                 });
 
             modelBuilder.Entity("TPharmacy.Shared.Domain.Product", b =>

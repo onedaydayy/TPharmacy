@@ -21,6 +21,5 @@ namespace TPharmacy.Shared.Domain
         public decimal ConFee { get; set; }
         public string ConDesc { get; set; }
         public virtual List<Prescription> Prescriptions { get; set; }
-
     }
 }

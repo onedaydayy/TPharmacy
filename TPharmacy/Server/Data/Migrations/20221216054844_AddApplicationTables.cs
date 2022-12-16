@@ -69,7 +69,7 @@ namespace TPharmacy.Server.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Consultation",
+                name: "Consultations",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
@@ -89,15 +89,15 @@ namespace TPharmacy.Server.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Consultation", x => x.ID);
+                    table.PrimaryKey("PK_Consultations", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Consultation_Customers_CustomerID",
+                        name: "FK_Consultations_Customers_CustomerID",
                         column: x => x.CustomerID,
                         principalTable: "Customers",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Consultation_Staffs_StaffID",
+                        name: "FK_Consultations_Staffs_StaffID",
                         column: x => x.StaffID,
                         principalTable: "Staffs",
                         principalColumn: "ID",
@@ -138,7 +138,7 @@ namespace TPharmacy.Server.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Prescription",
+                name: "Prescriptions",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
@@ -154,15 +154,15 @@ namespace TPharmacy.Server.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Prescription", x => x.ID);
+                    table.PrimaryKey("PK_Prescriptions", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Prescription_Consultation_ConsultationID",
+                        name: "FK_Prescriptions_Consultations_ConsultationID",
                         column: x => x.ConsultationID,
-                        principalTable: "Consultation",
+                        principalTable: "Consultations",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Prescription_Products_ProductID",
+                        name: "FK_Prescriptions_Products_ProductID",
                         column: x => x.ProductID,
                         principalTable: "Products",
                         principalColumn: "ID",
@@ -226,13 +226,13 @@ namespace TPharmacy.Server.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Consultation_CustomerID",
-                table: "Consultation",
+                name: "IX_Consultations_CustomerID",
+                table: "Consultations",
                 column: "CustomerID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Consultation_StaffID",
-                table: "Consultation",
+                name: "IX_Consultations_StaffID",
+                table: "Consultations",
                 column: "StaffID");
 
             migrationBuilder.CreateIndex(
@@ -261,13 +261,13 @@ namespace TPharmacy.Server.Data.Migrations
                 column: "OrderID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Prescription_ConsultationID",
-                table: "Prescription",
+                name: "IX_Prescriptions_ConsultationID",
+                table: "Prescriptions",
                 column: "ConsultationID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Prescription_ProductID",
-                table: "Prescription",
+                name: "IX_Prescriptions_ProductID",
+                table: "Prescriptions",
                 column: "ProductID");
         }
 
@@ -280,13 +280,13 @@ namespace TPharmacy.Server.Data.Migrations
                 name: "Payments");
 
             migrationBuilder.DropTable(
-                name: "Prescription");
+                name: "Prescriptions");
 
             migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Consultation");
+                name: "Consultations");
 
             migrationBuilder.DropTable(
                 name: "Products");
