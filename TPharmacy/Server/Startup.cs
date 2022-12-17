@@ -9,7 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
 using TPharmacy.Server.Data;
+using TPharmacy.Server.IRepository;
 using TPharmacy.Server.Models;
+using TPharmacy.Server.Repository;
 
 namespace TPharmacy.Server
 {
@@ -40,6 +42,8 @@ namespace TPharmacy.Server
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
