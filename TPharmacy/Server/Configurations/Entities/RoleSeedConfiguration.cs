@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace CarRentalManagement.Server.Configurations.Entities
+namespace TPharmacy.Server.Configurations.Entities
 {
     public class RoleSeedConfiguration : IEntityTypeConfiguration<IdentityRole>
     {
@@ -19,13 +19,13 @@ namespace CarRentalManagement.Server.Configurations.Entities
                 Name = "Administrator",
                 NormalizedName = "ADMINISTRATOR"
             },
-            new IdentityRole
-            {
-                Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
-                Name = "User",
-                NormalizedName = "USER"
-            }
-            );
+             new IdentityRole
+             {
+                 Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
+                 Name = "User",
+                 NormalizedName = "USER"
+             }
+                );
         }
     }
 }

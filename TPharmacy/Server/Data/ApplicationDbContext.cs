@@ -44,6 +44,12 @@ namespace TPharmacy.Server.Data
 
             builder.ApplyConfiguration(new ConsultationSeedConfiguration());
 
+            builder.ApplyConfiguration(new RoleSeedConfiguration());
+
+            builder.ApplyConfiguration(new UserRoleSeedConfiguration());
+
+            builder.ApplyConfiguration(new UserSeedConfiguration());
+
         }
     }
 }
