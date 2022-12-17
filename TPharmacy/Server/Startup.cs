@@ -1,19 +1,17 @@
+using IdentityServer4.Configuration;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using TPharmacy.Server.Data;
 using TPharmacy.Server.Models;
-using System.Security.Claims;
-using IdentityServer4.Configuration;
 
 namespace TPharmacy.Server
 {
@@ -40,7 +38,8 @@ namespace TPharmacy.Server
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
-                    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options => {
+                    .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(options =>
+                    {
                         options.IdentityResources["openid"].UserClaims.Add("name");
                         options.ApiResources.Single().UserClaims.Add("name");
                         options.IdentityResources["openid"].UserClaims.Add("role");

@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TPharmacy.Server.Models;
 using TPharmacy.Shared;
 
@@ -24,7 +23,7 @@ namespace TPharmacy.Server.Controllers
 
         private readonly ILogger<WeatherForecastController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, 
+        public WeatherForecastController(ILogger<WeatherForecastController> logger,
             UserManager<ApplicationUser> userManager)
         {
             this._logger = logger;

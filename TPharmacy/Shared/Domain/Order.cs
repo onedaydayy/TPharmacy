@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TPharmacy.Shared.Domain
 {
-    public class Order: BaseDomainModel
+    public class Order : BaseDomainModel
     {
         public int CusID { get; set; }
         public virtual Customer Customer { get; set; }
