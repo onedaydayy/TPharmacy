@@ -24,7 +24,8 @@ namespace TPharmacy.Server.Configurations.Entities
                 LastName = "User",
                 UserName = "Admin",
                 NormalizedUserName = "ADMIN",
-                PasswordHash = hasher.HashPassword(null, "P@ssword1")
+                PasswordHash = hasher.HashPassword(null, "P@ssword1"),
+                SecurityStamp = Guid.NewGuid().ToString()
             },
             new ApplicationUser
             {
@@ -35,7 +36,8 @@ namespace TPharmacy.Server.Configurations.Entities
                 LastName = "User",
                 UserName = "June",
                 NormalizedUserName = "JUNE",
-                PasswordHash = hasher.HashPassword(null, "June1234*")
+                PasswordHash = hasher.HashPassword(null, "June1234*"),
+                SecurityStamp = Guid.NewGuid().ToString()
             },
             new ApplicationUser
             {
@@ -46,7 +48,8 @@ namespace TPharmacy.Server.Configurations.Entities
                 LastName = "User",
                 UserName = "Customer",
                 NormalizedUserName = "CUSTOMER",
-                PasswordHash = hasher.HashPassword(null, "James1234*")
+                PasswordHash = hasher.HashPassword(null, "James1234*"),
+                SecurityStamp = Guid.NewGuid().ToString()
             }
             );
         }
