@@ -1,0 +1,120 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
+
+<nav class="navbar navbar-expand-md navbar-dark" style="width: -webkit-fill-available;">
+    <div class="container">
+        <div class="row">
+            <a class="navbar-brand" href="">TPharmacy</a>
+            <button class="navbar-toggler" @onclick="ToggleNavMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="@NavMenuCssClass navbar-collapse justify-content-end" id="navbarCollapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <NavLink class="nav-link mr-auto" href="" Match="NavLinkMatch.All">
+                            <span class="oi oi-home" aria-hidden="true"></span> Home
+                        </NavLink>
+                    </li>
+                    <li class="nav-item dropdown show">
+                        <NavLink class="nav-link mr-auto dropdown-toggle" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
+                            <span class="oi oi-cart" aria-hidden="true"></span> Shop
+                        </NavLink>
+                        @if (expandShopNavSetting)
+                        {
+                        <li class="dropdown-menu show" aria-labelledby="navbarDropdown" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
+                        <li class="nav-item mr-auto pl-2">
+                            <NavLink class="nav-link" href="consultation">
+                                <span class="oi oi-align-left" aria-hidden="true"></span> Supplement
+                            </NavLink>
+                        </li>
+                        <li class="nav-item mr-auto pl-2">
+                            <NavLink class="nav-link" href="consultation">
+                                <span class="oi oi-align-left" aria-hidden="true"></span> Sports
+                            </NavLink>
+                        </li>
+                        <li class="nav-item mr-auto pl-2">
+                            <NavLink class="nav-link" href="consultation">
+                                <span class="oi oi-align-left" aria-hidden="true"></span> Baby
+                            </NavLink>
+                        </li>
+                        </li>
+                    }
+                        </li>
+                        <li class="nav-item mr-auto">
+                            <NavLink class="nav-link" href="consultation">
+                                <span class="oi oi-chat" aria-hidden="true"></span> Consultation
+                            </NavLink>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div>
+                <ul class="navbar-nav ml-auto">
+                    <AuthorizeView>
+                        <Authorized>
+                            <li class="nav-item mr-auto">
+                                <NavLink class="nav-link" href="authentication/profile" Match="NavLinkMatch.All">
+                                    <span class="oi oi-person" aria-hidden="true"></span> Hello, @context.User.Identity.Name!
+                                </NavLink>
+                            </li>
+                            <li class="nav-item mr-auto">
+                                <NavLink class="nav-link" href="authentication/logout" Match="NavLinkMatch.All" @onclick="BeginSignOut">
+                                    <span class="oi oi-account-logout" aria-hidden="true"></span> Log out
+                                </NavLink>
+                            </li>
+                            <li class="nav-item mr-auto">
+                                <NavLink class="nav-link" href="#" Match="NavLinkMatch.All" @onclick="BeginSignOut">
+                                    <span class="oi oi-cart" aria-hidden="true"></span>
+                                </NavLink>
+                            </li>
+                        </Authorized>
+                        <NotAuthorized>
+                            <li class="nav-item mr-auto">
+                                <NavLink class="nav-link" href="authentication/register" Match="NavLinkMatch.All">
+                                    <span class="oi oi-person" aria-hidden="true"></span> Register
+                                </NavLink>
+                            </li>
+                            <li class="nav-item mr-auto">
+                                <NavLink class="nav-link" href="authentication/login" Match="NavLinkMatch.All">
+                                    <span class="oi oi-account-login" aria-hidden="true"></span> Log in
+                                </NavLink>
+                            </li>
+                            <li class="nav-item mr-auto">
+                                <NavLink class="nav-link" href="#" Match="NavLinkMatch.All" @onclick="BeginSignOut">
+                                    <span class="oi oi-cart" aria-hidden="true"></span>
+                                </NavLink>
+                            </li>
+                        </NotAuthorized>
+                    </AuthorizeView>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    @code {
+        private bool collapseNavMenu = true;
+
+        private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+        private bool expandShopNavSetting;
+
+        string baseMenuClass = "navbar-collapse d-sm-inline-flex flex-sm-row-reverse";
+
+        private void ToggleNavMenu()
+        {
+
+            if (!expandShopNavSetting)
+            {
+                collapseNavMenu = !collapseNavMenu;
+            }
+        }
+
+        private async Task BeginSignOut(MouseEventArgs args)
+        {
+            await SignOutManager.SetSignOutState();
+            Navigation.NavigateTo("authentication/logout");
+        }
+    }
