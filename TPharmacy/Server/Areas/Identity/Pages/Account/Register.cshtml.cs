@@ -20,18 +20,23 @@ namespace TPharmacy.Server.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
+        const string ADMINISTRATOR_USERNAME = "woon@gmail.com";
+        const string ADMINISTRATION_ROLE = "Administrators";
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            RoleManager<IdentityRole> roleManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
@@ -81,6 +86,16 @@ namespace TPharmacy.Server.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
+                    if(ADMINISTRATOR_USERNAME == Input.Email)
+                    {
+                        await _roleManager.FindByNameAsync(ADMINISTRATION_ROLE);
+                        await _userManager.AddToRoleAsync(user, ADMINISTRATION_ROLE);
+                    }
+                    else
+                    {
+                        await _roleManager.FindByNameAsync("User");
+                        await _userManager.AddToRoleAsync(user, "User");
+                    }
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(

@@ -9,9 +9,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
 using TPharmacy.Server.Data;
-using TPharmacy.Server.IRepository;
 using TPharmacy.Server.Models;
-using TPharmacy.Server.Repository;
+using IdentityServer4.Services;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
+using IdentityServer4.Configuration;
 
 namespace TPharmacy.Server
 {
@@ -34,17 +36,29 @@ namespace TPharmacy.Server
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(options =>
+                options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+            services.AddIdentityServer().AddApiAuthorization<ApplicationUser,
+                   ApplicationDbContext>(opt =>
+                   {
+                       opt.IdentityResources["openid"].UserClaims.Add("name");
+                       opt.ApiResources.Single().UserClaims.Add("name");
+                       opt.IdentityResources["openid"].UserClaims.Add("role");
+                       opt.ApiResources.Single().UserClaims.Add("role");
+                   });
 
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
+            services.AddAuthentication().AddIdentityServerJwt();
+            services.Configure<IdentityOptions>(options =>
+                options.ClaimsIdentity.UserIdClaimType = ClaimTypes.NameIdentifier);
 
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
-
+            services.AddTransient<IProfileService, ProfileService>();
+            services.PostConfigure<IdentityServerOptions>(option =>
+            {
+                option.UserInteraction.LogoutUrl = "/Idp/Logout";
+            });
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
