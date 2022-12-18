@@ -16,6 +16,7 @@ namespace TPharmacy.Server.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
+
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
@@ -83,15 +84,7 @@ namespace TPharmacy.Server.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-
-                    var user = _userManager.FindByNameAsync(Input.Email);
-                    _logger.LogInformation(""+user.Result);
-                    _logger.LogInformation("" + User.Claims);
-                    _logger.LogInformation("User logged in.");
-                    if (User.IsInRole("Admin"))
-                        return LocalRedirect("Admin URL Goes Here");
-                    else
-                        return LocalRedirect(returnUrl);
+                    return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
