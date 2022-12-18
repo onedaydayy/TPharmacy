@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using TPharmacy.Server.Models;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace TPharmacy.Server.Areas.Identity.Pages.Account
 {
@@ -82,6 +83,10 @@ namespace TPharmacy.Server.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+
+                    var user = _userManager.FindByNameAsync(Input.Email);
+                    _logger.LogInformation(""+user.Result);
+                    _logger.LogInformation("" + User.Claims);
                     _logger.LogInformation("User logged in.");
                     if (User.IsInRole("Admin"))
                         return LocalRedirect("Admin URL Goes Here");
