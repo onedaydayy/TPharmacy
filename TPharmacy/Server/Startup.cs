@@ -14,6 +14,7 @@ using IdentityServer4.Services;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using IdentityServer4.Configuration;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace TPharmacy.Server
 {
@@ -42,13 +43,14 @@ namespace TPharmacy.Server
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer().AddApiAuthorization<ApplicationUser,
-                   ApplicationDbContext>(opt =>
+                   ApplicationDbContext>(options =>
                    {
-                       opt.IdentityResources["openid"].UserClaims.Add("name");
-                       opt.ApiResources.Single().UserClaims.Add("name");
-                       opt.IdentityResources["openid"].UserClaims.Add("role");
-                       opt.ApiResources.Single().UserClaims.Add("role");
+                       options.IdentityResources["openid"].UserClaims.Add("name");
+                       options.ApiResources.Single().UserClaims.Add("name");
+                       options.IdentityResources["openid"].UserClaims.Add("role");
+                       options.ApiResources.Single().UserClaims.Add("role");
                    });
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("role");
 
             services.AddAuthentication().AddIdentityServerJwt();
             services.Configure<IdentityOptions>(options =>

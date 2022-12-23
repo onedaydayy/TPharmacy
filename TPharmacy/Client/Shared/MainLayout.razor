@@ -1,23 +1,64 @@
 ﻿@inherits LayoutComponentBase
 @*<div class="page" style= "display: block;">
-    <div class="navbar">
-        <CusNavMenu />
-    </div>
-    <div class="main">
-        <div class="content px-4">
-            @Body
+        <div class="navbar">
+            <CusNavMenu />
         </div>
-    </div>
-</div>*@
+        <div class="main">
+            <div class="content px-4">
+                @Body
+            </div>
+        </div>
+    </div>*@
 
-<div class="page" style= "display: flex;">
-    <div class="sidebar">
+
+@*<div class="page" style="display: flex;">
+        <div class="sidebar">
             <StafNavMenu />
         </div>
-    <div class="main">
-        <div class="content px-4">
-            @Body
+        <div class="main">
+            <div class="content px-4">
+                @Body
+            </div>
         </div>
-    </div>
-</div>
+    </div>*@
+
+<AuthorizeView>
+    <Authorized>
+        @if (context.User.IsInRole("User"))
+        {
+            <div class="page" style="display: block;">
+                <div class="navbar">
+                    <CusNavMenu />
+                </div>
+                    <div class="content px-4">
+                        @Body
+                    </div>
+            </div>
+        }
+        @if (context.User.IsInRole("Administrator"))
+        {
+            <div class="page" style="display: flex;">
+                <div class="sidebar">
+                    <StafNavMenu />
+                </div>
+                <div class="main">
+                    <div class="content px-4">
+                        @Body
+                    </div>
+                </div>
+            </div>
+        }
+
+    </Authorized>
+    <NotAuthorized>
+        <div class="page" style="display: block;">
+            <div class="navbar">
+                <CusNavMenu />
+            </div>
+                <div class="content px-4">
+                    @Body
+                </div>
+        </div>
+    </NotAuthorized>
+</AuthorizeView>
 

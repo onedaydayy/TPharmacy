@@ -25,8 +25,7 @@ namespace TPharmacy.Client
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("TPharmacy.ServerAPI"));
 
             builder.Services.AddApiAuthorization();
-            builder.Services.AddApiAuthorization()
-    .AddAccountClaimsPrincipalFactory<UserFactory>();
+            builder.Services.AddApiAuthorization().AddAccountClaimsPrincipalFactory<UserFactory>();
 
             await builder.Build().RunAsync();
         }

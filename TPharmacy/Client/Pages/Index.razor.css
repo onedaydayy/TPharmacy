@@ -170,3 +170,34 @@ h1.glance-text {
 .mini-padder-taker {
     padding-top: 10px;
 }
+
+footer {
+    margin-top: 50px;
+    background-color: black;
+    color: white;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.whiteline {
+    border: 5px;
+    color: white;
+}
+
+.logo {
+    height: auto;
+    max-width: 50px;
+}
+
+a {
+    color: white;
+}
+
+.alt-text-footer {
+    color: green;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0px;
+}
