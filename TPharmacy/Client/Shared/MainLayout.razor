@@ -26,14 +26,17 @@
     <Authorized>
         @if (context.User.IsInRole("User"))
         {
+
+            <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins" />
             <div class="page" style="display: block;">
-                <div class="navbar">
+                <div class="navbar cus-z-index" style="background: #0B763D;">
                     <CusNavMenu />
                 </div>
-                    <div class="content px-4">
-                        @Body
-                    </div>
+                <div class="main">
+                    @Body
+                </div>
             </div>
+            <CusFooter />
         }
         @if (context.User.IsInRole("Administrator"))
         {
@@ -52,13 +55,14 @@
     </Authorized>
     <NotAuthorized>
         <div class="page" style="display: block;">
-            <div class="navbar">
+            <div class="navbar cus-z-index">
                 <CusNavMenu />
             </div>
-                <div class="content px-4">
-                    @Body
-                </div>
+            <div class="content px-4">
+                @Body
+            </div>
         </div>
+        <CusFooter />
     </NotAuthorized>
 </AuthorizeView>
 
