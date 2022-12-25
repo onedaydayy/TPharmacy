@@ -34,7 +34,7 @@ namespace TPharmacy.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<WeatherForecast>> Get()
+        public async Task<ApplicationUser> Get()
         {
             var rng = new Random();
             var user = await userManager.GetUserAsync(User);
@@ -43,14 +43,7 @@ namespace TPharmacy.Server.Controllers
             {
                 logger.LogInformation($"User.Identity.Name: {user.UserName}");
             }
-
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = rng.Next(-20, 55),
-                Summary = Summaries[rng.Next(Summaries.Length)]
-            })
-            .ToArray();
+            return user;
         }
     }
 }
