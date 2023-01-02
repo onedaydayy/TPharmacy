@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
@@ -13,6 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Text.Encodings.Web;
+using System.Threading.Tasks;
 using TPharmacy.Server.Models;
 
 namespace TPharmacy.Server.Areas.Identity.Pages.Account
@@ -20,6 +20,8 @@ namespace TPharmacy.Server.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
+        const string ADMINISTRATOR_USERNAME = "test@email.com";
+        const string ADMINISTRATION_ROLE = "Administrators";
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -36,6 +38,7 @@ namespace TPharmacy.Server.Areas.Identity.Pages.Account
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _logger = logger;
             _emailSender = emailSender;
         }
@@ -82,6 +85,14 @@ namespace TPharmacy.Server.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    try {
+                        var roleResult = await _roleManager.CreateAsync(new IdentityRole(ADMINISTRATION_ROLE));
+                    }
+                    catch (Exception mm)
+                    {
+
+                    }
+                    
                     _logger.LogInformation("User created a new account with password.");
 
                     await _roleManager.FindByNameAsync("User");

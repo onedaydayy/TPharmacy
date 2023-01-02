@@ -1,10 +1,7 @@
-﻿using TPharmacy.Shared.Domain;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using TPharmacy.Shared.Domain;
 
 namespace TPharmacy.Server.Configurations.Entities
 {
@@ -25,16 +22,16 @@ namespace TPharmacy.Server.Configurations.Entities
                         UpdatedBy = "Kate"
                     },
                     new OrderItem
-                     {
-                          ID = 2,
-                          OrderID = 1,
-                          ProductID = 2,
-                          OrderQtny = 1,
-                          DateCreated = DateTime.Now,
-                          DataUpdated = DateTime.Now,
-                          CreatedBy = "System",
-                          UpdatedBy = "Kate"
-                     },
+                    {
+                        ID = 2,
+                        OrderID = 1,
+                        ProductID = 2,
+                        OrderQtny = 1,
+                        DateCreated = DateTime.Now,
+                        DataUpdated = DateTime.Now,
+                        CreatedBy = "System",
+                        UpdatedBy = "Kate"
+                    },
                     new OrderItem
                     {
                         ID = 3,

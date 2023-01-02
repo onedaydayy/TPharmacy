@@ -1,10 +1,10 @@
-﻿using TPharmacy.Server.Configurations.Entities;
-using TPharmacy.Server.Models;
-using TPharmacy.Shared.Domain;
-using IdentityServer4.EntityFramework.Options;
+﻿using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using TPharmacy.Server.Configurations.Entities;
+using TPharmacy.Server.Models;
+using TPharmacy.Shared.Domain;
 
 namespace TPharmacy.Server.Data
 {
