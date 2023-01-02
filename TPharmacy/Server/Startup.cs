@@ -15,6 +15,8 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using IdentityServer4.Configuration;
 using System.IdentityModel.Tokens.Jwt;
+using TPharmacy.Server.IRepository;
+using TPharmacy.Server.Repository;
 
 namespace TPharmacy.Server
 {
@@ -36,7 +38,7 @@ namespace TPharmacy.Server
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
-
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddDefaultIdentity<ApplicationUser>(options =>
                 options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
