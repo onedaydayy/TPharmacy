@@ -20,7 +20,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         PayCardInfo = "7855-3798-2344-9853",
                         PayFee = 128.00m,
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "System"
                     },
@@ -31,7 +31,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         PayCardInfo = "3244-2355-3459-9767",
                         PayFee = 103.00m,
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "System"
                     });

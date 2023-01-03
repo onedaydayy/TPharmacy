@@ -20,7 +20,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ProductID = 1,
                         OrderQtny = 2,
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "Kate"
                     },
@@ -31,7 +31,7 @@ namespace TPharmacy.Server.Configurations.Entities
                           ProductID = 2,
                           OrderQtny = 1,
                           DateCreated = DateTime.Now,
-                          DataUpdated = DateTime.Now,
+                          DateUpdated = DateTime.Now,
                           CreatedBy = "System",
                           UpdatedBy = "Kate"
                      },
@@ -42,7 +42,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ProductID = 3,
                         OrderQtny = 1,
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "Kate"
                     });

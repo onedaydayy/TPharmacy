@@ -23,7 +23,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         StafPassword = "Woon1234*",
                         StafRole = "Pharmacist",
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "June",
                         UpdatedBy = "System"
                     },
@@ -35,7 +35,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         StafPassword = "June1234*",
                         StafRole = "Admin",
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "June",
                         UpdatedBy = "System"
                     },
@@ -47,7 +47,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         StafPassword = "Kate1234*",
                         StafRole = "Packer",
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "June",
                         UpdatedBy = "System"
                     }

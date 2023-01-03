@@ -23,7 +23,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         CusPassword = "James1234*",
                         CusPoints = 100,
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "System"
                     },
@@ -36,7 +36,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         CusPassword = "Alice1234*",
                         CusPoints = 50,
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "System"
                     },
@@ -49,7 +49,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         CusPassword = "Grey1234*",
                         CusPoints = 89,
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "System"
                     }
