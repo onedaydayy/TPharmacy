@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using TPharmacy.Server.Data;
 using TPharmacy.Server.IRepository;
+using TPharmacy.Server.Models;
 using TPharmacy.Shared.Domain;
 
 namespace TPharmacy.Server.Controllers
@@ -14,25 +17,33 @@ namespace TPharmacy.Server.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class StaffsController : ControllerBase
-    {     //Refactored 
-          //private readonly ApplicationDbContext _context;
+    {
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILogger<StaffsController> logger;
+        //Refactored 
+        //private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
 
         //Refactored
         //public StaffsController(ApplicationDbContext context)
-        public StaffsController(IUnitOfWork unitOfWork)
+        public StaffsController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager,
+        ILogger<StaffsController> logger)
         {
-            //Refactored
-            //_context = context;
             _unitOfWork = unitOfWork;
+            this.userManager = userManager;
+            this.logger = logger;
         }
-
         // GET: api/Staffs
         [HttpGet]
         //Refactored
         //public async Task<ActionResult<IEnumerable<Staff>>> GetStaffs()
         public async Task<ActionResult<IEnumerable<Staff>>> GetStaffs()
         {
+            var user = await userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                logger.LogInformation($"User.Identity.Name: {user.UserName}");
+            }
             //Refactored
             //return await _context.Staffs.ToListAsync();
             var staffs = await _unitOfWork.Staffs.GetAll();

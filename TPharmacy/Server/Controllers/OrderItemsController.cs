@@ -3,9 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using TPharmacy.Server.Data;
 using TPharmacy.Server.IRepository;
+using TPharmacy.Server.Models;
 using TPharmacy.Shared.Domain;
 
 namespace TPharamacy.Server.Controllers
@@ -14,17 +18,21 @@ namespace TPharamacy.Server.Controllers
     [ApiController]
     public class OrderItemsController : ControllerBase
     {
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILogger<OrderItemsController> logger;
         //Refactored 
         //private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
 
         //Refactored
         //public OrderItemsController(ApplicationDbContext context)
-        public OrderItemsController(IUnitOfWork unitOfWork)
+
+        public OrderItemsController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager,
+        ILogger<OrderItemsController> logger)
         {
-            //Refactored
-            //_context = context;
             _unitOfWork = unitOfWork;
+            this.userManager = userManager;
+            this.logger = logger;
         }
 
         // GET: api/OrderItems
@@ -33,6 +41,11 @@ namespace TPharamacy.Server.Controllers
         //public async Task<ActionResult<IEnumerable<OrderItem>>> GetOrderItems()
         public async Task<ActionResult<IEnumerable<OrderItem>>> GetOrderItems()
         {
+            var user = await userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                logger.LogInformation($"User.Identity.Name: {user.UserName}");
+            }
             //Refactored
             //return await _context.OrderItems.ToListAsync();
             var orderItems = await _unitOfWork.OrderItems.GetAll();
