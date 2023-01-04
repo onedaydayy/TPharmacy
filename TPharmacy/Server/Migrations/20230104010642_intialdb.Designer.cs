@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TPharmacy.Server.Data;
 
-namespace TPharmacy.Server.Data.Migrations
+namespace TPharmacy.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221216134352_AddApplicationTables")]
-    partial class AddApplicationTables
+    [Migration("20230104010642_intialdb")]
+    partial class intialdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -149,6 +149,22 @@ namespace TPharmacy.Server.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
+                            ConcurrencyStamp = "c43c471f-5c68-4136-b815-955dfe533f5f",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
+                            ConcurrencyStamp = "16cc6f3b-8ee0-475b-800f-9528b029471b",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -236,6 +252,23 @@ namespace TPharmacy.Server.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102e4",
+                            RoleId = "ad2bcf0c-20db-474f-8407-5a6b159518ba"
+                        },
+                        new
+                        {
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102e5",
+                            RoleId = "ad2bcf0c-20db-474f-8407-5a6b159518ba"
+                        },
+                        new
+                        {
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102c4",
+                            RoleId = "bd2bcf0c-20db-474f-8407-5a6b159518bb"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -267,6 +300,9 @@ namespace TPharmacy.Server.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -277,6 +313,12 @@ namespace TPharmacy.Server.Data.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -291,6 +333,9 @@ namespace TPharmacy.Server.Data.Migrations
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -322,6 +367,71 @@ namespace TPharmacy.Server.Data.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
+                            AccessFailedCount = 0,
+                            Address = "TPharmacy",
+                            ConcurrencyStamp = "9c48c505-76af-4d19-b0c8-a65ce8593ae2",
+                            Email = "admin@localhost.com",
+                            EmailConfirmed = true,
+                            FirstName = "Admin",
+                            LastName = "User",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
+                            NormalizedUserName = "ADMIN@LOCALHOST.COM",
+                            Password = "P@ssword1",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKtuQze+n/y//xNVFuZwc0qVZ+UuY5tUCGoI0R7BJuGkx6HyOi7sC3W8IbyvSCz62A==",
+                            PhoneNumber = "0000",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "789c939a-2a5b-4f0e-b200-e9fd9022c94d",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@localhost.com"
+                        },
+                        new
+                        {
+                            Id = "3781efa7-66dc-47f0-860f-e506d04102e5",
+                            AccessFailedCount = 0,
+                            Address = "TPharmacy",
+                            ConcurrencyStamp = "709e9635-e9af-47a8-84ab-7ab9924cef61",
+                            Email = "june@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Admin",
+                            LastName = "User",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "JUNE@GMAIL.COM",
+                            NormalizedUserName = "JUNE@GMAIL.COM",
+                            Password = "June1234*",
+                            PasswordHash = "AQAAAAEAACcQAAAAEC3zx6U0isCNkRWlwRWZ5rzBLVp6wgAUWF6g0gdXNomuJsZSGH81Kc1GGGOfGcHtmg==",
+                            PhoneNumber = "0000",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "69cfd400-301e-442d-a016-94d4c6391313",
+                            TwoFactorEnabled = false,
+                            UserName = "june@gmail.com"
+                        },
+                        new
+                        {
+                            Id = "3781efa7-66dc-47f0-860f-e506d04102c4",
+                            AccessFailedCount = 0,
+                            Address = "Tampines Ave 1",
+                            ConcurrencyStamp = "3c20d344-f4a7-4c9e-b9cf-438a2c1f5a0f",
+                            Email = "james@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Customer",
+                            LastName = "User",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "JAMES@GMAIL.COM",
+                            NormalizedUserName = "JAMES@GMAIL.COM",
+                            Password = "James1234*",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKqwXzdoZ93m5LgHcURBmcTYAVaYgD+36DP/FdDteC0lmwiBssYTP3xdVaHdjWl7hQ==",
+                            PhoneNumber = "1111",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "7cabe8aa-b0cb-40b1-91e2-daa2cfd8f2c5",
+                            TwoFactorEnabled = false,
+                            UserName = "james@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("TPharmacy.Shared.Domain.Consultation", b =>
@@ -355,10 +465,10 @@ namespace TPharmacy.Server.Data.Migrations
                     b.Property<int?>("CustomerID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataUpdated")
+                    b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("StaffID")
@@ -374,6 +484,38 @@ namespace TPharmacy.Server.Data.Migrations
                     b.HasIndex("StaffID");
 
                     b.ToTable("Consultations");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            ConDate = new DateTime(2023, 1, 4, 9, 6, 41, 550, DateTimeKind.Local).AddTicks(9707),
+                            ConDesc = "Flu Consultation",
+                            ConEndTime = new DateTime(2023, 1, 4, 10, 15, 41, 551, DateTimeKind.Local).AddTicks(50),
+                            ConFee = 35.50m,
+                            ConStartTime = new DateTime(2023, 1, 4, 9, 6, 41, 550, DateTimeKind.Local).AddTicks(9928),
+                            CreatedBy = "Woon",
+                            CusID = 1,
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 551, DateTimeKind.Local).AddTicks(562),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 551, DateTimeKind.Local).AddTicks(564),
+                            StaffID = 1,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            ConDate = new DateTime(2023, 1, 4, 9, 6, 41, 551, DateTimeKind.Local).AddTicks(567),
+                            ConDesc = "Eczema Consultation",
+                            ConEndTime = new DateTime(2023, 1, 4, 10, 6, 41, 551, DateTimeKind.Local).AddTicks(569),
+                            ConFee = 30.50m,
+                            ConStartTime = new DateTime(2023, 1, 4, 9, 6, 41, 551, DateTimeKind.Local).AddTicks(568),
+                            CreatedBy = "Woon",
+                            CusID = 3,
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 551, DateTimeKind.Local).AddTicks(573),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 551, DateTimeKind.Local).AddTicks(574),
+                            StaffID = 1,
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("TPharmacy.Shared.Domain.Customer", b =>
@@ -401,10 +543,10 @@ namespace TPharmacy.Server.Data.Migrations
                     b.Property<int>("CusPoints")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataUpdated")
+                    b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UpdatedBy")
@@ -413,6 +555,47 @@ namespace TPharmacy.Server.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CreatedBy = "System",
+                            CusAddress = "Tampines Ave 1",
+                            CusEmail = "james@gmail.com",
+                            CusName = "James",
+                            CusPassword = "James1234*",
+                            CusPoints = 100,
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(3444),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(3449),
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CreatedBy = "System",
+                            CusAddress = "Bedok Ave 1",
+                            CusEmail = "alice@gmail.com",
+                            CusName = "Alice",
+                            CusPassword = "Alice1234*",
+                            CusPoints = 50,
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(3452),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(3453),
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            CreatedBy = "System",
+                            CusAddress = "Temasek Polytechnic",
+                            CusEmail = "grey@gmail.com",
+                            CusName = "Grey",
+                            CusPassword = "Grey1234*",
+                            CusPoints = 89,
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(3455),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(3456),
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("TPharmacy.Shared.Domain.Order", b =>
@@ -431,10 +614,10 @@ namespace TPharmacy.Server.Data.Migrations
                     b.Property<int?>("CustomerID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataUpdated")
+                    b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("OrderDateTime")
@@ -456,6 +639,32 @@ namespace TPharmacy.Server.Data.Migrations
                     b.HasIndex("StaffID");
 
                     b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CreatedBy = "System",
+                            CusID = 1,
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(6489),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(6491),
+                            OrderDateTime = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(6199),
+                            OrderPrice = 128.00m,
+                            StaffID = 3,
+                            UpdatedBy = "Kate"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CreatedBy = "System",
+                            CusID = 2,
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(6495),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(6496),
+                            OrderDateTime = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(6494),
+                            OrderPrice = 90.00m,
+                            StaffID = 3,
+                            UpdatedBy = "Kate"
+                        });
                 });
 
             modelBuilder.Entity("TPharmacy.Shared.Domain.OrderItem", b =>
@@ -468,10 +677,10 @@ namespace TPharmacy.Server.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DataUpdated")
+                    b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("OrderID")
@@ -493,6 +702,41 @@ namespace TPharmacy.Server.Data.Migrations
                     b.HasIndex("ProductID");
 
                     b.ToTable("OrderItems");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(8806),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(8809),
+                            OrderID = 1,
+                            OrderQtny = 2,
+                            ProductID = 1,
+                            UpdatedBy = "Kate"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(8812),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(8813),
+                            OrderID = 1,
+                            OrderQtny = 1,
+                            ProductID = 2,
+                            UpdatedBy = "Kate"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(8814),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(8815),
+                            OrderID = 2,
+                            OrderQtny = 1,
+                            ProductID = 3,
+                            UpdatedBy = "Kate"
+                        });
                 });
 
             modelBuilder.Entity("TPharmacy.Shared.Domain.Payment", b =>
@@ -505,10 +749,10 @@ namespace TPharmacy.Server.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DataUpdated")
+                    b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("OrderID")
@@ -528,6 +772,30 @@ namespace TPharmacy.Server.Data.Migrations
                     b.HasIndex("OrderID");
 
                     b.ToTable("Payments");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 550, DateTimeKind.Local).AddTicks(1315),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 550, DateTimeKind.Local).AddTicks(1319),
+                            OrderID = 1,
+                            PayCardInfo = "7855-3798-2344-9853",
+                            PayFee = 128.00m,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 550, DateTimeKind.Local).AddTicks(1323),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 550, DateTimeKind.Local).AddTicks(1324),
+                            OrderID = 2,
+                            PayCardInfo = "3244-2355-3459-9767",
+                            PayFee = 103.00m,
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("TPharmacy.Shared.Domain.Prescription", b =>
@@ -546,10 +814,10 @@ namespace TPharmacy.Server.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DataUpdated")
+                    b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("PresQty")
@@ -568,6 +836,30 @@ namespace TPharmacy.Server.Data.Migrations
                     b.HasIndex("ProductID");
 
                     b.ToTable("Prescriptions");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            ConID = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 550, DateTimeKind.Local).AddTicks(4198),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 550, DateTimeKind.Local).AddTicks(4206),
+                            PresQty = 1,
+                            ProductID = 1,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            ConID = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 550, DateTimeKind.Local).AddTicks(4276),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 550, DateTimeKind.Local).AddTicks(4277),
+                            PresQty = 2,
+                            ProductID = 3,
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("TPharmacy.Shared.Domain.Product", b =>
@@ -580,10 +872,10 @@ namespace TPharmacy.Server.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DataUpdated")
+                    b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ProdBrand")
@@ -604,6 +896,44 @@ namespace TPharmacy.Server.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 547, DateTimeKind.Local).AddTicks(1365),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 547, DateTimeKind.Local).AddTicks(8016),
+                            ProdBrand = "Blackmores",
+                            ProdDesc = "BLACKMORES Bio 1000mg Vitamin C 120 Tablets",
+                            ProdName = "Vitamin C",
+                            ProdPrice = 35.00m,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 547, DateTimeKind.Local).AddTicks(8606),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 547, DateTimeKind.Local).AddTicks(8609),
+                            ProdBrand = "Swisse",
+                            ProdDesc = "Omega 3 Fish Oil 1500mg 100 Tablets",
+                            ProdName = "Omega 3 Fish Oil",
+                            ProdPrice = 58.00m,
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            CreatedBy = "System",
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 547, DateTimeKind.Local).AddTicks(8612),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 547, DateTimeKind.Local).AddTicks(8613),
+                            ProdBrand = "Wastons",
+                            ProdDesc = "Calcium 500mg 150 Tablets",
+                            ProdName = "Calcium",
+                            ProdPrice = 45.00m,
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("TPharmacy.Shared.Domain.Staff", b =>
@@ -616,10 +946,10 @@ namespace TPharmacy.Server.Data.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DataUpdated")
+                    b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime>("DateUpdated")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("StafEmail")
@@ -640,6 +970,44 @@ namespace TPharmacy.Server.Data.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Staffs");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CreatedBy = "June",
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(224),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(235),
+                            StafEmail = "woon@gmail.com",
+                            StafName = "Woon",
+                            StafPassword = "Woon1234*",
+                            StafRole = "Pharmacist",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CreatedBy = "June",
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(238),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(239),
+                            StafEmail = "june@gmail.com",
+                            StafName = "June",
+                            StafPassword = "June1234*",
+                            StafRole = "Admin",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            CreatedBy = "June",
+                            DateCreated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(241),
+                            DateUpdated = new DateTime(2023, 1, 4, 9, 6, 41, 549, DateTimeKind.Local).AddTicks(242),
+                            StafEmail = "kate@gmail.com",
+                            StafName = "Kate",
+                            StafPassword = "Kate1234*",
+                            StafRole = "Packer",
+                            UpdatedBy = "System"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
