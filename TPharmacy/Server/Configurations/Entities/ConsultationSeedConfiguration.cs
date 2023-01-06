@@ -24,7 +24,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ConFee = 35.50m,
                         ConDesc = "Flu Consultation",
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "Woon",
                         UpdatedBy = "System"
                     },
@@ -39,7 +39,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ConFee = 30.50m,
                         ConDesc = "Eczema Consultation",
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "Woon",
                         UpdatedBy = "System"
                     }

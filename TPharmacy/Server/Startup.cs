@@ -39,7 +39,7 @@ namespace TPharmacy.Server
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
-
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddDefaultIdentity<ApplicationUser>(options =>
                 options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()

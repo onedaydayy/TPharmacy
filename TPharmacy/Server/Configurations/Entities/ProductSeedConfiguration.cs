@@ -22,7 +22,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ProdDesc = "BLACKMORES Bio 1000mg Vitamin C 120 Tablets",
                         ProdPrice = 35.00m,
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "System"
                     },
@@ -34,7 +34,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ProdDesc = "Omega 3 Fish Oil 1500mg 100 Tablets",
                         ProdPrice = 58.00m,
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "System"
                     },
@@ -46,7 +46,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ProdDesc = "Calcium 500mg 150 Tablets",
                         ProdPrice = 45.00m,
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "System"
                     }
