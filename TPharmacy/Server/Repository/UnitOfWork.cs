@@ -1,15 +1,13 @@
-﻿using TPharmacy.Server.Data;
-using TPharmacy.Server.IRepository;
-using TPharmacy.Server.Models;
-using TPharmacy.Shared.Domain;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
+using TPharmacy.Server.Data;
+using TPharmacy.Server.IRepository;
+using TPharmacy.Server.Models;
+using TPharmacy.Shared.Domain;
 
 namespace TPharmacy.Server.Repository
 {
