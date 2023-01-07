@@ -14,8 +14,8 @@ namespace TPharmacy.Server.IRepository
         IGenericRepository<Staff> Staffs { get; }
         IGenericRepository<Product> Products { get; }
         IGenericRepository<Order> Orders { get; }
-        IGenericRepository<OrderItem> OrderItems { get; }
         IGenericRepository<Payment> Payments { get; }
+        IGenericRepository<OrderItem> OrderItems { get; }
         IGenericRepository<Consultation> Consultations { get; }
         IGenericRepository<Prescription> Prescriptions { get; }
     }

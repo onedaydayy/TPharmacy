@@ -108,19 +108,19 @@ namespace TPharmacy.Server.Configurations.Entities
             new ApplicationUser
             {
                 Id = "3781efa7-66dc-47f0-860f-e506d04102c3",
-                Email = "grey@gmail.com",
-                NormalizedEmail = "GREY@GMAIL.COM",
-                FirstName = "Grey",
+                Email = "sheila@gmail.com",
+                NormalizedEmail = "SHEILA@GMAIL.COM",
+                FirstName = "Sheila",
                 LastName = "Customer",
-                UserName = "grey@gmail.com",
-                NormalizedUserName = "GREY@GMAIL.COM",
+                UserName = "sheila@gmail.com",
+                NormalizedUserName = "SHEILA@GMAIL.COM",
                 PhoneNumber = "9436 7238",
                 EmailConfirmed = true,
                 LockoutEnabled = true,
                 PhoneNumberConfirmed = true,
                 Address = "Jurong Ave 1",
-                Password = "Grey1234*",
-                PasswordHash = hasher.HashPassword(null, "Grey1234*"),
+                Password = "Sheila1234*",
+                PasswordHash = hasher.HashPassword(null, "Sheila1234*"),
                 SecurityStamp = Guid.NewGuid().ToString()
             });
         }
