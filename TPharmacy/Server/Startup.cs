@@ -21,6 +21,7 @@ using IdentityServer4.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using TPharmacy.Server.IRepository;
 using TPharmacy.Server.Repository;
+using System.Text.Json.Serialization;
 
 namespace TPharmacy.Server
 {
@@ -40,6 +41,8 @@ namespace TPharmacy.Server
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
+
+
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 

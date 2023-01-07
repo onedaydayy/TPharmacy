@@ -2,10 +2,70 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using TPharmacy.Shared
-@attribute [Authorize]
-@inject HttpClient Http
+@inject HttpClient _client
+@inject IJSRuntime js
+
+
 
 <h1>Product</h1>
 
-@code {
-}
+@if (Products == null)
+{
+    <div class="alert alert-info">Loading Products...</div> }
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th> Name </th>
+                <th> Brand </th>
+                <th> Description </th>
+                <th> Price </th>
+                <th> Category </th>
+                <th> Actions </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Products)
+            {
+            <tr>
+                <td> @product.ProdName </td>
+                <td> @product.ProdBrand </td>
+                <td> @product.ProdDesc </td>
+                <td> @product.ProdPrice </td>
+                <td> @product.ProdCategory </td>
+                <td>
+                    <a href="/makes/view/@product.ID" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
+                    <a href="/makes/edit/@product.ID" class="btn btn-warning">
+                        <span class="oi oi-pencil"></span>
+                    </a>
+                    <button class="btn btn-danger" @onclick="@(()=>Delete(product.ID))">
+                        <span class="oi oi-delete"></span>
+                    </button>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>}
+
+@code { 
+    private List<Product> Products;
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+    }
+
+    async Task Delete(int prodId)
+    {
+        var product = Products.First(q => q.ID == prodId);
+        var confirm = await js.InvokeAsync<bool>("Confirm", $"Do you want to delete {product.ProdName}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.ProductsEndpoint}/{prodId}");
+            await OnInitializedAsync();
+        }
+    } }
