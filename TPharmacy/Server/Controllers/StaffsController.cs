@@ -19,6 +19,7 @@ namespace TPharmacy.Server.Controllers
     public class StaffsController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly ILogger<StaffsController> logger;
         //Refactored 
         //private readonly ApplicationDbContext _context;
@@ -27,11 +28,12 @@ namespace TPharmacy.Server.Controllers
         //Refactored
         //public StaffsController(ApplicationDbContext context)
         public StaffsController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager,
-        ILogger<StaffsController> logger)
+        ILogger<StaffsController> logger, RoleManager<IdentityRole> roleManager)
         {
             _unitOfWork = unitOfWork;
             this.userManager = userManager;
             this.logger = logger;
+            this.roleManager = roleManager;
         }
         // GET: api/Staffs
         [HttpGet]

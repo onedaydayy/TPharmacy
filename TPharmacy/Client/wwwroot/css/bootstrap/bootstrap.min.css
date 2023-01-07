@@ -4124,10 +4124,8 @@ input[type=button].btn-block, input[type=reset].btn-block, input[type=submit].bt
 }
 
     .navbar-nav .nav-link {
-       /* padding-right: 0;
-        padding-left: 0;*/
-        padding-right: 0.5rem;
-        padding-left: 0.5rem
+        padding-right: 0;
+        padding-left: 0;
     }
 
     .navbar-nav .dropdown-menu {

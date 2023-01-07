@@ -3,43 +3,76 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 
-<h3 class="card-title">Staffs</h3>
-@if (Staffs == null)
-{
-    <div class="alert alert-info">Loading Staffs...</div>
-}
-else
-{
-    <table class="table table-responsive">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var staff in Staffs)
-            {
-                <tr>
-                    <td>@staff.StafName</td>
-                    <td>
-                        <a href="/colours/view/@staff.ID" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/colours/edit/@staff.ID" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(staff.ID))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+<div class="container mt-5">
+    <h1 class="header">Overview of TPharmacy Staff's</h1>
+    <h3>Welcome to the Staff Home! </h3>
+    <div class="row">
+        <div class="col-md-8">
+            <br />
+            <a href='/staffs/add' class="btn btn-success" role="button">
+                Add User
+            </a>
+        </div>
+        <div class="col-md-2.5">
+            <br />
+            <input type="text" class="form-control" placeholder="Search staff by name" @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
+        </div>
+        <div class="col-md-1">
+            <br />
+            <button class="btn btn-light" @onclick="ResetSearch">
+                Reset
+            </button>
+        </div>
+    </div>
+    <br />
+    @if (Staffs == null)
+    {
+        <div class="alert alert-info">Loading Staffs...</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped align-middle table-bordered">
+                <thead class="table">
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Name</th>
+                        <th>Password</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var staff in Staffs)
+                    {
+                        <tr>
+                            <td>@staff.ID</td>
+                            <td>@staff.StafEmail</td>
+                            <td>@staff.StafRole</td>
+                            <td>@staff.StafName</td>
+                            <td>@staff.StafPassword</td>
+                            <td>
+                                <a href="/staffs/view/@staff.ID" class="btn btn-primary">
+                                    <span class="oi oi-book"></span>
+                                </a>
+                                <a href="/staffs/edit/@staff.ID" class="btn btn-warning">
+                                    <span class="oi oi-pencil"></span>
+                                </a>
+                                <button class="btn btn-danger" @onclick="@(()=>Delete(staff.ID))">
+                                    <span class="oi oi-delete"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
 
 @code {
+    private string SearchString { get; set; }
     private List<Staff> Staffs;
 
     protected async override Task OnInitializedAsync()
@@ -54,7 +87,21 @@ else
         if (confirm)
         {
             await _client.DeleteAsync($"{Endpoints.StaffsEndpoint}/{staffID}");
-            await OnInitializedAsync();
+            Staffs = Staffs.Where(x => x.ID != staffID).ToList();
         }
+    }
+
+    protected void FilterUser()
+    {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            Staffs = Staffs.Where(x => x.StafName.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
+        }
+    }
+
+    public async void ResetSearch()
+    {
+        SearchString = string.Empty;
+        Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
     }
 }

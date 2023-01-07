@@ -3,43 +3,61 @@
 @inject IJSRuntime js
 @attribute [Authorize]
 
-<h3 class="card-title">Orders</h3>
-@if (Orders == null)
-{
-    <div class="alert alert-info">Loading Orders...</div>
-}
-else
-{
-    <table class="table table-responsive">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var order in Orders)
-            {
-                <tr>
-                    <td>@order.ID</td>
-                    <td>
-                        <a href="/colours/view/@order.ID" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/colours/edit/@order.ID" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(order.ID))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+<div class="container mt-5">
+    <h1 class="header">Overview of TPharmacy Order's</h1>
+    <h3>Welcome to the Order Home! </h3>
+    <div class="row">
+        <div class="col-md-8">
+            <br />
+        </div>
+        <div class="col-md-2.5">
+            <br />
+            <input type="text" class="form-control" placeholder="Search Order by ID" @bind="SearchString" @onkeyup="FilterUser" />
+        </div>
+        <div class="col-md-1">
+            <br />
+            <button class="btn btn-light" @onclick="ResetSearch">
+                Reset
+            </button>
+        </div>
+    </div>
+    <br />
+    @if (Orders == null)
+    {
+        <div class="alert alert-info">Loading orders...</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped align-middle table-bordered">
+                <thead class="table">
+                    <tr>
+                        <th>ID</th>
+                        <th>StaffID</th>
+                        <th>DateTime</th>
+                        <th>Price</th>
+                        <th>CusID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var order in Orders)
+                    {
+                    <tr>
+                        <td>@order.ID</td>
+                        <td>@order.StaffID</td>
+                        <td>@order.OrderDateTime</td>
+                        <td>@order.OrderPrice</td>
+                        <td>@order.CusID</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
 
 @code {
+    private string SearchString { get; set; }
     private List<Order> Orders;
 
     protected async override Task OnInitializedAsync()
@@ -47,14 +65,21 @@ else
         Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
     }
 
-    async Task Delete(int orderID)
+    protected void FilterUser()
     {
-        var order = Orders.First(q => q.ID == orderID);
-        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {order.ID}?");
-        if (confirm)
+        if (!string.IsNullOrEmpty(SearchString))
         {
-            await _client.DeleteAsync($"{Endpoints.OrdersEndpoint}/{orderID}");
-            await OnInitializedAsync();
+            int searchInt;
+            if (int.TryParse(SearchString, out searchInt))
+            {
+                Orders = Orders.Where(x => x.ID == searchInt).ToList();
+            }
         }
+    }
+
+    public async void ResetSearch()
+    {
+        SearchString = string.Empty;
+        Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
     }
 }

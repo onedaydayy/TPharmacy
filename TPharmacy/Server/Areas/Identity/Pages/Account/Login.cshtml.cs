@@ -87,7 +87,7 @@ namespace TPharmacy.Server.Areas.Identity.Pages.Account
                     var user = await _userManager.FindByNameAsync(Input.Email);
                     var roles = await _userManager.GetRolesAsync(user);
                     _logger.LogInformation("User logged in.");
-                    if (roles.Contains("Administrator"))
+                    if (roles.Contains("Staff"))
                     {
                         return Redirect("~/stafhome");
                     }

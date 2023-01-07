@@ -48,7 +48,7 @@ namespace TPharamacy.Server.Controllers
             }
             //Refactored
             //return await _context.OrderItems.ToListAsync();
-            var orderItems = await _unitOfWork.OrderItems.GetAll();
+            var orderItems = await _unitOfWork.OrderItems.GetAll(includes: q => q.Include(x => x.Product).Include(x => x.Order));
             return Ok(orderItems);
         }
 

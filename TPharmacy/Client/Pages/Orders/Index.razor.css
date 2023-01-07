@@ -7,3 +7,7 @@
     position: inherit;
     top: 70px;
 }
+
+.form-control {
+    width: auto;
+}

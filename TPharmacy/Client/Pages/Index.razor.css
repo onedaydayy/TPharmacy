@@ -1,6 +1,5 @@
 
 p, h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins';
     align-items: center;
     text-align: center;
 }
@@ -122,7 +121,7 @@ hr {
 }
 
 .alt-back {
-    background-color: #56B280;
+    background-color: #4CAF50;
 }
 
 .gray-card {

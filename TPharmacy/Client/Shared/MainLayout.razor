@@ -1,10 +1,10 @@
 ﻿@inherits LayoutComponentBase
 <AuthorizeView>
     <Authorized>
-        @if (context.User.IsInRole("User"))
+        @if (context.User.IsInRole("Customer"))
         {
             <div class="page" style="display: block;">
-                <div class="navbar cus-z-index" style="background: #0B763D;">
+                <div class="navbar cus-z-index">
                     <CusNavMenu />
                 </div>
                 <div class="main">
@@ -13,7 +13,7 @@
             </div>
             <CusFooter />
         }
-        @if (context.User.IsInRole("Administrator"))
+        @if (context.User.IsInRole("Staff"))
         {
             <div class="page" style="display: flex;">
                 <div class="sidebar">

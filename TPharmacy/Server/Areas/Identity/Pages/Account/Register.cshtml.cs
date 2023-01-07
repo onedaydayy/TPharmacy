@@ -95,8 +95,8 @@ namespace TPharmacy.Server.Areas.Identity.Pages.Account
                     
                     _logger.LogInformation("User created a new account with password.");
 
-                    await _roleManager.FindByNameAsync("User");
-                    await _userManager.AddToRoleAsync(user, "User");
+                    await _roleManager.FindByNameAsync("Customer");
+                    await _userManager.AddToRoleAsync(user, "Customer");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

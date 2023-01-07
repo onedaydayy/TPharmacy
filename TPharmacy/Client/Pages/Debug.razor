@@ -8,65 +8,66 @@
 
 @if (user is not null)
 {
-    <div class="header">
-        <span class="h2">@user.Identity.Name </span><span class="h1">
-            Welcome to your Profile Details!
-        </span>
-        <span class="t">
-            <p>
-                Is Authenticated: @user.Identity.IsAuthenticated<br />
-                Authentication Type: @user.Identity.AuthenticationType<br />
-            </p><br />
-            <table>
-                <thead>
+<div class="container mt-5">
+    <h1 class="header">
+        Welcome to your Profile Details!
+    </h1>
+    <h4>@user.Identity.Name </h4>
+    <div class="t">
+        <p>
+            <br />Is Authenticated: @user.Identity.IsAuthenticated<br />
+            Authentication Type: @user.Identity.AuthenticationType<br />
+        </p><br />
+        <table>
+            <thead>
+                <tr>
+                    <th>Claim Type</th>
+                    <th style="padding: 5px 10px;">Claim Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var claim in user.Claims)
+                {
                     <tr>
-                        <th>Claim Type</th>
-                        <th style="padding: 5px 10px;">Claim Value</th>
+                        <td>@claim.Type</td>
+                        <td style="padding: 5px 10px;">@claim.Value</td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var claim in user.Claims)
-                    {
-                        <tr>
-                            <td>@claim.Type</td>
-                            <td style="padding: 5px 10px;">@claim.Value</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </span>
+                }
+            </tbody>
+        </table>
     </div>
-}
-else
-{
-    <div class="header">
-        <span class="h1">
-            Error!
-        </span>
-    </div>
-}
+</div>
+        }
+        else
+        {
+        <div class="header">
+            <span class="h1">
+                Error!
+            </span>
+        </div>
+        }
 
-@code {
-    [CascadingParameter]
-    public Task<AuthenticationState> AuthTask { get; set; }
+        @code {
+            [CascadingParameter]
+            public Task<AuthenticationState> AuthTask { get; set; }
 
     private ClaimsPrincipal user;
 
-    protected async override Task OnInitializedAsync()
-    {
-        if (AuthTask == null)
+        protected async override Task OnInitializedAsync()
         {
-            return;
-        }
+            if (AuthTask == null)
+            {
+                return;
+            }
 
-        try
-        {
-            var authState = await AuthTask;
-            this.user = authState.User;
+            try
+            {
+                var authState = await AuthTask;
+                this.user = authState.User;
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+            }
         }
-        catch (Exception ex)
-        {
-            // Handle exception
         }
-    }
-}

@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using TPharmacy.Shared.Domain;
@@ -18,7 +18,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ProdName = "Vitamin C",
                         ProdDesc = "BLACKMORES Bio Vitamin C 1000mg 120 Tablets",
                         ProdPrice = 35.00m,
-                        ProdCategory = "Supplements",
+                        ProdCategory = "Supplement",
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
                         CreatedBy = "System",
@@ -31,7 +31,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ProdName = "Omega 3 Fish Oil",
                         ProdDesc = "Swisse Omega 3 Fish Oil 1500mg 100 Tablets",
                         ProdPrice = 58.00m,
-                        ProdCategory = "Supplements",
+                        ProdCategory = "Supplement",
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
                         CreatedBy = "System",
@@ -44,7 +44,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ProdName = "Calcium",
                         ProdDesc = "Wastons Calcium 500mg 150 Tablets",
                         ProdPrice = 45.00m,
-                        ProdCategory = "Supplements",
+                        ProdCategory = "Supplement",
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
                         CreatedBy = "System",
@@ -89,8 +89,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         CreatedBy = "System",
                         UpdatedBy = "System"
                     }
-                    );
-        }
+                    );        }
 
     }
 }

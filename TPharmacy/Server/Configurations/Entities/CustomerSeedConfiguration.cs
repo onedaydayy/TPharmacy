@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using TPharmacy.Shared.Domain;
@@ -40,24 +40,11 @@ namespace TPharmacy.Server.Configurations.Entities
                     new Customer
                     {
                         ID = 3,
-                        CusName = "Grey",
-                        CusEmail = "grey@gmail.com",
-                        CusAddress = "Tai Seng St 81",
-                        CusPassword = "Grey1234*",
-                        CusPoints = 89,
-                        DateCreated = DateTime.Now,
-                        DateUpdated = DateTime.Now,
-                        CreatedBy = "System",
-                        UpdatedBy = "System"
-                    },
-                    new Customer
-                    {
-                        ID = 4,
                         CusName = "Sheila",
                         CusEmail = "sheila@gmail.com",
-                        CusAddress = "1 Youngberg Terrace",
+                        CusAddress = "Jurong Ave 1",
                         CusPassword = "Sheila1234*",
-                        CusPoints = 200,
+                        CusPoints = 89,
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
                         CreatedBy = "System",
