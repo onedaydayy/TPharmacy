@@ -45,7 +45,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ID = 3,
                         CusName = "Grey",
                         CusEmail = "grey@gmail.com",
-                        CusAddress = "Temasek Polytechnic",
+                        CusAddress = "Jurong Ave 1",
                         CusPassword = "Grey1234*",
                         CusPoints = 89,
                         DateCreated = DateTime.Now,

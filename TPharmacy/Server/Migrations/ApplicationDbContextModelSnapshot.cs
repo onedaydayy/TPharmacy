@@ -151,17 +151,38 @@ namespace TPharmacy.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
-                            ConcurrencyStamp = "2fde4a69-ba32-4576-8bf4-761a612a4d42",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
+                            Id = "staff",
+                            ConcurrencyStamp = "0191b26f-ed15-446f-8ab8-153883d7183b",
+                            Name = "Staff",
+                            NormalizedName = "STAFF"
                         },
                         new
                         {
-                            Id = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
-                            ConcurrencyStamp = "f0647496-d019-45ed-8717-d365d8faa8c2",
-                            Name = "User",
-                            NormalizedName = "USER"
+                            Id = "customer",
+                            ConcurrencyStamp = "0c77c220-d6b4-4809-8607-ea360e2da374",
+                            Name = "Customer",
+                            NormalizedName = "CUSTOMER"
+                        },
+                        new
+                        {
+                            Id = "admin",
+                            ConcurrencyStamp = "9d114635-a657-4d06-9fdd-86ab266f3223",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "pharmacist",
+                            ConcurrencyStamp = "705affed-c9d1-4f5e-a344-a57db7ab72d1",
+                            Name = "Pharmacist",
+                            NormalizedName = "PHARMACIST"
+                        },
+                        new
+                        {
+                            Id = "packer",
+                            ConcurrencyStamp = "baa54c05-1da0-46fa-8690-80d3ce2d556e",
+                            Name = "Packer",
+                            NormalizedName = "PACKER"
                         });
                 });
 
@@ -254,18 +275,48 @@ namespace TPharmacy.Server.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "3781efa7-66dc-47f0-860f-e506d04102e4",
-                            RoleId = "ad2bcf0c-20db-474f-8407-5a6b159518ba"
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102s1",
+                            RoleId = "staff"
                         },
                         new
                         {
-                            UserId = "3781efa7-66dc-47f0-860f-e506d04102e5",
-                            RoleId = "ad2bcf0c-20db-474f-8407-5a6b159518ba"
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102s1",
+                            RoleId = "admin"
                         },
                         new
                         {
-                            UserId = "3781efa7-66dc-47f0-860f-e506d04102c4",
-                            RoleId = "bd2bcf0c-20db-474f-8407-5a6b159518bb"
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102s2",
+                            RoleId = "staff"
+                        },
+                        new
+                        {
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102s2",
+                            RoleId = "pharmacist"
+                        },
+                        new
+                        {
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102s3",
+                            RoleId = "staff"
+                        },
+                        new
+                        {
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102s3",
+                            RoleId = "packer"
+                        },
+                        new
+                        {
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102c1",
+                            RoleId = "customer"
+                        },
+                        new
+                        {
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102c2",
+                            RoleId = "customer"
+                        },
+                        new
+                        {
+                            UserId = "3781efa7-66dc-47f0-860f-e506d04102c3",
+                            RoleId = "customer"
                         });
                 });
 
@@ -369,66 +420,129 @@ namespace TPharmacy.Server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3781efa7-66dc-47f0-860f-e506d04102e4",
+                            Id = "3781efa7-66dc-47f0-860f-e506d04102s1",
                             AccessFailedCount = 0,
                             Address = "TPharmacy",
-                            ConcurrencyStamp = "7a0e17d2-6346-40a4-985d-933885e669ad",
-                            Email = "admin@localhost.com",
-                            EmailConfirmed = true,
-                            FirstName = "Admin",
-                            LastName = "Admin",
-                            LockoutEnabled = true,
-                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
-                            NormalizedUserName = "ADMIN@LOCALHOST.COM",
-                            Password = "P@ssword1",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGZh6BTf3YBozHJG+CsLg0XRRNGLm00t/CHX9xNDHLPeXETR6N7KouG27PWRh2Qnow==",
-                            PhoneNumber = "6721 9632",
-                            PhoneNumberConfirmed = true,
-                            SecurityStamp = "94733b50-9311-4d95-a7f9-271132b378be",
-                            TwoFactorEnabled = false,
-                            UserName = "admin@localhost.com"
-                        },
-                        new
-                        {
-                            Id = "3781efa7-66dc-47f0-860f-e506d04102e5",
-                            AccessFailedCount = 0,
-                            Address = "TPharmacy",
-                            ConcurrencyStamp = "0e133aeb-c507-4c7a-9490-a06f4669acce",
+                            ConcurrencyStamp = "b7acd781-eb3d-41df-a9f6-59166226e0fc",
                             Email = "june@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "June",
-                            LastName = "Admin",
+                            LastName = "Staff",
                             LockoutEnabled = true,
                             NormalizedEmail = "JUNE@GMAIL.COM",
                             NormalizedUserName = "JUNE@GMAIL.COM",
                             Password = "June1234*",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOrwwm5oeBnsqep5h70ZPDQXLxIrzvlJJmwyKsDpRaJSPOgrPh3fFPf9wO117D9CQA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECwwmD7VXYlQMZ7oA7p7+AwYCTqqqGWkjXyqPigEdWq5yUW8Vwjk46PPmla/BgUbsA==",
                             PhoneNumber = "9273 8983",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "6ff2ddad-67cd-461e-9366-feef16e6d1b5",
+                            SecurityStamp = "73b5f7e0-efb2-4daf-ace9-2c39fff2967e",
                             TwoFactorEnabled = false,
                             UserName = "june@gmail.com"
                         },
                         new
                         {
-                            Id = "3781efa7-66dc-47f0-860f-e506d04102c4",
+                            Id = "3781efa7-66dc-47f0-860f-e506d04102s2",
+                            AccessFailedCount = 0,
+                            Address = "TPharmacy",
+                            ConcurrencyStamp = "0164d16c-779e-4bf3-87e0-0977b0526330",
+                            Email = "woon@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Woon",
+                            LastName = "Staff",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "WOON@GMAIL.COM",
+                            NormalizedUserName = "WOON@GMAIL.COM",
+                            Password = "P@ssword1",
+                            PasswordHash = "AQAAAAEAACcQAAAAENd0tjQajjCDCV0KNPYIeWZegRx2lh0jScJyBcuVAzUMREdzLYf8QVVGEaR5kZTF4w==",
+                            PhoneNumber = "9287 2324",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "a675f033-056f-4c0f-a3ac-59fc905ba81c",
+                            TwoFactorEnabled = false,
+                            UserName = "woon@gmail.com"
+                        },
+                        new
+                        {
+                            Id = "3781efa7-66dc-47f0-860f-e506d04102s3",
+                            AccessFailedCount = 0,
+                            Address = "TPharmacy",
+                            ConcurrencyStamp = "94b2b4ae-a1ee-4209-811c-6421fbfa86d4",
+                            Email = "kate@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Kate",
+                            LastName = "Staff",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "KATE@GMAIL.COM",
+                            NormalizedUserName = "KATE@GMAIL.COM",
+                            Password = "Kate1234*",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJ41CkrfJs/fOD/Ai21/X9nFMaEIMZn9WI/fI3vi+MAnwVARAoHdEjtHZNyrjR4tVg==",
+                            PhoneNumber = "6329 9823",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "4cd2c392-b82f-4f31-a3d6-f4187ace24d9",
+                            TwoFactorEnabled = false,
+                            UserName = "kate@gmail.com"
+                        },
+                        new
+                        {
+                            Id = "3781efa7-66dc-47f0-860f-e506d04102c1",
                             AccessFailedCount = 0,
                             Address = "Tampines Ave 1",
-                            ConcurrencyStamp = "aaa99811-c310-41e7-a450-f712026b01e1",
+                            ConcurrencyStamp = "6fddb340-570e-4c8b-80ec-b6b1326f0e52",
                             Email = "james@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "James",
-                            LastName = "User",
+                            LastName = "Customer",
                             LockoutEnabled = true,
                             NormalizedEmail = "JAMES@GMAIL.COM",
                             NormalizedUserName = "JAMES@GMAIL.COM",
                             Password = "James1234*",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIbaRHJDLXsa1y6FCOka8EjubMxP/iApka0A6fIwvkD0cOKku2tXILPrh54owVyVzQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOl3DeyMdls1ldCME82/ZSflU0WNdwN6vwu8D67eVoib0co3aUpLvi5/mSIbIM8x4g==",
                             PhoneNumber = "8211 7319",
                             PhoneNumberConfirmed = true,
-                            SecurityStamp = "5599ee11-a52d-4a6e-b66a-1ab5c2450062",
+                            SecurityStamp = "ab433508-f111-407c-bc51-f8c2ff93b4f6",
                             TwoFactorEnabled = false,
                             UserName = "james@gmail.com"
+                        },
+                        new
+                        {
+                            Id = "3781efa7-66dc-47f0-860f-e506d04102c2",
+                            AccessFailedCount = 0,
+                            Address = "Bedok Ave 1",
+                            ConcurrencyStamp = "3c570ebf-7979-466a-a81f-cf387bc7edc9",
+                            Email = "alice@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Alice",
+                            LastName = "Customer",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "ALICE@GMAIL.COM",
+                            NormalizedUserName = "ALICE@GMAIL.COM",
+                            Password = "Alice1234*",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBLVFwmPFI/mQqSzdpRbesWzJ8RYFc2liqFfcoDdyCtKFovt8OGdrlPNaq9jddUxbA==",
+                            PhoneNumber = "8329 7433",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "a71b40d5-8d59-4674-9e98-a6063b6d709a",
+                            TwoFactorEnabled = false,
+                            UserName = "alice@gmail.com"
+                        },
+                        new
+                        {
+                            Id = "3781efa7-66dc-47f0-860f-e506d04102c3",
+                            AccessFailedCount = 0,
+                            Address = "Jurong Ave 1",
+                            ConcurrencyStamp = "d3bb59ea-ee0c-466d-b8d9-2caf848038a2",
+                            Email = "grey@gmail.com",
+                            EmailConfirmed = true,
+                            FirstName = "Grey",
+                            LastName = "Customer",
+                            LockoutEnabled = true,
+                            NormalizedEmail = "GREY@GMAIL.COM",
+                            NormalizedUserName = "GREY@GMAIL.COM",
+                            Password = "Grey1234*",
+                            PasswordHash = "AQAAAAEAACcQAAAAEDNZw4UCoKdeejZ+rxVX2Csk3ggHycxvly3yL/TVXXfonEa9nlexB+KMiubNbXCh/Q==",
+                            PhoneNumber = "9436 7238",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "69059b90-b46c-42c2-b502-1ecb72a71e40",
+                            TwoFactorEnabled = false,
+                            UserName = "grey@gmail.com"
                         });
                 });
 
@@ -487,30 +601,30 @@ namespace TPharmacy.Server.Migrations
                         new
                         {
                             ID = 1,
-                            ConDate = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(9806),
+                            ConDate = new DateTime(2023, 1, 7, 21, 33, 33, 426, DateTimeKind.Local).AddTicks(3177),
                             ConDesc = "Flu Consultation",
-                            ConEndTime = new DateTime(2023, 1, 7, 14, 36, 51, 808, DateTimeKind.Local).AddTicks(9995),
+                            ConEndTime = new DateTime(2023, 1, 7, 22, 42, 33, 426, DateTimeKind.Local).AddTicks(3406),
                             ConFee = 35.50m,
-                            ConStartTime = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(9914),
+                            ConStartTime = new DateTime(2023, 1, 7, 21, 33, 33, 426, DateTimeKind.Local).AddTicks(3309),
                             CreatedBy = "Woon",
                             CusID = 1,
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 809, DateTimeKind.Local).AddTicks(364),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 809, DateTimeKind.Local).AddTicks(365),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 426, DateTimeKind.Local).AddTicks(3844),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 426, DateTimeKind.Local).AddTicks(3846),
                             StaffID = 1,
                             UpdatedBy = "System"
                         },
                         new
                         {
                             ID = 2,
-                            ConDate = new DateTime(2023, 1, 7, 13, 27, 51, 809, DateTimeKind.Local).AddTicks(367),
+                            ConDate = new DateTime(2023, 1, 7, 21, 33, 33, 426, DateTimeKind.Local).AddTicks(3849),
                             ConDesc = "Eczema Consultation",
-                            ConEndTime = new DateTime(2023, 1, 7, 14, 27, 51, 809, DateTimeKind.Local).AddTicks(369),
+                            ConEndTime = new DateTime(2023, 1, 7, 22, 33, 33, 426, DateTimeKind.Local).AddTicks(3851),
                             ConFee = 30.50m,
-                            ConStartTime = new DateTime(2023, 1, 7, 13, 27, 51, 809, DateTimeKind.Local).AddTicks(368),
+                            ConStartTime = new DateTime(2023, 1, 7, 21, 33, 33, 426, DateTimeKind.Local).AddTicks(3850),
                             CreatedBy = "Woon",
                             CusID = 3,
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 809, DateTimeKind.Local).AddTicks(372),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 809, DateTimeKind.Local).AddTicks(373),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 426, DateTimeKind.Local).AddTicks(3855),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 426, DateTimeKind.Local).AddTicks(3856),
                             StaffID = 1,
                             UpdatedBy = "System"
                         });
@@ -564,8 +678,8 @@ namespace TPharmacy.Server.Migrations
                             CusName = "James",
                             CusPassword = "James1234*",
                             CusPoints = 100,
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 807, DateTimeKind.Local).AddTicks(9062),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 807, DateTimeKind.Local).AddTicks(9066),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(347),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(350),
                             UpdatedBy = "System"
                         },
                         new
@@ -577,21 +691,21 @@ namespace TPharmacy.Server.Migrations
                             CusName = "Alice",
                             CusPassword = "Alice1234*",
                             CusPoints = 50,
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 807, DateTimeKind.Local).AddTicks(9068),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 807, DateTimeKind.Local).AddTicks(9069),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(354),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(355),
                             UpdatedBy = "System"
                         },
                         new
                         {
                             ID = 3,
                             CreatedBy = "System",
-                            CusAddress = "Temasek Polytechnic",
+                            CusAddress = "Jurong Ave 1",
                             CusEmail = "grey@gmail.com",
                             CusName = "Grey",
                             CusPassword = "Grey1234*",
                             CusPoints = 89,
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 807, DateTimeKind.Local).AddTicks(9071),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 807, DateTimeKind.Local).AddTicks(9071),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(357),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(358),
                             UpdatedBy = "System"
                         });
                 });
@@ -644,9 +758,9 @@ namespace TPharmacy.Server.Migrations
                             ID = 1,
                             CreatedBy = "System",
                             CusID = 1,
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(1282),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(1283),
-                            OrderDateTime = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(1058),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(3317),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(3318),
+                            OrderDateTime = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(3040),
                             OrderPrice = 128.00m,
                             StaffID = 3,
                             UpdatedBy = "Kate"
@@ -656,9 +770,9 @@ namespace TPharmacy.Server.Migrations
                             ID = 2,
                             CreatedBy = "System",
                             CusID = 2,
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(1287),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(1288),
-                            OrderDateTime = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(1286),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(3323),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(3324),
+                            OrderDateTime = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(3321),
                             OrderPrice = 90.00m,
                             StaffID = 3,
                             UpdatedBy = "Kate"
@@ -684,7 +798,7 @@ namespace TPharmacy.Server.Migrations
                     b.Property<int>("OrderID")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderQtny")
+                    b.Property<int>("OrderItemQtny")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductID")
@@ -706,10 +820,10 @@ namespace TPharmacy.Server.Migrations
                         {
                             ID = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(3471),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(3476),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(5630),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(5634),
                             OrderID = 1,
-                            OrderQtny = 2,
+                            OrderItemQtny = 2,
                             ProductID = 1,
                             UpdatedBy = "Kate"
                         },
@@ -717,10 +831,10 @@ namespace TPharmacy.Server.Migrations
                         {
                             ID = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(3478),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(3479),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(5636),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(5637),
                             OrderID = 1,
-                            OrderQtny = 1,
+                            OrderItemQtny = 1,
                             ProductID = 2,
                             UpdatedBy = "Kate"
                         },
@@ -728,10 +842,10 @@ namespace TPharmacy.Server.Migrations
                         {
                             ID = 3,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(3481),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(3481),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(5639),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(5640),
                             OrderID = 2,
-                            OrderQtny = 1,
+                            OrderItemQtny = 1,
                             ProductID = 3,
                             UpdatedBy = "Kate"
                         });
@@ -776,22 +890,22 @@ namespace TPharmacy.Server.Migrations
                         {
                             ID = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(5740),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(5743),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(8128),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(8132),
                             OrderID = 1,
                             PayCardInfo = "7855-3798-2344-9853",
-                            PayFee = 128.00m,
+                            PayFee = 5.00m,
                             UpdatedBy = "System"
                         },
                         new
                         {
                             ID = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(5746),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(5747),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(8135),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 425, DateTimeKind.Local).AddTicks(8135),
                             OrderID = 2,
                             PayCardInfo = "3244-2355-3459-9767",
-                            PayFee = 103.00m,
+                            PayFee = 15.00m,
                             UpdatedBy = "System"
                         });
                 });
@@ -841,8 +955,8 @@ namespace TPharmacy.Server.Migrations
                             ID = 1,
                             ConID = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(7300),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(7302),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 426, DateTimeKind.Local).AddTicks(71),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 426, DateTimeKind.Local).AddTicks(74),
                             PresQty = 1,
                             ProductID = 4,
                             UpdatedBy = "System"
@@ -852,8 +966,8 @@ namespace TPharmacy.Server.Migrations
                             ID = 2,
                             ConID = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(7304),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 808, DateTimeKind.Local).AddTicks(7305),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 426, DateTimeKind.Local).AddTicks(76),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 426, DateTimeKind.Local).AddTicks(77),
                             PresQty = 2,
                             ProductID = 4,
                             UpdatedBy = "System"
@@ -903,11 +1017,11 @@ namespace TPharmacy.Server.Migrations
                         {
                             ID = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 806, DateTimeKind.Local).AddTicks(830),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 806, DateTimeKind.Local).AddTicks(7231),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 422, DateTimeKind.Local).AddTicks(9958),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 423, DateTimeKind.Local).AddTicks(6382),
                             ProdBrand = "Blackmores",
-                            ProdCategory = "Supplements",
-                            ProdDesc = "BLACKMORES Bio 1000mg Vitamin C 120 Tablets",
+                            ProdCategory = "Supplement",
+                            ProdDesc = "1000mg Vitamin C 120 Tablets",
                             ProdName = "Vitamin C",
                             ProdPrice = 35.00m,
                             UpdatedBy = "System"
@@ -916,11 +1030,11 @@ namespace TPharmacy.Server.Migrations
                         {
                             ID = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 806, DateTimeKind.Local).AddTicks(7641),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 806, DateTimeKind.Local).AddTicks(7643),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 423, DateTimeKind.Local).AddTicks(6898),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 423, DateTimeKind.Local).AddTicks(6900),
                             ProdBrand = "Swisse",
-                            ProdCategory = "Supplements",
-                            ProdDesc = "Omega 3 Fish Oil 1500mg 100 Tablets",
+                            ProdCategory = "Supplement",
+                            ProdDesc = "1500mg 100 Tablets",
                             ProdName = "Omega 3 Fish Oil",
                             ProdPrice = 58.00m,
                             UpdatedBy = "System"
@@ -929,11 +1043,11 @@ namespace TPharmacy.Server.Migrations
                         {
                             ID = 3,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 806, DateTimeKind.Local).AddTicks(7646),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 806, DateTimeKind.Local).AddTicks(7647),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 423, DateTimeKind.Local).AddTicks(6903),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 423, DateTimeKind.Local).AddTicks(6904),
                             ProdBrand = "Wastons",
-                            ProdCategory = "Supplements",
-                            ProdDesc = "Calcium 500mg 150 Tablets",
+                            ProdCategory = "Supplement",
+                            ProdDesc = "500mg 150 Tablets",
                             ProdName = "Calcium",
                             ProdPrice = 45.00m,
                             UpdatedBy = "System"
@@ -942,11 +1056,11 @@ namespace TPharmacy.Server.Migrations
                         {
                             ID = 4,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 806, DateTimeKind.Local).AddTicks(7648),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 806, DateTimeKind.Local).AddTicks(7649),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 423, DateTimeKind.Local).AddTicks(6906),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 423, DateTimeKind.Local).AddTicks(6907),
                             ProdBrand = "Telfast",
                             ProdCategory = "Prescriptions",
-                            ProdDesc = "Panadol 10mg",
+                            ProdDesc = "10mg",
                             ProdName = "Panadol",
                             ProdPrice = 20.00m,
                             UpdatedBy = "System"
@@ -993,20 +1107,8 @@ namespace TPharmacy.Server.Migrations
                         {
                             ID = 1,
                             CreatedBy = "June",
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 807, DateTimeKind.Local).AddTicks(6616),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 807, DateTimeKind.Local).AddTicks(6626),
-                            StafEmail = "woon@gmail.com",
-                            StafName = "Woon",
-                            StafPassword = "Woon1234*",
-                            StafRole = "Pharmacist",
-                            UpdatedBy = "System"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            CreatedBy = "June",
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 807, DateTimeKind.Local).AddTicks(6630),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 807, DateTimeKind.Local).AddTicks(6631),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 424, DateTimeKind.Local).AddTicks(7366),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 424, DateTimeKind.Local).AddTicks(7377),
                             StafEmail = "june@gmail.com",
                             StafName = "June",
                             StafPassword = "June1234*",
@@ -1015,10 +1117,22 @@ namespace TPharmacy.Server.Migrations
                         },
                         new
                         {
+                            ID = 2,
+                            CreatedBy = "June",
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 424, DateTimeKind.Local).AddTicks(7380),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 424, DateTimeKind.Local).AddTicks(7381),
+                            StafEmail = "woon@gmail.com",
+                            StafName = "Woon",
+                            StafPassword = "Woon1234*",
+                            StafRole = "Pharmacist",
+                            UpdatedBy = "System"
+                        },
+                        new
+                        {
                             ID = 3,
                             CreatedBy = "June",
-                            DateCreated = new DateTime(2023, 1, 7, 13, 27, 51, 807, DateTimeKind.Local).AddTicks(6633),
-                            DateUpdated = new DateTime(2023, 1, 7, 13, 27, 51, 807, DateTimeKind.Local).AddTicks(6633),
+                            DateCreated = new DateTime(2023, 1, 7, 21, 33, 33, 424, DateTimeKind.Local).AddTicks(7383),
+                            DateUpdated = new DateTime(2023, 1, 7, 21, 33, 33, 424, DateTimeKind.Local).AddTicks(7384),
                             StafEmail = "kate@gmail.com",
                             StafName = "Kate",
                             StafPassword = "Kate1234*",

@@ -18,10 +18,10 @@ namespace TPharmacy.Server.Configurations.Entities
                     new Staff
                     {
                         ID = 1,
-                        StafName = "Woon",
-                        StafEmail = "woon@gmail.com",
-                        StafPassword = "Woon1234*",
-                        StafRole = "Pharmacist",
+                        StafName = "June",
+                        StafEmail = "june@gmail.com",
+                        StafPassword = "June1234*",
+                        StafRole = "Admin",
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
                         CreatedBy = "June",
@@ -30,10 +30,10 @@ namespace TPharmacy.Server.Configurations.Entities
                     new Staff
                     {
                         ID = 2,
-                        StafName = "June",
-                        StafEmail = "june@gmail.com",
-                        StafPassword = "June1234*",
-                        StafRole = "Admin",
+                        StafName = "Woon",
+                        StafEmail = "woon@gmail.com",
+                        StafPassword = "Woon1234*",
+                        StafRole = "Pharmacist",
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
                         CreatedBy = "June",

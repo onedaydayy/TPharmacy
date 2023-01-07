@@ -15,18 +15,48 @@ namespace TPharmacy.Server.Configurations.Entities
             builder.HasData(
             new IdentityUserRole<string>
             {
-                RoleId = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
-                UserId = "3781efa7-66dc-47f0-860f-e506d04102e4"
+                RoleId = "staff",
+                UserId = "3781efa7-66dc-47f0-860f-e506d04102s1"
+            },  
+            new IdentityUserRole<string>
+            {
+                RoleId = "admin",
+                UserId = "3781efa7-66dc-47f0-860f-e506d04102s1"
             },
             new IdentityUserRole<string>
             {
-                RoleId = "ad2bcf0c-20db-474f-8407-5a6b159518ba",
-                UserId = "3781efa7-66dc-47f0-860f-e506d04102e5"
+                RoleId = "staff",
+                UserId = "3781efa7-66dc-47f0-860f-e506d04102s2"
             },
             new IdentityUserRole<string>
             {
-                RoleId = "bd2bcf0c-20db-474f-8407-5a6b159518bb",
-                UserId = "3781efa7-66dc-47f0-860f-e506d04102c4"
+                RoleId = "pharmacist",
+                UserId = "3781efa7-66dc-47f0-860f-e506d04102s2"
+            },
+             new IdentityUserRole<string>
+             {
+                 RoleId = "staff",
+                 UserId = "3781efa7-66dc-47f0-860f-e506d04102s3"
+             },
+             new IdentityUserRole<string>
+             {
+                 RoleId = "packer",
+                 UserId = "3781efa7-66dc-47f0-860f-e506d04102s3"
+             },
+            new IdentityUserRole<string>
+            {
+                RoleId = "customer",
+                UserId = "3781efa7-66dc-47f0-860f-e506d04102c1"
+            },
+            new IdentityUserRole<string>
+            {
+                RoleId = "customer",
+                UserId = "3781efa7-66dc-47f0-860f-e506d04102c2"
+            },
+            new IdentityUserRole<string>
+            {
+                RoleId = "customer",
+                UserId = "3781efa7-66dc-47f0-860f-e506d04102c3"
             });
         }
     }

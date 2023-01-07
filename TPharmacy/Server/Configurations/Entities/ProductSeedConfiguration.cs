@@ -19,9 +19,9 @@ namespace TPharmacy.Server.Configurations.Entities
                         ID = 1,
                         ProdBrand = "Blackmores",
                         ProdName = "Vitamin C",
-                        ProdDesc = "BLACKMORES Bio 1000mg Vitamin C 120 Tablets",
+                        ProdDesc = "1000mg Vitamin C 120 Tablets",
                         ProdPrice = 35.00m,
-                        ProdCategory = "Supplements",
+                        ProdCategory = "Supplement",
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
                         CreatedBy = "System",
@@ -32,9 +32,9 @@ namespace TPharmacy.Server.Configurations.Entities
                         ID = 2,
                         ProdBrand = "Swisse",
                         ProdName = "Omega 3 Fish Oil",
-                        ProdDesc = "Omega 3 Fish Oil 1500mg 100 Tablets",
+                        ProdDesc = "1500mg 100 Tablets",
                         ProdPrice = 58.00m,
-                        ProdCategory = "Supplements",
+                        ProdCategory = "Supplement",
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
                         CreatedBy = "System",
@@ -45,9 +45,9 @@ namespace TPharmacy.Server.Configurations.Entities
                         ID = 3,
                         ProdBrand = "Wastons",
                         ProdName = "Calcium",
-                        ProdDesc = "Calcium 500mg 150 Tablets",
+                        ProdDesc = "500mg 150 Tablets",
                         ProdPrice = 45.00m,
-                        ProdCategory = "Supplements",
+                        ProdCategory = "Supplement",
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
                         CreatedBy = "System",
@@ -58,15 +58,14 @@ namespace TPharmacy.Server.Configurations.Entities
                         ID = 4,
                         ProdBrand = "Telfast",
                         ProdName = "Panadol",
-                        ProdDesc = "Panadol 10mg",
+                        ProdDesc = "10mg",
                         ProdPrice = 20.00m,
                         ProdCategory = "Prescriptions",
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "System"
-                    }
-                    );
+                    });
         }
 
     }
