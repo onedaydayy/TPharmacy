@@ -49,7 +49,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ProdPrice = 45.00m,
                         ProdCategory = "Supplements",
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "System"
                     },
