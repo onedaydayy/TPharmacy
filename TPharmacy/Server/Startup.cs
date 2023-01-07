@@ -1,17 +1,13 @@
-using IdentityServer4.Configuration;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using TPharmacy.Server.Data;
 using TPharmacy.Server.Models;
 using IdentityServer4.Services;
@@ -21,7 +17,6 @@ using IdentityServer4.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using TPharmacy.Server.IRepository;
 using TPharmacy.Server.Repository;
-using System.Text.Json.Serialization;
 
 namespace TPharmacy.Server
 {
@@ -43,15 +38,22 @@ namespace TPharmacy.Server
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-
-
             services.AddDatabaseDeveloperPageExceptionFilter();
-
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddDefaultIdentity<ApplicationUser>(options =>
+                options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+            services.AddIdentityServer().AddApiAuthorization<ApplicationUser,
+                   ApplicationDbContext>(options =>
+                   {
+                       options.IdentityResources["openid"].UserClaims.Add("name");
+                       options.ApiResources.Single().UserClaims.Add("name");
+                       options.IdentityResources["openid"].UserClaims.Add("role");
+                       options.ApiResources.Single().UserClaims.Add("role");
+                   });
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("role");
 
             services.AddAuthentication().AddIdentityServerJwt();
             services.Configure<IdentityOptions>(options =>
@@ -98,22 +100,6 @@ namespace TPharmacy.Server
                 endpoints.MapControllers();
                 endpoints.MapFallbackToFile("index.html");
             });
-        }
-        private async Task CreateRoles(IServiceProvider serviceProvider)
-        {
-            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-
-            IdentityResult adminRoleResult;
-            bool adminRoleExists = await RoleManager.RoleExistsAsync("Admin");
-
-            if (!adminRoleExists)
-            {
-                adminRoleResult = await RoleManager.CreateAsync(new IdentityRole("Admin"));
-            }
-
-            ApplicationUser userToMakeAdmin = await UserManager.FindByNameAsync("test@test.com");
-            await UserManager.AddToRoleAsync(userToMakeAdmin, "Admin");
         }
     }
 }
