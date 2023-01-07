@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,7 +36,7 @@ namespace TPharamacy.Server.Controllers
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             //Refactored
-            //return await _context.Products.ToListAsync();
+            //return await _context.Products.ToListAsync(); includes: q => q.Include(x => x.OrderItems).Include(x => x.Prescriptions)
             var products = await _unitOfWork.Products.GetAll();
             return Ok(products);
         }

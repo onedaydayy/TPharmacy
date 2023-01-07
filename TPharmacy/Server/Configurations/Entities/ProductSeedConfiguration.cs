@@ -1,10 +1,7 @@
-﻿using TPharmacy.Shared.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using TPharmacy.Shared.Domain;
 
 
 namespace TPharmacy.Server.Configurations.Entities
@@ -19,7 +16,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ID = 1,
                         ProdBrand = "Blackmores",
                         ProdName = "Vitamin C",
-                        ProdDesc = "1000mg Vitamin C 120 Tablets",
+                        ProdDesc = "BLACKMORES Bio Vitamin C 1000mg 120 Tablets",
                         ProdPrice = 35.00m,
                         ProdCategory = "Supplement",
                         DateCreated = DateTime.Now,
@@ -32,7 +29,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ID = 2,
                         ProdBrand = "Swisse",
                         ProdName = "Omega 3 Fish Oil",
-                        ProdDesc = "1500mg 100 Tablets",
+                        ProdDesc = "Swisse Omega 3 Fish Oil 1500mg 100 Tablets",
                         ProdPrice = 58.00m,
                         ProdCategory = "Supplement",
                         DateCreated = DateTime.Now,
@@ -45,7 +42,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ID = 3,
                         ProdBrand = "Wastons",
                         ProdName = "Calcium",
-                        ProdDesc = "500mg 150 Tablets",
+                        ProdDesc = "Wastons Calcium 500mg 150 Tablets",
                         ProdPrice = 45.00m,
                         ProdCategory = "Supplement",
                         DateCreated = DateTime.Now,
@@ -58,15 +55,41 @@ namespace TPharmacy.Server.Configurations.Entities
                         ID = 4,
                         ProdBrand = "Telfast",
                         ProdName = "Panadol",
-                        ProdDesc = "10mg",
+                        ProdDesc = "Telfast Panadol 10mg",
                         ProdPrice = 20.00m,
                         ProdCategory = "Prescriptions",
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "System"
-                    });
-        }
+                    },
+                    new Product
+                    {
+                        ID = 5,
+                        ProdBrand = "Cellucor",
+                        ProdName = "Whey Protein Powder",
+                        ProdDesc = "Cellucor Whey Protein Powder 5LBS",
+                        ProdPrice = 60.00m,
+                        ProdCategory = "Sports",
+                        DateCreated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
+                        CreatedBy = "System",
+                        UpdatedBy = "System"
+                    },
+                    new Product
+                    {
+                        ID = 6,
+                        ProdBrand = "Solaray",
+                        ProdName = "Kids Multi Vitamins & Minerals Gummies",
+                        ProdDesc = "Solaray Kids Multi Vitamins & Minerals Gummies 120S",
+                        ProdPrice = 30.00m,
+                        ProdCategory = "Baby",
+                        DateCreated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
+                        CreatedBy = "System",
+                        UpdatedBy = "System"
+                    }
+                    );        }
 
     }
 }

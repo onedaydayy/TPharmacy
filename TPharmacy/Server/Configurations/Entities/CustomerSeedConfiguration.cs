@@ -1,10 +1,7 @@
-﻿using TPharmacy.Shared.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using TPharmacy.Shared.Domain;
 
 
 namespace TPharmacy.Server.Configurations.Entities
@@ -43,10 +40,10 @@ namespace TPharmacy.Server.Configurations.Entities
                     new Customer
                     {
                         ID = 3,
-                        CusName = "Grey",
-                        CusEmail = "grey@gmail.com",
+                        CusName = "Sheila",
+                        CusEmail = "sheila@gmail.com",
                         CusAddress = "Jurong Ave 1",
-                        CusPassword = "Grey1234*",
+                        CusPassword = "Sheila1234*",
                         CusPoints = 89,
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,

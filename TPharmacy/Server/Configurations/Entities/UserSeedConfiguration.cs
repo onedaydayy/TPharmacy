@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TPharmacy.Server.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using TPharmacy.Server.Models;
 
 namespace TPharmacy.Server.Configurations.Entities
 {
@@ -82,9 +78,9 @@ namespace TPharmacy.Server.Configurations.Entities
                 EmailConfirmed = true,
                 LockoutEnabled = true,
                 PhoneNumberConfirmed = true,
-                Address = "Tampines Ave 1",
-                Password = "James1234*",
-                PasswordHash = hasher.HashPassword(null, "James1234*"),
+                Address = "1 Youngberg Terrace",
+                Password = "Sheila1234*",
+                PasswordHash = hasher.HashPassword(null, "Sheila1234*"),
                 SecurityStamp = Guid.NewGuid().ToString()
             },
             new ApplicationUser

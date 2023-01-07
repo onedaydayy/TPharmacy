@@ -53,5 +53,19 @@ namespace TPharmacy.Server.Controllers
             })
             .ToArray();
         }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public IEnumerable<WeatherForecast> AdminGetTest()
+        {
+            var rng = new Random();
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = rng.Next(1, 5),
+                Summary = Summaries[rng.Next(Summaries.Length)]
+            })
+            .ToArray(); ;
+        }
     }
 }
