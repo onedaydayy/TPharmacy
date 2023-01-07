@@ -1,7 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using TPharmacy.Shared.Domain;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
-using TPharmacy.Shared.Domain;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace TPharmacy.Server.Configurations.Entities
 {
@@ -17,21 +20,21 @@ namespace TPharmacy.Server.Configurations.Entities
                         ProductID = 1,
                         OrderQtny = 2,
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "Kate"
                     },
                     new OrderItem
-                    {
-                        ID = 2,
-                        OrderID = 1,
-                        ProductID = 2,
-                        OrderQtny = 1,
-                        DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
-                        CreatedBy = "System",
-                        UpdatedBy = "Kate"
-                    },
+                     {
+                          ID = 2,
+                          OrderID = 1,
+                          ProductID = 2,
+                          OrderQtny = 1,
+                          DateCreated = DateTime.Now,
+                          DateUpdated = DateTime.Now,
+                          CreatedBy = "System",
+                          UpdatedBy = "Kate"
+                     },
                     new OrderItem
                     {
                         ID = 3,
@@ -39,7 +42,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ProductID = 3,
                         OrderQtny = 1,
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "Kate"
                     });

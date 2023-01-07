@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using TPharmacy.Server.IRepository;
+using TPharmacy.Server.Models;
 using TPharmacy.Shared.Domain;
 
 namespace TPharamacy.Server.Controllers
@@ -14,17 +17,20 @@ namespace TPharamacy.Server.Controllers
     [ApiController]
     public class PaymentsController : ControllerBase
     {
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly ILogger<PaymentsController> logger;
         //Refactored 
         //private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
 
         //Refactored
         //public PaymentsController(ApplicationDbContext context)
-        public PaymentsController(IUnitOfWork unitOfWork)
+        public PaymentsController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager,
+        ILogger<PaymentsController> logger)
         {
-            //Refactored
-            //_context = context;
             _unitOfWork = unitOfWork;
+            this.userManager = userManager;
+            this.logger = logger;
         }
 
         // GET: api/Payments
@@ -33,6 +39,11 @@ namespace TPharamacy.Server.Controllers
         //public async Task<ActionResult<IEnumerable<Payment>>> GetPayments()
         public async Task<ActionResult<IEnumerable<Payment>>> GetPayments()
         {
+            var user = await userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                logger.LogInformation($"User.Identity.Name: {user.UserName}");
+            }
             //Refactored
             //return await _context.Payments.ToListAsync();
             var payments = await _unitOfWork.Payments.GetAll();

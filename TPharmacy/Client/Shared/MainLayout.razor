@@ -1,33 +1,8 @@
 ﻿@inherits LayoutComponentBase
-@*<div class="page" style= "display: block;">
-        <div class="navbar">
-            <CusNavMenu />
-        </div>
-        <div class="main">
-            <div class="content px-4">
-                @Body
-            </div>
-        </div>
-    </div>*@
-
-
-@*<div class="page" style="display: flex;">
-        <div class="sidebar">
-            <StafNavMenu />
-        </div>
-        <div class="main">
-            <div class="content px-4">
-                @Body
-            </div>
-        </div>
-    </div>*@
-
 <AuthorizeView>
     <Authorized>
         @if (context.User.IsInRole("User"))
         {
-
-           <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Poppins" />
             <div class="page" style="display: block;">
                 <div class="navbar cus-z-index" style="background: #0B763D;">
                     <CusNavMenu />

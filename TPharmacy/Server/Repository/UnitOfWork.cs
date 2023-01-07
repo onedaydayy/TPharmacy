@@ -65,7 +65,7 @@ namespace TPharmacy.Server.Repository
 
             foreach (var entry in entries)
             {
-                ((BaseDomainModel)entry.Entity).DataUpdated = DateTime.Now;
+                ((BaseDomainModel)entry.Entity).DateUpdated = DateTime.Now;
                 ((BaseDomainModel)entry.Entity).UpdatedBy = user;
                 if (entry.State == EntityState.Added)
                 {

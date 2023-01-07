@@ -11,7 +11,7 @@ using TPharmacy.Shared;
 
 namespace TPharmacy.Server.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -34,16 +34,24 @@ namespace TPharmacy.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ApplicationUser> Get()
+        public async Task<IEnumerable<WeatherForecast>> Get()
         {
             var rng = new Random();
+
             var user = await userManager.GetUserAsync(User);
 
             if (user != null)
             {
                 logger.LogInformation($"User.Identity.Name: {user.UserName}");
             }
-            return user;
+
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = rng.Next(-20, 55),
+                Summary = Summaries[rng.Next(Summaries.Length)]
+            })
+            .ToArray();
         }
 
         [HttpGet]

@@ -1,0 +1,30 @@
+.header {
+    width: 500px;
+    height: 60px;
+    background-position: center center;
+    position: absolute;
+    top: 54px;
+    left: 296px;
+}
+
+.h2 {
+    position: absolute;
+    top: 38px;
+    left: 0px;
+    font-size: 20px;
+}
+
+.h1 {
+    width: 344px;
+    position: relative;
+    font-weight: Bold;
+    font-size: 30px;
+    opacity: 1;
+    text-align: left;
+}
+
+.t {
+    position: inherit;
+    top: 70px;
+    left: 0;
+}

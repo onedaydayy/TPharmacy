@@ -10,56 +10,55 @@
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
-</div>
-
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <div class="container" style="margin-top: 15px;">
-        <ul class="navbar-nav ml-auto">
-            <AuthorizeView Roles="Customer">
+    <div class="container" style="margin-top: 30px;">
+        <ul class="navbar-nav">
+            <AuthorizeView>
                 <Authorized>
-                    <li class="nav-item ">
+                    <li class="nav-item">
                         <NavLink class="nav-link" href="authentication/profile" Match="NavLinkMatch.All">
                             <span class="oi oi-person" aria-hidden="true"></span> Hello, @context.User.Identity.Name!
                         </NavLink>
                     </li>
-                    <li class="nav-item ">
+                    <li class="nav-item">
                         <NavLink class="nav-link" href="authentication/logout" Match="NavLinkMatch.All" @onclick="BeginSignOut">
                             <span class="oi oi-account-logout" aria-hidden="true"></span> Log out
                         </NavLink>
                     </li>
-                </Authorized>
-                <NotAuthorized>
-                    <li class="nav-item ">
-                        <NavLink class="nav-link" href="authentication/register" Match="NavLinkMatch.All">
-                            <span class="oi oi-person" aria-hidden="true"></span> Register
-                        </NavLink>
-                    </li>
                     <li class="nav-item">
-                        <NavLink class="nav-link" href="authentication/login" Match="NavLinkMatch.All">
-                            <span class="oi oi-account-login" aria-hidden="true"></span> Log in
+                        <NavLink class="nav-link" href="debug" Match="NavLinkMatch.All">
+                            <span class="oi oi-star" aria-hidden="true"></span> debug
                         </NavLink>
                     </li>
-                </NotAuthorized>
+                </Authorized>
             </AuthorizeView>
-        </ul>
-        <ul class="nav flex-column">
-            <li class="nav-item ">
+            <li class="nav-item">
                 <NavLink class="nav-link" href="stafhome" Match="NavLinkMatch.All">
                     <span class="oi oi-home" aria-hidden="true"></span> Home
                 </NavLink>
             </li>
-            <li class="nav-item ">
-                <NavLink class="nav-link" href="fetchdata" Match="NavLinkMatch.All">
-                    <span class="oi oi-list" aria-hidden="true"></span> Data
+            <li class="nav-item">
+                <NavLink class="nav-link" href="staffs" Match="NavLinkMatch.All">
+                    <span class="oi oi-list" aria-hidden="true"></span> Staff
                 </NavLink>
             </li>
-            <li class="nav-item ">
-                <NavLink class="nav-link" href="stafconsultation" Match="NavLinkMatch.All">
-                    <span class="oi oi-cart" aria-hidden="true"></span> Orders
+            <li class="nav-item">
+                <NavLink class="nav-link" href="orderitems" Match="NavLinkMatch.All">
+                    <span class="oi oi-list" aria-hidden="true"></span> OrderItems
                 </NavLink>
             </li>
-            <li class="nav-item mr-auto">
+            <li class="nav-item">
+                <NavLink class="nav-link" href="orders" Match="NavLinkMatch.All">
+                    <span class="oi oi-list" aria-hidden="true"></span> Order
+                </NavLink>
+            </li>
+            <li class="nav-item">
+                <NavLink class="nav-link" href="payments">
+                    <span class="oi oi-list" aria-hidden="true"></span> Payment
+                </NavLink>
+            </li>
+            <li class="nav-item">
                 <NavLink class="nav-link" href="stafconsultation">
                     <span class="oi oi-chat" aria-hidden="true"></span> Consultation
                 </NavLink>
@@ -84,7 +83,7 @@
                     </ul>
                 }
             </li>
-            <li class="nav-item mr-auto">
+            <li class="nav-item">
                 <NavLink class="nav-link" href="fetchdata">
                     <span class="oi oi-list" aria-hidden="true"></span> Test User
                 </NavLink>
@@ -92,6 +91,7 @@
         </ul>
     </div>
 </div>
+    </div>
 
 
 @code {

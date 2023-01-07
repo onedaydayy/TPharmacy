@@ -18,7 +18,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         OrderDateTime = DateTime.Now,
                         OrderPrice = 128.00m,
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "Kate"
                     },
@@ -30,7 +30,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         OrderDateTime = DateTime.Now,
                         OrderPrice = 90.00m,
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "Kate"
                     });

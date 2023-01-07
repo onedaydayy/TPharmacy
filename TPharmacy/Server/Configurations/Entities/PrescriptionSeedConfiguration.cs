@@ -18,7 +18,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ConID = 1,
                         ProductID = 4,
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "System"
                     },
@@ -29,7 +29,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ConID = 2,
                         ProductID = 4,
                         DateCreated = DateTime.Now,
-                        DataUpdated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "System"
                     }
