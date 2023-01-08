@@ -1,7 +1,7 @@
 ﻿@inherits LayoutComponentBase
 <AuthorizeView>
     <Authorized>
-        @if (context.User.IsInRole("Customer"))
+        @if (context.User.IsInRole("User"))
         {
             <div class="page" style="display: block;">
                 <div class="navbar cus-z-index">

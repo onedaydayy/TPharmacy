@@ -91,6 +91,10 @@ namespace TPharmacy.Server.Areas.Identity.Pages.Account
                     {
                         return Redirect("~/stafhome");
                     }
+                    else if (roles.Contains("User"))
+                    {
+                        return Redirect("~/customer");
+                    }
                     else
                     {
                         return Redirect("/");
