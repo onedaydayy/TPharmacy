@@ -1,0 +1,202 @@
+
+p, h1, h2, h3, h4, h5, h6 {
+    align-items: center;
+    text-align: center;
+}
+
+h1 {
+    font-size: 50px 150%;
+}
+
+h2 {
+    font-size: x-large;
+}
+
+h3 {
+    font-size: large;
+}
+
+h4 {
+    font-size: medium;
+}
+
+h5 {
+    font-size: small;
+}
+
+h6 {
+    font-size: x-small;
+}
+
+.title {
+    font-size: 76px;
+    line-height: 58px;
+    align-items: center;
+    text-align: center;
+    color: #006F1F;
+    padding-top:20px
+}
+
+.sub-title {
+}
+
+.checked {
+    color: orange;
+}
+
+.testi {
+    width: auto;
+    max-height: 150px
+}
+
+
+
+hr {
+    border: 5px;
+    color: white;
+}
+
+.btn-green {
+    border-radius: 3px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    padding: 12px 28px;
+    border-radius: 4px;
+    margin: 30px;
+}
+
+    .btn-green:hover {
+        background-color: white;
+        color: black;
+        border: 2px solid #4CAF50;
+    }
+
+.cut-over {
+    display: block;
+}
+
+.paracen {
+    display: inline-flex;
+    max-width: 60%;
+}
+
+.alt-txt {
+    color: green
+}
+
+.product-img {
+    width: auto;
+    max-height: 150px;
+    display: inline-flex;
+}
+
+.price {
+    padding-right: 12px;
+    color: green;
+    margin-bottom: 12px;
+}
+
+.content-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-card {
+    padding: 20px;
+    display: block;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    height: 87%;
+}
+
+.content-text {
+    padding-bottom: 20px;
+    height:65px;
+}
+
+.our-fact {
+    text-align: center;
+    font-size: 70px;
+}
+
+.alt-back {
+    background-color: #4CAF50;
+}
+
+.gray-card {
+    background-color: #D9D9D9;
+    border-radius: 5px;
+    height: 90%;
+}
+
+.our-fact-card {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.our-fact-text {
+    padding-bottom: 50px;
+}
+
+.padder {
+    margin-bottom: 50px;
+}
+
+h1.glance-text {
+    margin-bottom: 50px;
+}
+
+.testi-back {
+    background-color: white;
+    height: 95%;
+}
+
+.card-moder {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.x-padder {
+    padding-bottom: 50px;
+    margin-bottom: 50px;
+}
+
+.padding-taker {
+    padding-top: 30px;
+}
+
+.mini-padder-taker {
+    padding-top: 10px;
+}
+
+footer {
+    margin-top: 50px;
+    background-color: black;
+    color: white;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+.whiteline {
+    border: 5px;
+    color: white;
+}
+
+.logo {
+    height: auto;
+    max-width: 50px;
+}
+
+a {
+    color: white;
+}
+
+.alt-text-footer {
+    color: green;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0px;
+}

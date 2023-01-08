@@ -4,7 +4,7 @@
 @inject HttpClient Http
 @inject HttpClient _client
 @inject IJSRuntime js
-@page "/cusproducts"
+@page "/productview"
 
 
 <h1>Products</h1>
@@ -38,7 +38,7 @@ else
                                 <h2 class="price float-right">@Products[card].ProdPrice</h2>
                             </div>
                             <div>
-                                <a href="/product/productview/@Products[card].ID" class="btn btn-primary">
+                                <a href="/product/view/@Products[card].ID" class="btn btn-primary">
                                     <span class="oi oi-book"></span>
                                 </a>
                                 <a href="/product/edit/@Products[card].ID" class="btn btn-warning">
