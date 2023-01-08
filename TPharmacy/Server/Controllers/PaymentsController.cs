@@ -7,17 +7,19 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using TPharmacy.Server.Data;
 using TPharmacy.Server.IRepository;
 using TPharmacy.Server.Models;
 using TPharmacy.Shared.Domain;
 
-namespace TPharamacy.Server.Controllers
+namespace TPharmacy.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class PaymentsController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly ILogger<PaymentsController> logger;
         //Refactored 
         //private readonly ApplicationDbContext _context;
@@ -26,18 +28,18 @@ namespace TPharamacy.Server.Controllers
         //Refactored
         //public PaymentsController(ApplicationDbContext context)
         public PaymentsController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager,
-        ILogger<PaymentsController> logger)
+        ILogger<PaymentsController> logger, RoleManager<IdentityRole> roleManager)
         {
             _unitOfWork = unitOfWork;
             this.userManager = userManager;
             this.logger = logger;
+            this.roleManager = roleManager;
         }
-
         // GET: api/Payments
         [HttpGet]
         //Refactored
         //public async Task<ActionResult<IEnumerable<Payment>>> GetPayments()
-        public async Task<ActionResult<IEnumerable<Payment>>> GetPayments()
+        public async Task<ActionResult> GetPayments()
         {
             var user = await userManager.GetUserAsync(User);
             if (user != null)
@@ -151,3 +153,5 @@ namespace TPharamacy.Server.Controllers
         }
     }
 }
+
+

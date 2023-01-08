@@ -39,7 +39,7 @@ namespace TPharmacy.Server.Controllers
         [HttpGet]
         //Refactored
         //public async Task<ActionResult<IEnumerable<Staff>>> GetStaffs()
-        public async Task<ActionResult<IEnumerable<Staff>>> GetStaffs()
+        public async Task<ActionResult> GetStaffs()
         {
             var user = await userManager.GetUserAsync(User);
             if (user != null)

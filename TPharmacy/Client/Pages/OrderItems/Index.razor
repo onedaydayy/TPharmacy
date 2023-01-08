@@ -44,13 +44,12 @@
                     @foreach (var orderitem in OrderItems)
                     {
                     <tr>
-                        @*<td>@orderitem.OrderID</td>*@
+                        <td>@orderitem.OrderID</td>
                         <td>@orderitem.ID</td>
-                        @*<td>@orderitem.Order.OrderDateTime</td>*@
-                        @*<td>@orderitem.ProductID</td>
-        <td>@orderitem.Product.ProdName</td>*@
+                        <td>@orderitem.Order.OrderDateTime</td>
+                        <td>@orderitem.ProductID</td>
                         <td>@orderitem.OrderItemQtny</td>
-                        <!--<td>@orderitem.OrderItemQtny*@orderitem.Product.ProdPrice</td>-->
+                        <td>@orderitem.OrderItemQtny*@orderitem.Product.ProdPrice</td>
                     </tr>
                     }
                 </tbody>

@@ -1,13 +1,65 @@
-﻿@inherits LayoutComponentBase
+﻿@*@inherits LayoutComponentBase
+
+    <div class="page" style="display: block;">
+        <div class="navbar">
+            <CusNavMenu />
+        </div>
+        <div class="main">
+            <div class="content px-4">
+                @Body
+            </div>
+        </div>
+    </div>*@
+
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
 
 
-<div class="page" style="display: block;">
-    <div class="navbar">
-        <CusNavMenu />
-    </div>
-    <div class="main">
-        <div class="content px-4">
-            @Body
+<footer>
+    <div class="container-fluid footer-general mt-5">
+        <div class="container">
+            <hr class="whiteline" />
+            <div class="row">
+                <div class="col-6">
+                    <div class="row">
+                        <img src="icon-512.png" class="logo" /><h3>TPharmacy</h3>
+                    </div>
+                    <h7>
+                        For your body and health.
+                    </h7>
+                </div>
+                <div class="col-3">
+                    <h5 class="alt-text-footer">Discovery</h5>
+                    <ul>
+                        <li>
+                            <a href="#">New season</a>
+                        </li>
+                        <li>
+                            <a href="#">Most searched</a>
+                        </li>
+                        <li>
+                            <a href="#">Most selled</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-3">
+                    <h5 class="alt-text-footer">About</h5>
+                    <ul>
+                        <li>
+                            <a href="#">Contact us</a>
+                        </li>
+                        <li>
+                            <a href="#">Shipping</a>
+                        </li>
+                        <li>
+                            <a href="#">Terms & Conditions</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</footer>

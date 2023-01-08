@@ -18,8 +18,6 @@ namespace TPharamacy.Server.Controllers
     [ApiController]
     public class OrderItemsController : ControllerBase
     {
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly ILogger<OrderItemsController> logger;
         //Refactored 
         //private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
@@ -27,25 +25,18 @@ namespace TPharamacy.Server.Controllers
         //Refactored
         //public OrderItemsController(ApplicationDbContext context)
 
-        public OrderItemsController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager,
-        ILogger<OrderItemsController> logger)
+        public OrderItemsController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            this.userManager = userManager;
-            this.logger = logger;
+     
         }
 
         // GET: api/OrderItems
         [HttpGet]
         //Refactored
         //public async Task<ActionResult<IEnumerable<OrderItem>>> GetOrderItems()
-        public async Task<ActionResult<IEnumerable<OrderItem>>> GetOrderItems()
+        public async Task<ActionResult> GetOrderItems()
         {
-            var user = await userManager.GetUserAsync(User);
-            if (user != null)
-            {
-                logger.LogInformation($"User.Identity.Name: {user.UserName}");
-            }
             //Refactored
             //return await _context.OrderItems.ToListAsync();
             var orderItems = await _unitOfWork.OrderItems.GetAll(includes: q => q.Include(x => x.Product).Include(x => x.Order));

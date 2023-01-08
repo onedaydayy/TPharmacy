@@ -33,7 +33,7 @@ namespace TPharamacy.Server.Controllers
         [HttpGet]
         //Refactored
         //public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult> GetProducts()
         {
             //Refactored
             //return await _context.Products.ToListAsync(); includes: q => q.Include(x => x.OrderItems).Include(x => x.Prescriptions)
