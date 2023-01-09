@@ -20,6 +20,7 @@ namespace TPharmacy.Server.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ILogger<StaffsController> logger;
         //Refactored 
         //private readonly ApplicationDbContext _context;
@@ -28,9 +29,10 @@ namespace TPharmacy.Server.Controllers
         //Refactored
         //public StaffsController(ApplicationDbContext context)
         public StaffsController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager,
-        ILogger<StaffsController> logger, RoleManager<IdentityRole> roleManager)
+        ILogger<StaffsController> logger, RoleManager<IdentityRole> roleManager, SignInManager<ApplicationUser> signInManager)
         {
             _unitOfWork = unitOfWork;
+            this.signInManager = signInManager;
             this.userManager = userManager;
             this.logger = logger;
             this.roleManager = roleManager;
@@ -113,10 +115,21 @@ namespace TPharmacy.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Staff>> PostStaff(Staff staff)
         {
-            //Refactored
-            //_context.Staffs.Add(staff);
-            //await _context.SaveChangesAsync();
-            await _unitOfWork.Staffs.Insert(staff);
+            if (ModelState.IsValid)
+            {
+                var user = new ApplicationUser { UserName = staff.StafEmail, Email = staff.StafEmail };
+                var result = await userManager.CreateAsync(user, staff.StafPassword);
+                if (result.Succeeded)
+                {
+                    logger.LogInformation("User created a new account with password.");
+                    await roleManager.FindByNameAsync("Staff");
+                    await userManager.AddToRoleAsync(user, "Staff");
+                }
+            }
+                    //Refactored
+                    //_context.Staffs.Add(staff);
+                    //await _context.SaveChangesAsync();
+                    await _unitOfWork.Staffs.Insert(staff);
             await _unitOfWork.Save(HttpContext);
             return CreatedAtAction("GetStaff", new { id = staff.ID }, staff);
         }

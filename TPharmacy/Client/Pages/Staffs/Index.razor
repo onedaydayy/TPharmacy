@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-8">
             <br />
-            <a href='/staffs/add' class="btn btn-success" role="button">
+            <a href="/staffs/create" class="btn btn-success" role="button">
                 Add User
             </a>
         </div>
@@ -20,7 +20,7 @@
         <div class="col-md-1">
             <br />
             <button class="btn btn-light" @onclick="ResetSearch">
-                Reset
+                Reset/Refresh
             </button>
         </div>
     </div>
@@ -91,17 +91,27 @@
         }
     }
 
-    protected void FilterUser()
+    protected async void FilterUser()
     {
         if (!string.IsNullOrEmpty(SearchString))
         {
             Staffs = Staffs.Where(x => x.StafName.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
         }
+        else
+        {
+            SearchString = string.Empty;
+            Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+        }
     }
+
 
     public async void ResetSearch()
     {
-        SearchString = string.Empty;
-        Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            SearchString = string.Empty;
+            Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+        }
     }
+
 }
