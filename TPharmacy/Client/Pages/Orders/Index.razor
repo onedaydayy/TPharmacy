@@ -2,25 +2,11 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
+@implements IDisposable
 
 <div class="container mt-5">
     <h1 class="header">Overview of TPharmacy Order's</h1>
     <h3>Welcome to the Order Home! </h3>
-    <div class="row">
-        <div class="col-md-8">
-            <br />
-        </div>
-        <div class="col-md-2.5">
-            <br />
-            <input type="text" class="form-control" placeholder="Search Order by ID" @bind="SearchString" @onkeyup="FilterUser" />
-        </div>
-        <div class="col-md-1">
-            <br />
-            <button class="btn btn-light" @onclick="ResetSearch">
-                Reset/Refresh
-            </button>
-        </div>
-    </div>
     <br />
     @if (Orders == null)
     {
@@ -28,20 +14,20 @@
     }
     else
     {
-        <div class="table-responsive">
-            <table class="table table-striped align-middle table-bordered">
-                <thead class="table">
-                    <tr>
-                        <th>ID</th>
-                        <th>StaffID</th>
-                        <th>DateTime</th>
-                        <th>Price</th>
-                        <th>CusID</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var order in Orders)
-                    {
+        <table class="table table-striped align-middle table-bordered" id="ordersTable">
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>StaffID</th>
+                    <th>DateTime</th>
+                    <th>Price</th>
+                    <th>CusID</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Orders)
+                {
                     <tr>
                         <td>@order.ID</td>
                         <td>@order.StaffID</td>
@@ -49,15 +35,13 @@
                         <td>@order.OrderPrice</td>
                         <td>@order.CusID</td>
                     </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
     }
 </div>
 
 @code {
-    private string SearchString { get; set; }
     private List<Order> Orders;
 
     protected async override Task OnInitializedAsync()
@@ -65,21 +49,13 @@
         Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
     }
 
-    protected void FilterUser()
+    protected async override Task OnAfterRenderAsync(bool firstRender)
     {
-        if (!string.IsNullOrEmpty(SearchString))
-        {
-            int searchInt;
-            if (int.TryParse(SearchString, out searchInt))
-            {
-                Orders = Orders.Where(x => x.ID == searchInt).ToList();
-            }
-        }
+        await js.InvokeVoidAsync("AddDataTable", "#ordersTable");
     }
 
-    public async void ResetSearch()
+    public void Dispose()
     {
-        SearchString = string.Empty;
-        Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
+        js.InvokeVoidAsync("DataTablesDispose", "#ordersTable");
     }
 }

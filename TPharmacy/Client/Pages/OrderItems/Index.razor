@@ -2,25 +2,11 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
+@implements IDisposable
 
 <div class="container mt-5">
     <h1 class="header">Overview of TPharmacy OrderItem's</h1>
     <h3>Welcome to the OrderItem Home! </h3>
-    <div class="row">
-        <div class="col-md-8">
-            <br />
-        </div>
-        <div class="col-md-2.5">
-            <br />
-            <input type="text" class="form-control" placeholder="Search orderitem by ID" @bind="SearchString" @onkeyup="FilterUser" />
-        </div>
-        <div class="col-md-1">
-            <br />
-            <button class="btn btn-light" @onclick="ResetSearch">
-                Reset/Refresh
-            </button>
-        </div>
-    </div>
     <br />
     @if (OrderItems == null)
     {
@@ -28,38 +14,35 @@
     }
     else
     {
-        <div class="table-responsive">
-            <table class="table table-striped align-middle table-bordered">
-                <thead class="table">
+        <table class="table table-striped align-middle table-bordered" id="orderitemsTable">
+            <thead>
+                <tr>
+                    <th>OrderID</th>
+                    <th>ID</th>
+                    <th>DateTime</th>
+                    <th>ProductID</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var orderitem in OrderItems)
+                {
                     <tr>
-                        <th>OrderID</th>
-                        <th>ID</th>
-                        <th>DateTime</th>
-                        <th>ProductID</th>
-                        <th>Quantity</th>
-                        <th>Total</th>
+                        <td>@orderitem.OrderID</td>
+                        <td>@orderitem.ID</td>
+                        <td>@orderitem.Order.OrderDateTime</td>
+                        <td>@orderitem.ProductID</td>
+                        <td>@orderitem.OrderItemQtny</td>
+                        <td>@orderitem.OrderItemQtny*@orderitem.Product.ProdPrice</td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var orderitem in OrderItems)
-                    {
-                        <tr>
-                            <td>@orderitem.OrderID</td>
-                            <td>@orderitem.ID</td>
-                            <td>@orderitem.Order.OrderDateTime</td>
-                            <td>@orderitem.ProductID</td>
-                            <td>@orderitem.OrderItemQtny</td>
-                            <td>@orderitem.OrderItemQtny*@orderitem.Product.ProdPrice</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
     }
 </div>
 
 @code {
-    private string SearchString { get; set; }
     private List<OrderItem> OrderItems;
 
     protected async override Task OnInitializedAsync()
@@ -67,28 +50,13 @@
         OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}");
     }
 
-    protected async void FilterUser()
+    protected async override Task OnAfterRenderAsync(bool firstRender)
     {
-        if (!string.IsNullOrEmpty(SearchString))
-        {
-            int searchInt;
-            if (int.TryParse(SearchString, out searchInt))
-            {
-                OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}");
-            }
-        }
-        {
-            SearchString = string.Empty;
-            OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}");
-        }
+        await js.InvokeVoidAsync("AddDataTable", "#orderitemsTable");
     }
 
-    public async void ResetSearch()
+    public void Dispose()
     {
-        if (!string.IsNullOrEmpty(SearchString))
-        {
-            SearchString = string.Empty;
-            OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}");
-        }
+        js.InvokeVoidAsync("DataTablesDispose", "#orderitemsTable");
     }
 }

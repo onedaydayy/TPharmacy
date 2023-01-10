@@ -2,6 +2,7 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
+@implements IDisposable
 
 <div class="container mt-5">
     <h1 class="header">Overview of TPharmacy Staff's</h1>
@@ -13,16 +14,6 @@
                 Add User
             </a>
         </div>
-        <div class="col-md-2.5">
-            <br />
-            <input type="text" class="form-control" placeholder="Search staff by name" @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
-        </div>
-        <div class="col-md-1">
-            <br />
-            <button class="btn btn-light" @onclick="ResetSearch">
-                Reset/Refresh
-            </button>
-        </div>
     </div>
     <br />
     @if (Staffs == null)
@@ -31,48 +22,45 @@
     }
     else
     {
-        <div class="table-responsive">
-            <table class="table table-striped align-middle table-bordered">
-                <thead class="table">
+        <table class="table table-striped align-middle table-bordered" id="staffsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Name</th>
+                    <th>Password</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var staff in Staffs)
+                {
                     <tr>
-                        <th>ID</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Name</th>
-                        <th>Password</th>
-                        <th>Actions</th>
+                        <td>@staff.ID</td>
+                        <td>@staff.StafEmail</td>
+                        <td>@staff.StafRole</td>
+                        <td>@staff.StafName</td>
+                        <td>@staff.StafPassword</td>
+                        <td>
+                            <a href="/staffs/view/@staff.ID" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/staffs/edit/@staff.ID" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(()=>Delete(staff.ID))">
+                                <span class="oi oi-delete"></span>
+                            </button>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var staff in Staffs)
-                    {
-                        <tr>
-                            <td>@staff.ID</td>
-                            <td>@staff.StafEmail</td>
-                            <td>@staff.StafRole</td>
-                            <td>@staff.StafName</td>
-                            <td>@staff.StafPassword</td>
-                            <td>
-                                <a href="/staffs/view/@staff.ID" class="btn btn-primary">
-                                    <span class="oi oi-book"></span>
-                                </a>
-                                <a href="/staffs/edit/@staff.ID" class="btn btn-warning">
-                                    <span class="oi oi-pencil"></span>
-                                </a>
-                                <button class="btn btn-danger" @onclick="@(()=>Delete(staff.ID))">
-                                    <span class="oi oi-delete"></span>
-                                </button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                }
+            </tbody>
+        </table>
     }
 </div>
 
 @code {
-    private string SearchString { get; set; }
     private List<Staff> Staffs;
 
     protected async override Task OnInitializedAsync()
@@ -80,37 +68,25 @@
         Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
     }
 
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#staffsTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#staffTable");
+    }
+
+
     async Task Delete(int staffID)
     {
-        var staff = Staffs.First(q => q.ID == staffID);
-        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {staff.StafName}?");
+        var vehicle = Staffs.First(q => q.ID == staffID);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {vehicle.StafName}?");
         if (confirm)
         {
             await _client.DeleteAsync($"{Endpoints.StaffsEndpoint}/{staffID}");
-            Staffs = Staffs.Where(x => x.ID != staffID).ToList();
-        }
-    }
-
-    protected async void FilterUser()
-    {
-        if (!string.IsNullOrEmpty(SearchString))
-        {
-            Staffs = Staffs.Where(x => x.StafName.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1).ToList();
-        }
-        else
-        {
-            SearchString = string.Empty;
-            Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
-        }
-    }
-
-
-    public async void ResetSearch()
-    {
-        if (!string.IsNullOrEmpty(SearchString))
-        {
-            SearchString = string.Empty;
-            Staffs = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+            await OnInitializedAsync();
         }
     }
 
