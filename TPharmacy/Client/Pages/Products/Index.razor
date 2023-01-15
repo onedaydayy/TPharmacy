@@ -6,59 +6,62 @@
 @inject IJSRuntime js
 @page "/cusproducts"
 
+<div class="container mt-5">
 
-<h1>Products</h1>
-
-@code {
-}
-@if (Products == null)
-{
-    <div class="alert alert-info">Loading Products...</div> }
-else
-{
-    int count = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(Products.Count) / Convert.ToDecimal(4)));
-    int card = 0;
-    @for (int g = 0; g < count; g++)
-    {
-        <div class="row">
-            @for (int i = 0; i < 4; i++)
-            {
-                if (card < Products.Count) { 
-                    <div class="col-sm-6 col-md-3 col-xl-3">
-                        <div class="product-card mt-5">
-                            <div class="content-card">
-                                <img src="img/@Products[card].ProdName .jpeg" class="product-img" />
-                            </div>
-                            <div class="content-text">
-                                <h3>
-                                    @Products[card].ProdName
-                                </h3>
-                            </div>
-                            <div class="align-bottom">
-                                <h2 class="price float-right">@Products[card].ProdPrice</h2>
-                            </div>
-                            <div>
-                                <a href="/product/productview/@Products[card].ID" class="btn btn-primary">
-                                    <span class="oi oi-book"></span>
-                                </a>
-                                <a href="/product/edit/@Products[card].ID" class="btn btn-warning">
-                                    <span class="oi oi-pencil"></span>
-                                </a>
-                                <button class="btn btn-danger" @onclick="@(() => Delete(Products[card].ID))">
-                                    <span class="oi oi-delete"></span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    card++;
-                }
-            }
-        </div>
-    }
-}
+    <h1>Products</h1>
 
     @code {
-private List<Product> Products;
+    }
+    @if (Products == null)
+    {
+        <div class="alert alert-info">Loading Products...</div> }
+    else
+    {
+        int count = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(Products.Count) / Convert.ToDecimal(4)));
+        int card = 0;
+        @for (int g = 0; g < count; g++)
+        {
+            <div class="row">
+                @for (int i = 0; i < 4; i++)
+                {
+                    if (card < Products.Count)
+                    {
+                        <div class="col-sm-6 col-md-3 col-xl-3">
+                            <div class="product-card mt-5">
+                                <div class="content-card">
+                                    <img src="img/@Products[card].ProdName .jpeg" class="product-img" />
+                                </div>
+                                <div class="content-text">
+                                    <h3>
+                                        @Products[card].ProdName
+                                    </h3>
+                                </div>
+                                <div class="align-bottom">
+                                    <h2 class="price float-right">@Products[card].ProdPrice</h2>
+                                </div>
+                                <div>
+                                    <a href="/product/productview/@Products[card].ID" class="btn btn-primary">
+                                        <span class="oi oi-book"></span>
+                                    </a>
+                                    <a href="/product/edit/@Products[card].ID" class="btn btn-warning">
+                                        <span class="oi oi-pencil"></span>
+                                    </a>
+                                    <button class="btn btn-danger" @onclick="@(() => Delete(Products[card].ID))">
+                                        <span class="oi oi-delete"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        card++;
+                    }
+                }
+            </div>
+        }
+    }
+</div>
+
+@code {
+    private List<Product> Products;
 
 
     protected async override Task OnInitializedAsync()
