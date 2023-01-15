@@ -48,8 +48,6 @@ namespace TPharmacy.Server.Controllers
             {
                 logger.LogInformation($"User.Identity.Name: {user.UserName}");
             }
-            //Refactored
-            //return await _context.Staffs.ToListAsync();
             var staffs = await _unitOfWork.Staffs.GetAll();
             return Ok(staffs);
         }
@@ -60,16 +58,12 @@ namespace TPharmacy.Server.Controllers
         //public async Task<ActionResult<Staff>> GetStaff(int id)
         public async Task<IActionResult> GetStaff(int id)
         {
-            //Refactored
-            //var staff = await _context.Staffs.FindAsync(id);
             var staff = await _unitOfWork.Staffs.Get(q => q.ID == id);
 
             if (staff == null)
             {
                 return NotFound();
             }
-
-            //Refactored
             return Ok(staff);
         }
 
@@ -78,6 +72,32 @@ namespace TPharmacy.Server.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStaff(int id, Staff staff)
         {
+            var user = await userManager.FindByIdAsync(staff.StafName);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var currentRoles = await userManager.GetRolesAsync(user);
+            if (staff.StafRole == "Admin")
+            {
+                await userManager.RemoveFromRolesAsync(user, currentRoles);
+                await roleManager.FindByNameAsync("Admin");
+                await userManager.AddToRoleAsync(user, "Admin");
+            }
+            if (staff.StafRole == "Pharmacist")
+            {
+                await userManager.RemoveFromRolesAsync(user, currentRoles);
+                await roleManager.FindByNameAsync("Pharmacist");
+                await userManager.AddToRoleAsync(user, "Pharmacist");
+            }
+            if (staff.StafRole == "Packer")
+            {
+                await userManager.RemoveFromRolesAsync(user, currentRoles);
+                await roleManager.FindByNameAsync("Packer");
+                await userManager.AddToRoleAsync(user, "Packer");
+            }
+
             if (id != staff.ID)
             {
                 return BadRequest();
@@ -117,19 +137,35 @@ namespace TPharmacy.Server.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = staff.StafEmail, Email = staff.StafEmail };
+                var user = new ApplicationUser { UserName = staff.StafEmail, Email = staff.StafEmail, Id = staff.StafName };
                 var result = await userManager.CreateAsync(user, staff.StafPassword);
                 if (result.Succeeded)
                 {
                     logger.LogInformation("User created a new account with password.");
-                    await roleManager.FindByNameAsync("Staff");
+                    await roleManager.RoleExistsAsync("Staff");
                     await userManager.AddToRoleAsync(user, "Staff");
+
+                    if (staff.StafRole == "Admin")
+                    {
+                        await roleManager.RoleExistsAsync("Admin");
+                        await userManager.AddToRoleAsync(user, "Admin");
+                    }
+                    if (staff.StafRole == "Pharmacist")
+                    {
+                        await roleManager.RoleExistsAsync("Pharmacist");
+                        await userManager.AddToRoleAsync(user, "Pharmacist");
+                    }
+                    if (staff.StafRole == "Packer")
+                    {
+                        await roleManager.RoleExistsAsync("Packer");
+                        await userManager.AddToRoleAsync(user, "Packer");
+                    }
                 }
             }
-                    //Refactored
-                    //_context.Staffs.Add(staff);
-                    //await _context.SaveChangesAsync();
-                    await _unitOfWork.Staffs.Insert(staff);
+            //Refactored
+            //_context.Staffs.Add(staff);
+            //await _context.SaveChangesAsync();
+            await _unitOfWork.Staffs.Insert(staff);
             await _unitOfWork.Save(HttpContext);
             return CreatedAtAction("GetStaff", new { id = staff.ID }, staff);
         }
@@ -151,6 +187,17 @@ namespace TPharmacy.Server.Controllers
             //await _context.SaveChangesAsync();
             await _unitOfWork.Staffs.Delete(id);
             await _unitOfWork.Save(HttpContext);
+
+            var user = await userManager.FindByNameAsync(staff.StafName);
+            if (user != null)
+            {
+                await roleManager.FindByNameAsync("Staff");
+                var result = await userManager.RemoveFromRoleAsync(user, "Staff");
+                if (result.Succeeded)
+                {
+                    return Ok();
+                }
+            }
 
             return NoContent();
         }
