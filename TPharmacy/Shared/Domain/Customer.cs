@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TPharmacy.Shared.Domain
 {
@@ -7,7 +8,7 @@ namespace TPharmacy.Shared.Domain
     {
         public string CusName { get; set; }
         public string CusEmail { get; set; }
-        public string CusNumber { get; set; }
+        public int CusNumber { get; set; }
         public string CusAddress { get; set; }
         public string CusPassword { get; set; }
         public int CusPoints { get; set; }

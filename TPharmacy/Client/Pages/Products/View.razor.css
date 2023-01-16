@@ -109,6 +109,11 @@ hr {
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     height: 87%;
 }
+.product-card-2 {
+    padding: 20px;
+    display: block;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
 
 .content-text {
     padding-bottom: 20px;
@@ -199,4 +204,30 @@ a {
 ul {
     list-style-type: none;
     padding-left: 0px;
+}
+
+.qty {
+    width: 40px;
+    height: 25px;
+    text-align: center;
+}
+
+input.qtyplus {
+    width: 25px;
+    height: 25px;
+}
+
+input.qtyminus {
+    width: 25px;
+    height: 25px;
+}
+
+.desc-zone {
+    border: 2px solid lightgray;
+    border-radius: 5px;
+    padding: 50px;
+    margin: 30px;
+}
+.view-margin{
+    margin-top: 5px;
 }

@@ -1,72 +1,82 @@
 ﻿@using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using TPharmacy.Shared
+@inject NavigationManager _navManager
 @inject HttpClient Http
 @inject HttpClient _client
 @inject IJSRuntime js
 @page "/productview/{id:int}"
 
 
-<h1>Products</h1>
+<h1>@product.ProdName</h1>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3 col-md-3 col-xl-3">
+            <div class="product-card-2 mt-5">
+                <div class="content-card">
+                    <img src="img/@product.ProdName .jpeg" class="product-img" />
+                </div>
 
-@code {
-}
-@if (Products == null)
-{
-    <div class="alert alert-info">Loading Products...</div> }
-else
-{
-    int count = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(Products.Count) / Convert.ToDecimal(4)));
-    int card = 0;
-    @for (int g = 0; g < count; g++)
-    {
-        <div class="row">
-            @for (int i = 0; i < 4; i++)
-            {
-                if (card < Products.Count) { 
-                    <div class="col-sm-6 col-md-3 col-xl-3">
-                        <div class="product-card mt-5">
-                            <div class="content-card">
-                                <img src="img/@Products[card].ProdName .jpeg" class="product-img" />
-                            </div>
-                            <div class="content-text">
-                                <h3>
-                                    @Products[card].ProdName
-                                </h3>
-                            </div>
-                            <div class="align-bottom">
-                                <h2 class="price float-right">@Products[card].ProdPrice</h2>
-                            </div>
-                            <div>
-                                <a href="/product/view/@Products[card].ID" class="btn btn-primary">
-                                    <span class="oi oi-book"></span>
-                                </a>
-                            </div>
+            </div>
+        </div>
+        <div class="col-sm-9 col-md-9 col-xl-9">
+            <br />
+            <br />
+            <div class="row">
+                <div class="col-sm-4 col-md-4 col-xl-4">
+                    <div class="d-inline float-right">
+                        <div class="row view-margin">
+                            <h2 class="price">@product.ProdPrice</h2>
+                        </div>                  
+                        <div class="row view-margin">
+                            <input type='button' value='-' class='qtyminus minus' field='quantity' />
+                            <input type='text' name='quantity' value='0' class='qty' />
+                            <input type='button' value='+' class='qtyplus plus' field='quantity' />
                         </div>
                     </div>
-                    card++;
-                }
-            }
+                </div>
+                <div class="col-sm-5 col-md-5 col-xl-5">
+                    <div class="view-margin">
+                        <input type="radio" id="onttime" name="methodb" value="HTML">
+                        <label for="onttime">One Time Purchase</label><br>
+                    </div>
+                    <div class="view-margin">
+                        <input type="radio" selected id="sub" name="methodb" value="CSS">
+                        <label for="sub">
+                             Subcribe & Delivery Every <select id="cars">
+                                <option value="1">1</option>
+                                <option value="2" selected>2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </label> <br/>
+                                 <span>Free Shipping</span>
+
+                    </div>
+                    <div class="add-to-cart">
+                        <a href="/productview/@product.ID" class="btn btn-primary">
+                            <span class="oi oi-cart"> Add to Cart </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="content-text desc-zone">
+                @product.ProdDesc
+            </div>
         </div>
-    }
-}
+    </div>
+</div>
+
 
     @code {
-private List<Product> Products;
+        [Parameter] public int id { get; set; }
+        Product product = new Product();
 
+        protected async override Task OnParametersSetAsync()
+        {
+            product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/{id}");
+        }
 
-    protected async override Task OnInitializedAsync()
-    {
-        Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
     }
 
-    async Task Delete(int prodId)
-    {
-        var product = Products.First(q => q.ID == prodId);
-        var confirm = await js.InvokeAsync<bool>("Confirm", $"Do you want to delete {product.ProdName}?");
-        if (confirm)
-        {
-            await _client.DeleteAsync($"{Endpoints.ProductsEndpoint}/{prodId}");
-            await OnInitializedAsync();
-        }
-    } }
+
