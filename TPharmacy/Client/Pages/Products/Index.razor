@@ -8,7 +8,7 @@
 
 <div class="container mt-5">
 
-    <h1>Products</h1>
+<h1>Products</h1>
 
     @code {
     }
@@ -41,14 +41,8 @@
                                 </div>
                                 <div>
                                     <a href="/product/productview/@Products[card].ID" class="btn btn-primary">
-                                        <span class="oi oi-book"></span>
+                                        <span class="oi oi-book"></span> 
                                     </a>
-                                    <a href="/product/edit/@Products[card].ID" class="btn btn-warning">
-                                        <span class="oi oi-pencil"></span>
-                                    </a>
-                                    <button class="btn btn-danger" @onclick="@(() => Delete(Products[card].ID))">
-                                        <span class="oi oi-delete"></span>
-                                    </button>
                                 </div>
                             </div>
                         </div>

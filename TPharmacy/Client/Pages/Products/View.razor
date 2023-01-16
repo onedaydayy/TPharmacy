@@ -4,7 +4,7 @@
 @inject HttpClient Http
 @inject HttpClient _client
 @inject IJSRuntime js
-@page "/productview"
+@page "/productview/{id:int}"
 
 
 <h1>Products</h1>
@@ -41,12 +41,6 @@ else
                                 <a href="/product/view/@Products[card].ID" class="btn btn-primary">
                                     <span class="oi oi-book"></span>
                                 </a>
-                                <a href="/product/edit/@Products[card].ID" class="btn btn-warning">
-                                    <span class="oi oi-pencil"></span>
-                                </a>
-                                <button class="btn btn-danger" @onclick="@(() => Delete(Products[card].ID))">
-                                    <span class="oi oi-delete"></span>
-                                </button>
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,7 @@
-﻿namespace TPharmacy.Shared.Domain
+﻿using System;
+using System.Collections.Generic;
+
+namespace TPharmacy.Shared.Domain
 {
     public class Prescription : BaseDomainModel
     {

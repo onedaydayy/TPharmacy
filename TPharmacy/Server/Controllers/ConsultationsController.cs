@@ -3,38 +3,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using TPharmacy.Server.Data;
 using TPharmacy.Server.IRepository;
+using TPharmacy.Server.Models;
 using TPharmacy.Shared.Domain;
 
-namespace TPharamacy.Server.Controllers
+namespace TPharmacy.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class ConsultationsController : ControllerBase
     {
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly ILogger<OrdersController> logger;
         //Refactored 
         //private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
 
         //Refactored
         //public ConsultationsController(ApplicationDbContext context)
-        public ConsultationsController(IUnitOfWork unitOfWork)
+        public ConsultationsController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager,
+        ILogger<OrdersController> logger, RoleManager<IdentityRole> roleManager)
         {
-            //Refactored
-            //_context = context;
             _unitOfWork = unitOfWork;
+            this.userManager = userManager;
+            this.logger = logger;
+            this.roleManager = roleManager;
         }
 
         // GET: api/Consultations
         [HttpGet]
         //Refactored
         //public async Task<ActionResult<IEnumerable<Consultation>>> GetConsultations()
-        public async Task<ActionResult<IEnumerable<Consultation>>> GetConsultations()
+        public async Task<ActionResult> GetConsultations()
         {
+            var user = await userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                logger.LogInformation($"User.Identity.Name: {user.UserName}");
+            }
             //Refactored
-            //return await _context.Consultations.ToListAsync();
+            //return await _context.Consultations.ToListAsync(); includes: q => q.Include(x => x.OrderItems).Include(x => x.Prescriptions)
             var consultations = await _unitOfWork.Consultations.GetAll();
             return Ok(consultations);
         }

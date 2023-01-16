@@ -3,38 +3,52 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using TPharmacy.Server.Data;
 using TPharmacy.Server.IRepository;
+using TPharmacy.Server.Models;
 using TPharmacy.Shared.Domain;
 
-namespace TPharamacy.Server.Controllers
+namespace TPharmacy.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class PrescriptionsController : ControllerBase
     {
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly ILogger<OrdersController> logger;
         //Refactored 
         //private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
 
         //Refactored
         //public PrescriptionsController(ApplicationDbContext context)
-        public PrescriptionsController(IUnitOfWork unitOfWork)
+        public PrescriptionsController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager,
+        ILogger<OrdersController> logger, RoleManager<IdentityRole> roleManager)
         {
-            //Refactored
-            //_context = context;
             _unitOfWork = unitOfWork;
+            this.userManager = userManager;
+            this.logger = logger;
+            this.roleManager = roleManager;
         }
 
         // GET: api/Prescriptions
         [HttpGet]
         //Refactored
         //public async Task<ActionResult<IEnumerable<Prescription>>> GetPrescriptions()
-        public async Task<ActionResult<IEnumerable<Prescription>>> GetPrescriptions()
+        public async Task<ActionResult> GetPrescriptions()
         {
+            var user = await userManager.GetUserAsync(User);
+            if (user != null)
+            {
+                logger.LogInformation($"User.Identity.Name: {user.UserName}");
+            }
             //Refactored
-            //return await _context.Prescriptions.ToListAsync();
+            //return await _context.Prescriptions.ToListAsync(); includes: q => q.Include(x => x.OrderItems).Include(x => x.Prescriptions)
             var prescriptions = await _unitOfWork.Prescriptions.GetAll();
             return Ok(prescriptions);
         }
