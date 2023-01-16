@@ -43,12 +43,12 @@ namespace TPharmacy.Server.Controllers
         //public async Task<ActionResult<IEnumerable<Staff>>> GetStaffs()
         public async Task<ActionResult> GetStaffs()
         {
+            var staffs = await _unitOfWork.Staffs.GetAll();
             var user = await userManager.GetUserAsync(User);
             if (user != null)
             {
                 logger.LogInformation($"User.Identity.Name: {user.UserName}");
             }
-            var staffs = await _unitOfWork.Staffs.GetAll();
             return Ok(staffs);
         }
 
