@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TPharmacy.Server.Migrations
 {
-    public partial class AddNewApplicationData : Migration
+    public partial class NewApplicationTable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,7 +58,7 @@ namespace TPharmacy.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CusName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CusEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CusNumber = table.Column<int>(type: "int", nullable: false),
+                    CusNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CusAddress = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CusPassword = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CusPoints = table.Column<int>(type: "int", nullable: false),
@@ -420,11 +420,11 @@ namespace TPharmacy.Server.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "staff", "882f442a-4055-4ef9-b804-43abd8d1a029", "Staff", "STAFF" },
-                    { "customer", "876fd60e-bb8d-4051-92d0-0a19883ffab3", "Customer", "CUSTOMER" },
-                    { "admin", "e6fa9df3-8609-4b71-9c05-e2b1590228a2", "Admin", "ADMIN" },
-                    { "pharmacist", "fbba1ce3-7582-4493-8dac-7d3e20caebe0", "Pharmacist", "PHARMACIST" },
-                    { "packer", "62ada7b9-963b-4ae2-ab1b-83280285573c", "Packer", "PACKER" }
+                    { "staff", "884d0cce-2a27-4663-9468-7e92bcdd5708", "Staff", "STAFF" },
+                    { "customer", "42b0f3bf-8b05-4726-b1b7-3189d5dcc079", "Customer", "CUSTOMER" },
+                    { "admin", "a69a1279-060d-40d9-9ea2-0be4c4fb2a97", "Admin", "ADMIN" },
+                    { "pharmacist", "801b7526-3b7d-4a8a-b091-c0bba715971f", "Pharmacist", "PHARMACIST" },
+                    { "packer", "bcfbef1c-be9e-4216-a463-f9b867788600", "Packer", "PACKER" }
                 });
 
             migrationBuilder.InsertData(
@@ -432,12 +432,12 @@ namespace TPharmacy.Server.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "Address", "ConcurrencyStamp", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "Password", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "3781efa7-66dc-47f0-860f-e506d04102s1", 0, "TPharmacy", "01a9c3a9-220f-4d07-bb23-8f2e4fdff463", "june@gmail.com", true, "June", "Staff", true, null, "JUNE@GMAIL.COM", "JUNE@GMAIL.COM", "June1234*", "AQAAAAEAACcQAAAAEFJCoMlZwTkMYQCeAtcdVQAF+DOudE1FYKXmRPyfflo7ECqTl8YWTOLzTMIogeTAPQ==", "9273 8983", true, "2f8820ef-0a7e-4c93-900a-6024e53ee7c4", false, "june@gmail.com" },
-                    { "3781efa7-66dc-47f0-860f-e506d04102s2", 0, "TPharmacy", "1d370582-b403-4072-8235-e842eed03969", "woon@gmail.com", true, "Woon", "Staff", true, null, "WOON@GMAIL.COM", "WOON@GMAIL.COM", "P@ssword1", "AQAAAAEAACcQAAAAENbqHJroSS+pfXFnnhxKeJung1Dyd0PUz7WAvAEBRPUhj9wKgLkqag54jIgssbnrKQ==", "9287 2324", true, "f79f3bfb-dd70-41c4-81d1-78c9a63418d3", false, "woon@gmail.com" },
-                    { "3781efa7-66dc-47f0-860f-e506d04102s3", 0, "TPharmacy", "e22e89a3-1695-4ed6-a405-e0bbf96f7d01", "kate@gmail.com", true, "Kate", "Staff", true, null, "KATE@GMAIL.COM", "KATE@GMAIL.COM", "Kate1234*", "AQAAAAEAACcQAAAAEJtt/4jRHkNC4OJzGfUt4mioCtx6Itrfchvu6PICaUoU/OKihPaaQn/orJsyTeEEIg==", "6329 9823", true, "2bf0bd14-01cf-4e77-a078-fdc49ea59b42", false, "kate@gmail.com" },
-                    { "3781efa7-66dc-47f0-860f-e506d04102c1", 0, "Tampines Ave 1", "8b43fb2e-fc9b-448d-a544-6843470cfcff", "james@gmail.com", true, "James", "Customer", true, null, "JAMES@GMAIL.COM", "JAMES@GMAIL.COM", "James1234*", "AQAAAAEAACcQAAAAED/y18ewGgi48IHhwk+SZg9YSFYcdZOU/6oOfwuTtOfogWKhR7ojefiT/I//fnSGpA==", "8211 7319", true, "aa4a5c97-4e7c-409c-9a7e-8f0a36571773", false, "james@gmail.com" },
-                    { "3781efa7-66dc-47f0-860f-e506d04102c2", 0, "Bedok Ave 1", "70364b2f-4dbd-4e3c-a946-5d43c4037bff", "alice@gmail.com", true, "Alice", "Customer", true, null, "ALICE@GMAIL.COM", "ALICE@GMAIL.COM", "Alice1234*", "AQAAAAEAACcQAAAAEBqT2hzxThw6AmRkS/YBI2wFWF9ErTOqgf61qhdk6csB9NkoALidQ1W0EoCkX0g3vQ==", "8329 7433", true, "ac7bd0d7-08fa-42c9-94ba-d9d61140c428", false, "alice@gmail.com" },
-                    { "3781efa7-66dc-47f0-860f-e506d04102c3", 0, "Jurong Ave 1", "bdbcb6c9-6bf6-4383-88c2-c93f2833b431", "sheila@gmail.com", true, "Sheila", "Customer", true, null, "SHEILA@GMAIL.COM", "SHEILA@GMAIL.COM", "Sheila1234*", "AQAAAAEAACcQAAAAEJqX8VJCA1nHacqWN3UxCoqmGYxa0Ghw9RYXxWyVjdeniddwWqA6Gw/cgpCePXuerg==", "9436 7238", true, "b7484c8b-4863-47b0-82c4-e789938d5dc3", false, "sheila@gmail.com" }
+                    { "3781efa7-66dc-47f0-860f-e506d04102s1", 0, "TPharmacy", "5dcfc940-f1b4-4b73-9e43-b1ced35b7a4b", "june@gmail.com", true, "June", "Staff", true, null, "JUNE@GMAIL.COM", "JUNE@GMAIL.COM", "June1234*", "AQAAAAEAACcQAAAAEMZJ/08hKeaP+FUBiknas4GDYb+8Ny5LBoDIMhvkveTEcthCtuXaAvh8i7CYogiV1w==", "9273 8983", true, "3fed860f-f310-447d-beae-76d99f8e5d8d", false, "june@gmail.com" },
+                    { "3781efa7-66dc-47f0-860f-e506d04102s2", 0, "TPharmacy", "33f9c604-4792-4f3b-8078-c65dce68960f", "woon@gmail.com", true, "Woon", "Staff", true, null, "WOON@GMAIL.COM", "WOON@GMAIL.COM", "P@ssword1", "AQAAAAEAACcQAAAAENNcMYxG4uYpJOkR9FkYHIlOf6vpJNoEm91AEJlEhjfHp+W+31/WN455CmgHnN4EaA==", "9287 2324", true, "72a4dbca-2c06-49dd-bb76-8bc428b95759", false, "woon@gmail.com" },
+                    { "3781efa7-66dc-47f0-860f-e506d04102s3", 0, "TPharmacy", "1d33f327-ea4b-4313-aafe-a29955f52563", "kate@gmail.com", true, "Kate", "Staff", true, null, "KATE@GMAIL.COM", "KATE@GMAIL.COM", "Kate1234*", "AQAAAAEAACcQAAAAED+ywOhQThkAn3qaQDCLQ90ne/kbEIERX9fnRCizGuBLj/ILiOYtb3MI1umd5QyEfQ==", "6329 9823", true, "ebe9db90-27e4-4d29-8580-94bea7368882", false, "kate@gmail.com" },
+                    { "3781efa7-66dc-47f0-860f-e506d04102c1", 0, "Tampines Ave 1", "2caa2406-be40-4732-8ab2-cf404974ac7e", "james@gmail.com", true, "James", "Customer", true, null, "JAMES@GMAIL.COM", "JAMES@GMAIL.COM", "James1234*", "AQAAAAEAACcQAAAAEFqJJigLdJMvs9z13J1huG6P6C0HEkdd9rG/DYMnDb5JLZzdfkWGHNbKCJypGA6aiw==", "8211 7319", true, "a205250d-fad5-43b1-8266-9054c9e1b5a3", false, "james@gmail.com" },
+                    { "3781efa7-66dc-47f0-860f-e506d04102c2", 0, "Bedok Ave 1", "1decd4ed-aba9-4fb9-9cd3-9fb0e325b625", "alice@gmail.com", true, "Alice", "Customer", true, null, "ALICE@GMAIL.COM", "ALICE@GMAIL.COM", "Alice1234*", "AQAAAAEAACcQAAAAEOXlNQMR/Qk+Yc2njnkLZfd2mdd1qvl6LzwD3MYltBQFk6eU85nLYgLHz4mGIfMHXQ==", "8329 7433", true, "acbf444d-1869-4ea1-8cfb-639efabd01cf", false, "alice@gmail.com" },
+                    { "3781efa7-66dc-47f0-860f-e506d04102c3", 0, "Jurong Ave 1", "7ce9fdd7-77f9-45e3-bbee-35f353f24230", "sheila@gmail.com", true, "Sheila", "Customer", true, null, "SHEILA@GMAIL.COM", "SHEILA@GMAIL.COM", "Sheila1234*", "AQAAAAEAACcQAAAAEAPH5rA/yYgi/POJLVbQ+jH8j6h5II2+Q3q+/lwLkHWgr5zeFrlArY9muZmmupFugQ==", "9436 7238", true, "13917bbd-32ad-4606-acd6-43b13834e0fc", false, "sheila@gmail.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -445,9 +445,9 @@ namespace TPharmacy.Server.Migrations
                 columns: new[] { "ID", "CreatedBy", "CusAddress", "CusEmail", "CusName", "CusNumber", "CusPassword", "CusPoints", "DateCreated", "DateUpdated", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 3, "System", "Jurong Ave 1", "sheila@gmail.com", "Sheila", 87511773, "Sheila1234*", 89, new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(5020), new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(5021), "System" },
-                    { 1, "System", "Tampines Ave 1", "james@gmail.com", "James", 87439653, "James1234*", 100, new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(5005), new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(5014), "System" },
-                    { 2, "System", "Bedok Ave 1", "alice@gmail.com", "Alice", 96512845, "Alice1234*", 50, new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(5017), new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(5019), "System" }
+                    { 3, "System", "Jurong Ave 1", "sheila@gmail.com", "Sheila", "87511773", "Sheila1234*", 89, new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(6419), new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(6420), "System" },
+                    { 1, "System", "Tampines Ave 1", "james@gmail.com", "James", "87439653", "James1234*", 100, new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(6406), new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(6413), "System" },
+                    { 2, "System", "Bedok Ave 1", "alice@gmail.com", "Alice", "96512845", "Alice1234*", 50, new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(6416), new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(6417), "System" }
                 });
 
             migrationBuilder.InsertData(
@@ -455,12 +455,12 @@ namespace TPharmacy.Server.Migrations
                 columns: new[] { "ID", "CreatedBy", "DateCreated", "DateUpdated", "ProdBrand", "ProdCategory", "ProdDesc", "ProdName", "ProdPrice", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, "System", new DateTime(2023, 1, 16, 20, 1, 9, 97, DateTimeKind.Local).AddTicks(2685), new DateTime(2023, 1, 16, 20, 1, 9, 98, DateTimeKind.Local).AddTicks(7111), "Blackmores", "Supplement", "BLACKMORES Bio Vitamin C 1000mg 120 Tablets", "Vitamin C", 35.00m, "System" },
-                    { 2, "System", new DateTime(2023, 1, 16, 20, 1, 9, 98, DateTimeKind.Local).AddTicks(7974), new DateTime(2023, 1, 16, 20, 1, 9, 98, DateTimeKind.Local).AddTicks(7979), "Swisse", "Supplement", "Swisse Omega 3 Fish Oil 1500mg 100 Tablets", "Omega 3 Fish Oil", 58.00m, "System" },
-                    { 3, "System", new DateTime(2023, 1, 16, 20, 1, 9, 98, DateTimeKind.Local).AddTicks(7981), new DateTime(2023, 1, 16, 20, 1, 9, 98, DateTimeKind.Local).AddTicks(7982), "Wastons", "Supplement", "Wastons Calcium 500mg 150 Tablets", "Calcium", 45.00m, "System" },
-                    { 4, "System", new DateTime(2023, 1, 16, 20, 1, 9, 98, DateTimeKind.Local).AddTicks(7984), new DateTime(2023, 1, 16, 20, 1, 9, 98, DateTimeKind.Local).AddTicks(7985), "Telfast", "Prescriptions", "Telfast Panadol 10mg", "Panadol", 20.00m, "System" },
-                    { 5, "System", new DateTime(2023, 1, 16, 20, 1, 9, 98, DateTimeKind.Local).AddTicks(7987), new DateTime(2023, 1, 16, 20, 1, 9, 98, DateTimeKind.Local).AddTicks(7988), "Cellucor", "Sports", "Cellucor Whey Protein Powder 5LBS", "Whey Protein Powder", 60.00m, "System" },
-                    { 6, "System", new DateTime(2023, 1, 16, 20, 1, 9, 98, DateTimeKind.Local).AddTicks(7990), new DateTime(2023, 1, 16, 20, 1, 9, 98, DateTimeKind.Local).AddTicks(7991), "Solaray", "Baby", "Solaray Kids Multi Vitamins & Minerals Gummies 120S", "Kids Multi Vitamins & Minerals Gummies", 30.00m, "System" }
+                    { 1, "System", new DateTime(2023, 1, 17, 11, 16, 43, 71, DateTimeKind.Local).AddTicks(2856), new DateTime(2023, 1, 17, 11, 16, 43, 72, DateTimeKind.Local).AddTicks(677), "Blackmores", "Supplement", "BLACKMORES Bio Vitamin C 1000mg 120 Tablets", "Vitamin C", 35.00m, "System" },
+                    { 2, "System", new DateTime(2023, 1, 17, 11, 16, 43, 72, DateTimeKind.Local).AddTicks(1228), new DateTime(2023, 1, 17, 11, 16, 43, 72, DateTimeKind.Local).AddTicks(1231), "Swisse", "Supplement", "Swisse Omega 3 Fish Oil 1500mg 100 Tablets", "Omega 3 Fish Oil", 58.00m, "System" },
+                    { 3, "System", new DateTime(2023, 1, 17, 11, 16, 43, 72, DateTimeKind.Local).AddTicks(1233), new DateTime(2023, 1, 17, 11, 16, 43, 72, DateTimeKind.Local).AddTicks(1234), "Wastons", "Supplement", "Wastons Calcium 500mg 150 Tablets", "Calcium", 45.00m, "System" },
+                    { 4, "System", new DateTime(2023, 1, 17, 11, 16, 43, 72, DateTimeKind.Local).AddTicks(1236), new DateTime(2023, 1, 17, 11, 16, 43, 72, DateTimeKind.Local).AddTicks(1237), "Telfast", "Prescriptions", "Telfast Panadol 10mg", "Panadol", 20.00m, "System" },
+                    { 5, "System", new DateTime(2023, 1, 17, 11, 16, 43, 72, DateTimeKind.Local).AddTicks(1239), new DateTime(2023, 1, 17, 11, 16, 43, 72, DateTimeKind.Local).AddTicks(1240), "Cellucor", "Sports", "Cellucor Whey Protein Powder 5LBS", "Whey Protein Powder", 60.00m, "System" },
+                    { 6, "System", new DateTime(2023, 1, 17, 11, 16, 43, 72, DateTimeKind.Local).AddTicks(1242), new DateTime(2023, 1, 17, 11, 16, 43, 72, DateTimeKind.Local).AddTicks(1243), "Solaray", "Baby", "Solaray Kids Multi Vitamins & Minerals Gummies 120S", "Kids Multi Vitamins & Minerals Gummies", 30.00m, "System" }
                 });
 
             migrationBuilder.InsertData(
@@ -468,9 +468,9 @@ namespace TPharmacy.Server.Migrations
                 columns: new[] { "ID", "CreatedBy", "DateCreated", "DateUpdated", "StafEmail", "StafName", "StafPassword", "StafRole", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 2, "June", new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(940), new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(941), "woon@gmail.com", "Woon", "Woon1234*", "Pharmacist", "System" },
-                    { 1, "June", new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(912), new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(937), "june@gmail.com", "June", "June1234*", "Admin", "System" },
-                    { 3, "June", new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(942), new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(943), "kate@gmail.com", "Kate", "Kate1234*", "Packer", "System" }
+                    { 2, "June", new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(2562), new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(2563), "woon@gmail.com", "Woon", "Woon1234*", "Pharmacist", "System" },
+                    { 1, "June", new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(2550), new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(2559), "june@gmail.com", "June", "June1234*", "Admin", "System" },
+                    { 3, "June", new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(2564), new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(2565), "kate@gmail.com", "Kate", "Kate1234*", "Packer", "System" }
                 });
 
             migrationBuilder.InsertData(
@@ -494,8 +494,8 @@ namespace TPharmacy.Server.Migrations
                 columns: new[] { "ID", "ConDate", "ConDesc", "ConEndTime", "ConFee", "ConStartTime", "CreatedBy", "CusID", "CustomerID", "DateCreated", "DateUpdated", "StaffID", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2023, 1, 16, 20, 1, 9, 102, DateTimeKind.Local).AddTicks(3116), "Flu Consultation", new DateTime(2023, 1, 16, 21, 10, 9, 102, DateTimeKind.Local).AddTicks(3706), 35.50m, new DateTime(2023, 1, 16, 20, 1, 9, 102, DateTimeKind.Local).AddTicks(3445), "Woon", 1, null, new DateTime(2023, 1, 16, 20, 1, 9, 102, DateTimeKind.Local).AddTicks(5437), new DateTime(2023, 1, 16, 20, 1, 9, 102, DateTimeKind.Local).AddTicks(5451), 1, "System" },
-                    { 2, new DateTime(2023, 1, 16, 20, 1, 9, 102, DateTimeKind.Local).AddTicks(5457), "Eczema Consultation", new DateTime(2023, 1, 16, 21, 1, 9, 102, DateTimeKind.Local).AddTicks(5460), 30.50m, new DateTime(2023, 1, 16, 20, 1, 9, 102, DateTimeKind.Local).AddTicks(5458), "Woon", 3, null, new DateTime(2023, 1, 16, 20, 1, 9, 102, DateTimeKind.Local).AddTicks(5469), new DateTime(2023, 1, 16, 20, 1, 9, 102, DateTimeKind.Local).AddTicks(5470), 1, "System" }
+                    { 1, new DateTime(2023, 1, 17, 11, 16, 43, 75, DateTimeKind.Local).AddTicks(1635), "Flu Consultation", new DateTime(2023, 1, 17, 12, 25, 43, 75, DateTimeKind.Local).AddTicks(1969), 35.50m, new DateTime(2023, 1, 17, 11, 16, 43, 75, DateTimeKind.Local).AddTicks(1814), "Woon", 1, null, new DateTime(2023, 1, 17, 11, 16, 43, 75, DateTimeKind.Local).AddTicks(2568), new DateTime(2023, 1, 17, 11, 16, 43, 75, DateTimeKind.Local).AddTicks(2572), 1, "System" },
+                    { 2, new DateTime(2023, 1, 17, 11, 16, 43, 75, DateTimeKind.Local).AddTicks(2575), "Eczema Consultation", new DateTime(2023, 1, 17, 12, 16, 43, 75, DateTimeKind.Local).AddTicks(2577), 30.50m, new DateTime(2023, 1, 17, 11, 16, 43, 75, DateTimeKind.Local).AddTicks(2576), "Woon", 3, null, new DateTime(2023, 1, 17, 11, 16, 43, 75, DateTimeKind.Local).AddTicks(2582), new DateTime(2023, 1, 17, 11, 16, 43, 75, DateTimeKind.Local).AddTicks(2583), 1, "System" }
                 });
 
             migrationBuilder.InsertData(
@@ -503,8 +503,8 @@ namespace TPharmacy.Server.Migrations
                 columns: new[] { "ID", "CreatedBy", "CusID", "CustomerID", "DateCreated", "DateUpdated", "OrderDateTime", "OrderPrice", "StaffID", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, "System", 1, null, new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(8428), new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(8433), new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(8037), 128.00m, 3, "Kate" },
-                    { 2, "System", 2, null, new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(8437), new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(8438), new DateTime(2023, 1, 16, 20, 1, 9, 100, DateTimeKind.Local).AddTicks(8436), 90.00m, 3, "Kate" }
+                    { 1, "System", 1, null, new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(9764), new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(9767), new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(9374), 128.00m, 3, "Kate" },
+                    { 2, "System", 2, null, new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(9772), new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(9773), new DateTime(2023, 1, 17, 11, 16, 43, 73, DateTimeKind.Local).AddTicks(9771), 90.00m, 3, "Kate" }
                 });
 
             migrationBuilder.InsertData(
@@ -512,8 +512,8 @@ namespace TPharmacy.Server.Migrations
                 columns: new[] { "ID", "ConID", "ConsultationID", "CreatedBy", "DateCreated", "DateUpdated", "PresQty", "ProductID", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, 1, null, "System", new DateTime(2023, 1, 16, 20, 1, 9, 101, DateTimeKind.Local).AddTicks(8669), new DateTime(2023, 1, 16, 20, 1, 9, 101, DateTimeKind.Local).AddTicks(8678), 1, 4, "System" },
-                    { 2, 2, null, "System", new DateTime(2023, 1, 16, 20, 1, 9, 101, DateTimeKind.Local).AddTicks(8681), new DateTime(2023, 1, 16, 20, 1, 9, 101, DateTimeKind.Local).AddTicks(8682), 2, 4, "System" }
+                    { 1, 1, null, "System", new DateTime(2023, 1, 17, 11, 16, 43, 74, DateTimeKind.Local).AddTicks(8102), new DateTime(2023, 1, 17, 11, 16, 43, 74, DateTimeKind.Local).AddTicks(8108), 1, 4, "System" },
+                    { 2, 2, null, "System", new DateTime(2023, 1, 17, 11, 16, 43, 74, DateTimeKind.Local).AddTicks(8110), new DateTime(2023, 1, 17, 11, 16, 43, 74, DateTimeKind.Local).AddTicks(8111), 2, 4, "System" }
                 });
 
             migrationBuilder.InsertData(
@@ -521,9 +521,9 @@ namespace TPharmacy.Server.Migrations
                 columns: new[] { "ID", "CreatedBy", "DateCreated", "DateUpdated", "OrderID", "OrderItemQtny", "ProductID", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, "System", new DateTime(2023, 1, 16, 20, 1, 9, 101, DateTimeKind.Local).AddTicks(1375), new DateTime(2023, 1, 16, 20, 1, 9, 101, DateTimeKind.Local).AddTicks(1382), 1, 2, 1, "Kate" },
-                    { 2, "System", new DateTime(2023, 1, 16, 20, 1, 9, 101, DateTimeKind.Local).AddTicks(1385), new DateTime(2023, 1, 16, 20, 1, 9, 101, DateTimeKind.Local).AddTicks(1386), 1, 1, 2, "Kate" },
-                    { 3, "System", new DateTime(2023, 1, 16, 20, 1, 9, 101, DateTimeKind.Local).AddTicks(1388), new DateTime(2023, 1, 16, 20, 1, 9, 101, DateTimeKind.Local).AddTicks(1389), 2, 1, 3, "Kate" }
+                    { 1, "System", new DateTime(2023, 1, 17, 11, 16, 43, 74, DateTimeKind.Local).AddTicks(2552), new DateTime(2023, 1, 17, 11, 16, 43, 74, DateTimeKind.Local).AddTicks(2557), 1, 2, 1, "Kate" },
+                    { 2, "System", new DateTime(2023, 1, 17, 11, 16, 43, 74, DateTimeKind.Local).AddTicks(2560), new DateTime(2023, 1, 17, 11, 16, 43, 74, DateTimeKind.Local).AddTicks(2561), 1, 1, 2, "Kate" },
+                    { 3, "System", new DateTime(2023, 1, 17, 11, 16, 43, 74, DateTimeKind.Local).AddTicks(2563), new DateTime(2023, 1, 17, 11, 16, 43, 74, DateTimeKind.Local).AddTicks(2564), 2, 1, 3, "Kate" }
                 });
 
             migrationBuilder.InsertData(
@@ -531,8 +531,8 @@ namespace TPharmacy.Server.Migrations
                 columns: new[] { "ID", "CreatedBy", "DateCreated", "DateUpdated", "OrderID", "PayCardInfo", "PayFee", "UpdatedBy" },
                 values: new object[,]
                 {
-                    { 1, "System", new DateTime(2023, 1, 16, 20, 1, 9, 101, DateTimeKind.Local).AddTicks(5621), new DateTime(2023, 1, 16, 20, 1, 9, 101, DateTimeKind.Local).AddTicks(5642), 1, "7855-3798-2344-9853", 5.00m, "System" },
-                    { 2, "System", new DateTime(2023, 1, 16, 20, 1, 9, 101, DateTimeKind.Local).AddTicks(5646), new DateTime(2023, 1, 16, 20, 1, 9, 101, DateTimeKind.Local).AddTicks(5647), 2, "3244-2355-3459-9767", 15.00m, "System" }
+                    { 1, "System", new DateTime(2023, 1, 17, 11, 16, 43, 74, DateTimeKind.Local).AddTicks(5656), new DateTime(2023, 1, 17, 11, 16, 43, 74, DateTimeKind.Local).AddTicks(5662), 1, "7855-3798-2344-9853", 5.00m, "System" },
+                    { 2, "System", new DateTime(2023, 1, 17, 11, 16, 43, 74, DateTimeKind.Local).AddTicks(5664), new DateTime(2023, 1, 17, 11, 16, 43, 74, DateTimeKind.Local).AddTicks(5665), 2, "3244-2355-3459-9767", 15.00m, "System" }
                 });
 
             migrationBuilder.CreateIndex(
