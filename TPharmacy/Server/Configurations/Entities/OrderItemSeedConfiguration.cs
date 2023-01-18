@@ -19,28 +19,31 @@ namespace TPharmacy.Server.Configurations.Entities
                         OrderID = 1,
                         ProductID = 1,
                         OrderItemQtny = 2,
+                        OrderItemTotal= 35.00m * 2,
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "Kate"
                     },
                     new OrderItem
-                     {
-                          ID = 2,
-                          OrderID = 1,
-                          ProductID = 2,
-                          OrderItemQtny = 1,
-                          DateCreated = DateTime.Now,
-                          DateUpdated = DateTime.Now,
-                          CreatedBy = "System",
-                          UpdatedBy = "Kate"
-                     },
+                    {
+                        ID = 2,
+                        OrderID = 1,
+                        ProductID = 2,
+                        OrderItemQtny = 1,
+                        OrderItemTotal = 58.00m * 1,
+                        DateCreated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
+                        CreatedBy = "System",
+                        UpdatedBy = "Kate"
+                    },
                     new OrderItem
                     {
                         ID = 3,
                         OrderID = 2,
                         ProductID = 3,
-                        OrderItemQtny = 1,
+                        OrderItemQtny = 2,
+                        OrderItemTotal = 45.00m * 2,
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
                         CreatedBy = "System",

@@ -106,13 +106,13 @@ hr {
 .product-card {
     padding: 20px;
     display: block;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    box-shadow: rgba(0, 0, 0, 0.10) 0px 5px 15px;
     height: 87%;
 }
 .product-card-2 {
     padding: 20px;
     display: block;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    box-shadow: rgba(0, 0, 0, 0.10) 0px 5px 15px;
 }
 
 .content-text {
@@ -204,22 +204,6 @@ a {
 ul {
     list-style-type: none;
     padding-left: 0px;
-}
-
-.qty {
-    width: 40px;
-    height: 25px;
-    text-align: center;
-}
-
-input.qtyplus {
-    width: 25px;
-    height: 25px;
-}
-
-input.qtyminus {
-    width: 25px;
-    height: 25px;
 }
 
 .desc-zone {

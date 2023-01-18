@@ -12,7 +12,7 @@ using TPharmacy.Server.IRepository;
 using TPharmacy.Server.Models;
 using TPharmacy.Shared.Domain;
 
-namespace TPharamacy.Server.Controllers
+namespace TPharmacy.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -20,7 +20,6 @@ namespace TPharamacy.Server.Controllers
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
-        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly ILogger<OrderItemsController> logger;
         //Refactored 
         //private readonly ApplicationDbContext _context;
@@ -28,17 +27,14 @@ namespace TPharamacy.Server.Controllers
 
         //Refactored
         //public OrderItemsController(ApplicationDbContext context)
-
         public OrderItemsController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager,
-        ILogger<OrderItemsController> logger, RoleManager<IdentityRole> roleManager, SignInManager<ApplicationUser> signInManager)
+        ILogger<OrderItemsController> logger, RoleManager<IdentityRole> roleManager)
         {
             _unitOfWork = unitOfWork;
-            this.signInManager = signInManager;
             this.userManager = userManager;
             this.logger = logger;
             this.roleManager = roleManager;
         }
-
         // GET: api/OrderItems
         [HttpGet]
         //Refactored
@@ -52,8 +48,8 @@ namespace TPharamacy.Server.Controllers
             }
             //Refactored
             //return await _context.OrderItems.ToListAsync();
-            var orderItems = await _unitOfWork.OrderItems.GetAll(includes: q => q.Include(x => x.Product).Include(x => x.Order));
-            return Ok(orderItems);
+            var orderitems = await _unitOfWork.OrderItems.GetAll(includes: q => q.Include(x => x.Order).Include(x => x.Product));
+            return Ok(orderitems);
         }
 
         // GET: api/OrderItems/5
@@ -63,31 +59,31 @@ namespace TPharamacy.Server.Controllers
         public async Task<IActionResult> GetOrderItem(int id)
         {
             //Refactored
-            //var orderItem = await _context.OrderItems.FindAsync(id);
-            var orderItem = await _unitOfWork.OrderItems.Get(q => q.ID == id);
+            //var orderitem = await _context.OrderItems.FindAsync(id);
+            var orderitem = await _unitOfWork.OrderItems.Get(q => q.ID == id);
 
-            if (orderItem == null)
+            if (orderitem == null)
             {
                 return NotFound();
             }
 
             //Refactored
-            return Ok(orderItem);
+            return Ok(orderitem);
         }
 
         // PUT: api/OrderItems/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrderItem(int id, OrderItem orderItem)
+        public async Task<IActionResult> PutOrderItem(int id, OrderItem orderitem)
         {
-            if (id != orderItem.ID)
+            if (id != orderitem.ID)
             {
                 return BadRequest();
             }
 
             //Refactored
-            //_context.Entry(orderItem).State = EntityState.Modified;
-            _unitOfWork.OrderItems.Update(orderItem);
+            //_context.Entry(orderitem).State = EntityState.Modified;
+            _unitOfWork.OrderItems.Update(orderitem);
 
             try
             {
@@ -115,14 +111,14 @@ namespace TPharamacy.Server.Controllers
         // POST: api/OrderItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<OrderItem>> PostOrderItem(OrderItem orderItem)
+        public async Task<ActionResult<OrderItem>> PostOrderItem(OrderItem orderitem)
         {
             //Refactored
-            //_context.OrderItems.Add(orderItem);
+            //_context.OrderItems.Add(orderitem);
             //await _context.SaveChangesAsync();
-            await _unitOfWork.OrderItems.Insert(orderItem);
+            await _unitOfWork.OrderItems.Insert(orderitem);
             await _unitOfWork.Save(HttpContext);
-            return CreatedAtAction("GetOrderItem", new { id = orderItem.ID }, orderItem);
+            return CreatedAtAction("GetOrderItem", new { id = orderitem.ID }, orderitem);
         }
 
         // DELETE: api/OrderItems/5
@@ -130,15 +126,15 @@ namespace TPharamacy.Server.Controllers
         public async Task<IActionResult> DeleteOrderItem(int id)
         {
             //Refactored
-            //var orderItem = await _context.OrderItems.FindAsync(id);
-            var orderItem = await _unitOfWork.OrderItems.Get(q => q.ID == id);
-            if (orderItem == null)
+            //var orderitem = await _context.OrderItems.FindAsync(id);
+            var orderitem = await _unitOfWork.OrderItems.Get(q => q.ID == id);
+            if (orderitem == null)
             {
                 return NotFound();
             }
 
             //Refactored
-            //_context.OrderItems.Remove(orderItem);
+            //_context.OrderItems.Remove(orderitem);
             //await _context.SaveChangesAsync();
             await _unitOfWork.OrderItems.Delete(id);
             await _unitOfWork.Save(HttpContext);
@@ -152,8 +148,10 @@ namespace TPharamacy.Server.Controllers
         {
             //Refactored
             //return _context.OrderItems.Any(e => e.ID == id);
-            var orderItem = await _unitOfWork.OrderItems.Get(q => q.ID == id);
-            return orderItem != null;
+            var orderitem = await _unitOfWork.OrderItems.Get(q => q.ID == id);
+            return orderitem != null;
         }
     }
 }
+
+

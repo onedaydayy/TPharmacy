@@ -16,7 +16,8 @@ namespace TPharmacy.Server.Configurations.Entities
                         CusID = 1,
                         StaffID = 3,
                         OrderDateTime = DateTime.Now,
-                        OrderPrice = 128.00m,
+                        OrderFee = 0.00m,
+                        OrderTotal = 0.00m + 128.00m,
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
                         CreatedBy = "System",
@@ -25,10 +26,11 @@ namespace TPharmacy.Server.Configurations.Entities
                     new Order
                     {
                         ID = 2,
-                        CusID = 2,
+                        CusID = 3,
                         StaffID = 3,
                         OrderDateTime = DateTime.Now,
-                        OrderPrice = 90.00m,
+                        OrderFee = 10.00m,
+                        OrderTotal = 10.00m + 90.00m,
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
                         CreatedBy = "System",

@@ -14,12 +14,11 @@
     }
     else
     {
-        <table class="table table-striped align-middle table-bordered responsive-table" id="orderitemsTable">
+        <table class="table table-striped align-middle table-bordered responsive-table" id="orderitemsTable" style="border-top-width: 0px;">
             <thead>
                 <tr>
-                    <th>OrderID</th>
                     <th>ID</th>
-                    <th>DateTime</th>
+                    <th>OrderID</th>
                     <th>ProductID</th>
                     <th>Quantity</th>
                     <th>Total</th>
@@ -31,20 +30,17 @@
                     <tr>
                         <td>@orderitem.OrderID</td>
                         <td>@orderitem.ID</td>
-                        <td>@orderitem.Order.OrderDateTime</td>
                         <td>@orderitem.ProductID</td>
                         <td>@orderitem.OrderItemQtny</td>
-                        <td>@orderitem.OrderItemQtny*@orderitem.Product.ProdPrice</td>
+                        <td>@orderitem.OrderItemTotal</td>
                     </tr>
                 }
             </tbody>
         </table>
     }
 </div>
-
 @code {
     private List<OrderItem> OrderItems;
-
     protected async override Task OnInitializedAsync()
     {
         OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}");
@@ -60,4 +56,3 @@
         js.InvokeVoidAsync("DataTablesDispose", "#orderitemsTable");
     }
 }
-

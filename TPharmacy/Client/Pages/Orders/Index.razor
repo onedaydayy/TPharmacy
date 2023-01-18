@@ -14,27 +14,29 @@
     }
     else
     {
-        <table class="table table-striped align-middle table-bordered responsive-table" id="ordersTable">
+        <table class="table table-striped align-middle table-bordered responsive-table" id="ordersTable" style="border-top-width: 0px;">
             <thead>
 
                 <tr>
                     <th>ID</th>
+                    <th>CusID</th>
                     <th>StaffID</th>
                     <th>DateTime</th>
-                    <th>Price</th>
-                    <th>CusID</th>
+                    <th>Fee</th>
+                    <th>Total</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var order in Orders)
                 {
-                    <tr>
-                        <td>@order.ID</td>
-                        <td>@order.StaffID</td>
-                        <td>@order.OrderDateTime</td>
-                        <td>@order.OrderPrice</td>
-                        <td>@order.CusID</td>
-                    </tr>
+                <tr>
+                    <td>@order.ID</td>
+                    <td>@order.CusID</td>
+                    <td>@order.StaffID</td>
+                    <td>@order.OrderDateTime</td>
+                    <td>@order.OrderFee</td>
+                    <td>@order.OrderTotal</td>
+                </tr>
                 }
             </tbody>
         </table>
