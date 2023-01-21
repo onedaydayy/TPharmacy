@@ -25,7 +25,7 @@
                                 <p>Quantity: @orderitem.OrderItemQtny</p>
                                 <p>Total: @orderitem.OrderItemTotal</p>
                             </div>
-                            <div class="remove-item-button">
+                            <div class="remove-item-button" @onclick="@(()=>Delete(orderitem.ID))">
                                 <button class="btn btn-danger">Remove</button>
                             </div>
                         </div>
@@ -61,6 +61,17 @@
         var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
         var user = authstate.User;
         return user.Identity.Name;
+    }
+
+    async Task Delete(int orderitemID)
+    {
+        var orderitem = OrderItems.First(q => q.ID == orderitemID);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {orderitem.ID}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.OrderItemsEndpoint}/{orderitemID}");
+            await OnInitializedAsync();
+        }
     }
 }
 
