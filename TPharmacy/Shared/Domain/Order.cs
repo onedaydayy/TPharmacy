@@ -6,7 +6,7 @@ namespace TPharmacy.Shared.Domain
 {
     public class Order : BaseDomainModel
     {
-        public int CusID { get; set; }
+        public int CustomerID { get; set; }
         public virtual Customer Customer { get; set; }
         public int StaffID { get; set; }
         public virtual Staff Staff { get; set; }

@@ -13,7 +13,7 @@ namespace TPharmacy.Server.Configurations.Entities
                     new Consultation
                     {
                         ID = 1,
-                        CusID = 1,
+                        CustomerID = 1,
                         StaffID = 1,
                         ConDate = DateTime.Now,
                         ConStartTime = DateTime.Now,
@@ -28,7 +28,7 @@ namespace TPharmacy.Server.Configurations.Entities
                     new Consultation
                     {
                         ID = 2,
-                        CusID = 3,
+                        CustomerID = 3,
                         StaffID = 1,
                         ConDate = DateTime.Now,
                         ConStartTime = DateTime.Now,

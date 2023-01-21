@@ -1,0 +1,66 @@
+﻿@page "/shoppingcart"
+@inject HttpClient _client
+@inject IJSRuntime js
+@inject AuthenticationStateProvider GetAuthenticationStateAsync
+@attribute [Authorize]
+
+<div class="container mt-5">
+    <div class="shopping-cart">
+        <h1 class="header">Shopping Cart</h1>
+        <div class="cart-items-container">
+            @if (OrderItems == null)
+            {
+                <div class="alert alert-info">Loading items...</div>
+            }
+            else
+            {
+                @foreach (var orderitem in OrderItems)
+                {
+                    var customer = Customers.FirstOrDefault(c => c.CusEmail == name && c.ID == orderitem.Order.CustomerID);
+                    if (customer != null)
+                    {
+                        <div class="cart-item">
+                            <div class="product-info">
+                                <h2>Product ID: @orderitem.ProductID</h2>
+                                <p>Quantity: @orderitem.OrderItemQtny</p>
+                                <p>Total: @orderitem.OrderItemTotal</p>
+                            </div>
+                            <div class="remove-item-button">
+                                <button class="btn btn-danger">Remove</button>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+        <div class="cart-total">
+            <h2>Total:</h2>
+            <p>$0.00</p>
+        </div>
+        <div class="checkout-button">
+            <button class="btn btn-primary">Checkout</button>
+        </div>
+    </div>
+</div>
+@code {
+    private List<OrderItem> OrderItems;
+    private List<Customer> Customers;
+    private string name;
+
+    protected async override Task OnInitializedAsync()
+    {
+        name = await GetUserName();
+        await js.InvokeVoidAsync("console.log", "name:" + name);
+
+        OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}");
+        Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+    }
+
+    private async Task<string> GetUserName()
+    {
+        var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+        var user = authstate.User;
+        return user.Identity.Name;
+    }
+}
+

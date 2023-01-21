@@ -61,7 +61,6 @@
     [Parameter] public int id { get; set; }
     Product product = new Product();
     OrderItem orderitem = new OrderItem();
-
     protected async override Task OnParametersSetAsync()
     {
         product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/{id}");
@@ -70,9 +69,9 @@
     private async Task CreateOrderItem()
     {
         orderitem.ProductID = product.ID;
-        orderitem.OrderID = 1;
+        orderitem.OrderID = 2;
         await _client.PostAsJsonAsync(Endpoints.OrderItemsEndpoint, orderitem);
-        _navManager.NavigateTo("/orderitems/");
+        _navManager.NavigateTo("/shoppingcart");
     }
 }
 

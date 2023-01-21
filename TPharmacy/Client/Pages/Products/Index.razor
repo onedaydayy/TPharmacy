@@ -63,13 +63,4 @@
         Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
     }
 
-    async Task Delete(int prodId)
-    {
-        var product = Products.First(q => q.ID == prodId);
-        var confirm = await js.InvokeAsync<bool>("Confirm", $"Do you want to delete {product.ProdName}?");
-        if (confirm)
-        {
-            await _client.DeleteAsync($"{Endpoints.ProductsEndpoint}/{prodId}");
-            await OnInitializedAsync();
-        }
-    } }
+}

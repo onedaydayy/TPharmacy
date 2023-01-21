@@ -13,7 +13,7 @@ namespace TPharmacy.Server.Configurations.Entities
                     new Order
                     {
                         ID = 1,
-                        CusID = 1,
+                        CustomerID = 1,
                         StaffID = 3,
                         OrderDateTime = DateTime.Now,
                         OrderFee = 0.00m,
@@ -26,7 +26,7 @@ namespace TPharmacy.Server.Configurations.Entities
                     new Order
                     {
                         ID = 2,
-                        CusID = 3,
+                        CustomerID = 3,
                         StaffID = 3,
                         OrderDateTime = DateTime.Now,
                         OrderFee = 10.00m,

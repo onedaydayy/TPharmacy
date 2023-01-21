@@ -11,3 +11,4 @@ function DataTablesDispose(table) {
         element.parentNode.removeChild(element);
     })
 }
+

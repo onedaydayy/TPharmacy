@@ -7,7 +7,7 @@ namespace TPharmacy.Shared.Domain
     public class Consultation : BaseDomainModel
     {
         public virtual Customer Customer { get; set; }
-        public int CusID { get; set; }
+        public int CustomerID { get; set; }
         public virtual Staff Staff { get; set; }
         public int StaffID { get; set; }
         public DateTime ConDate { get; set; }

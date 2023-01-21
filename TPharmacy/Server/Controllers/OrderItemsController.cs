@@ -41,7 +41,7 @@ namespace TPharmacy.Server.Controllers
         //public async Task<ActionResult<IEnumerable<OrderItem>>> GetOrderItems()
         public async Task<ActionResult> GetOrderItems()
         {
-            var user = await userManager.GetUserAsync(User);
+            var user = await userManager.GetUserAsync(HttpContext.User);
             if (user != null)
             {
                 logger.LogInformation($"User.Identity.Name: {user.UserName}");
@@ -107,7 +107,6 @@ namespace TPharmacy.Server.Controllers
 
             return NoContent();
         }
-
         // POST: api/OrderItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
