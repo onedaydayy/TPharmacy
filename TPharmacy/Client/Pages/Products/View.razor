@@ -11,51 +11,36 @@
     <EditForm Model="@orderitem" OnValidSubmit="CreateOrderItem">
         <DataAnnotationsValidator />
         <ValidationSummary />
-        <h1>@product.ProdName- @product.ID</h1>
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-5 col-md-5 col-xl-5">
-                    <div class="product-card-2 mt-5">
-                        <div class="content-card">
-                            <img src="img/@product.ProdName .jpeg" class="product-img" />
-                        </div>
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title text-center">@product.ProdName - @product.ID</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="img/@product.ProdName .jpeg" class="img-fluid img-thumbnail" alt="Product Image">
                     </div>
-                </div>
-                <div class="col-sm-5 col-md-5 col-xl-5">
-                    <br />
-                    <br />
-                    <div class="col-sm-4 col-md-4 col-xl-4">
-                        <div class="d-inline float-right">
-                            <div class="row view-margin">
-                                <h2 class="price">@product.ProdPrice</h2>
-                            </div>
-                            <div class="row view-margin">
-                                <div class="form-group">
-                                    <label>Quantity </label>
-                                    <div>
-                                        <InputNumber @bind-Value="@orderitem.OrderItemQtny" class="form-control" Min=1 Max=10 />
-                                        <ValidationMessage For="@(() => orderitem.OrderItemQtny)" />
-                                    </div>
-                                </div>
-                                <h4>Free Shipping</h4>
-                            </div>
+                    <div class="col-md-6">
+                        <h2 class="price text-left" style="padding-top: 30px;">$ @product.ProdPrice</h2>
+                        <div class="form-group" style="padding-top: 20px;">
+                            <h5>Quantity</h5>
+                            <InputNumber @bind-Value="@orderitem.OrderItemQtny" class="form-control" Min=1 Max=100 />
+                            <ValidationMessage For="@(() => orderitem.OrderItemQtny)" />
                         </div>
-                        <br />
-                        <div class="row view-margin">
-                            <button type="submit" class="btn btn-success btn-block">
-                                <span class="oi oi-cart"></span>
-                            </button>
-                        </div>
-                        <br /> <div class="content-text desc-zone">
+                        <h5 class="text-left" style="padding-top: 20px; padding-bottom: 20px;">
+                            Free Shipping
+                        </h5>
+                        <button type="submit" class="btn btn-success btn-block">
+                            <span class="oi oi-cart"></span> Add to Cart
+                        </button>
+                        <div class="card-text" style="padding-top: 30px;">
                             @product.ProdDesc
                         </div>
                     </div>
-                   
                 </div>
             </div>
-            </div>
+        </div>
     </EditForm>
 </div>
+
 
 @code {
     [Parameter] public int id { get; set; }

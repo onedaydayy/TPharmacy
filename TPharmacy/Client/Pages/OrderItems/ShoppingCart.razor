@@ -6,42 +6,56 @@
 
 <div class="container mt-5">
     <div class="shopping-cart">
-        <h1 class="header">Shopping Cart</h1>
+        <h1 class="header text-center">Shopping Cart</h1>
         <div class="cart-items-container">
             @if (OrderItems == null)
             {
-                <div class="alert alert-info">Loading items...</div>
+                <div class="alert alert-info text-center">Loading items...</div>
             }
             else
             {
+                decimal total = 0;
                 @foreach (var orderitem in OrderItems)
                 {
                     var customer = Customers.FirstOrDefault(c => c.CusEmail == name && c.ID == orderitem.Order.CustomerID);
                     if (customer != null)
                     {
-                        <div class="cart-item">
-                            <div class="product-info">
-                                <h2>Product ID: @orderitem.ProductID</h2>
-                                <p>Quantity: @orderitem.OrderItemQtny</p>
-                                <p>Total: @orderitem.OrderItemTotal</p>
+                        <div class="cart-item row">
+                            <div class="col-md-3 product-photo">
+                                <img src="img/@orderitem.Product.ProdName .jpeg" class="Product Image">
                             </div>
-                            <div class="remove-item-button" @onclick="@(()=>Delete(orderitem.ID))">
-                                <button class="btn btn-danger">Remove</button>
+                            <div class="col-md-6 product-info">
+                                <h3>Product ID: @orderitem.ProductID</h3>
+                                <h5>Quantity: @orderitem.OrderItemQtny</h5>
+                                <h5>Description: @orderitem.Product.ProdDesc</h5>
+                                <h5>Total: $@orderitem.OrderItemTotal</h5>
+                            </div>
+                            <div class="col-md-3 text-center">
+                                <div class="edit-item-button">
+                                    <a href="/shoppingcart/edit/@orderitem.ID" class="btn btn-primary">
+                                        Edit
+                                    </a>
+                                </div>
+                                <div class="remove-item-button" @onclick="@(()=>Delete(orderitem.ID))">
+                                    <button class="btn btn-danger">Remove</button>
+                                </div>
                             </div>
                         </div>
+                        total += orderitem.OrderItemTotal;
                     }
                 }
+                <div class="cart-total text-left" style="padding-left: 900px;">
+                    <h4>Total: $@total</h4>
+                    <div class="checkout-button text-right">
+                        <button class="btn btn-primary">Checkout</button>
+                    </div>
+                </div>
             }
-        </div>
-        <div class="cart-total">
-            <h2>Total:</h2>
-            <p>$0.00</p>
-        </div>
-        <div class="checkout-button">
-            <button class="btn btn-primary">Checkout</button>
+
         </div>
     </div>
 </div>
+
 @code {
     private List<OrderItem> OrderItems;
     private List<Customer> Customers;
@@ -51,7 +65,6 @@
     {
         name = await GetUserName();
         await js.InvokeVoidAsync("console.log", "name:" + name);
-
         OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}");
         Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
     }
@@ -59,18 +72,18 @@
     private async Task<string> GetUserName()
     {
         var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
-        var user = authstate.User;
-        return user.Identity.Name;
+        var user = authstate.User; return user.Identity.Name;
     }
 
     async Task Delete(int orderitemID)
     {
         var orderitem = OrderItems.First(q => q.ID == orderitemID);
-        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {orderitem.ID}?");
+        var confirm = await js.InvokeAsync<bool>
+            ("confirm", $"Do you want to delete {orderitem.ID}?");
         if (confirm)
         {
             await _client.DeleteAsync($"{Endpoints.OrderItemsEndpoint}/{orderitemID}");
-            await OnInitializedAsync();
+            OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}");
         }
     }
 }
