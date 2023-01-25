@@ -10,19 +10,20 @@ namespace TPharmacy.Server.Configurations.Entities
         public void Configure(EntityTypeBuilder<Order> builder)
         {
             builder.HasData(
-                    new Order
-                    {
-                        ID = 1,
-                        CustomerID = 1,
-                        StaffID = 3,
-                        OrderDateTime = DateTime.Now,
-                        OrderFee = 0.00m,
-                        OrderTotal = 0.00m + 128.00m,
-                        DateCreated = DateTime.Now,
-                        DateUpdated = DateTime.Now,
-                        CreatedBy = "System",
-                        UpdatedBy = "Kate"
-                    },
+                   new Order
+                   {
+                       ID = 1,
+                       CustomerID = 1,
+                       StaffID = 3,
+                       OrderDateTime = DateTime.Now,
+                       OrderFee = 0.00m,
+                       OrderTotal = 0.00m + 128.00m,
+                       DateCreated = DateTime.Now,
+                       DateUpdated = DateTime.Now,
+                       CreatedBy = "System",
+                       UpdatedBy = "Kate",
+                       OrderStatus = Order.Status.InProgress
+                   },
                     new Order
                     {
                         ID = 2,
@@ -34,7 +35,8 @@ namespace TPharmacy.Server.Configurations.Entities
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
                         CreatedBy = "System",
-                        UpdatedBy = "Kate"
+                        UpdatedBy = "Kate",
+                        OrderStatus = Order.Status.InProgress
                     });
         }
     }

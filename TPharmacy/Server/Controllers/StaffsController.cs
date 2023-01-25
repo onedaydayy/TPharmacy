@@ -137,7 +137,7 @@ namespace TPharmacy.Server.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = staff.StafEmail, Email = staff.StafEmail, Id = staff.StafName };
+                var user = new ApplicationUser { UserName = staff.StafEmail, Email = staff.StafEmail, Id = staff.StafName, Name= staff.StafName, Role= "Staff"};
                 var result = await userManager.CreateAsync(user, staff.StafPassword);
                 if (result.Succeeded)
                 {

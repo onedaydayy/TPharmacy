@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TPharmacy.Server.Models;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Http;
 
 namespace TPharmacy.Server.Areas.Identity.Pages.Account
 {
@@ -87,6 +88,11 @@ namespace TPharmacy.Server.Areas.Identity.Pages.Account
                     var user = await _userManager.FindByNameAsync(Input.Email);
                     var roles = await _userManager.GetRolesAsync(user);
                     _logger.LogInformation("User logged in.");
+
+                    // Store user's information in session variable
+                    var username = user.UserName;
+                    HttpContext.Session.SetString("username", username);
+
                     if (roles.Contains("Staff"))
                     {
                         return Redirect("~/stafhome");

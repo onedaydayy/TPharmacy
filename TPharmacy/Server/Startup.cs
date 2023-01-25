@@ -69,6 +69,7 @@ namespace TPharmacy.Server
             services.AddRazorPages();
 
             services.AddHttpContextAccessor();
+            services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,6 +97,7 @@ namespace TPharmacy.Server
             app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
