@@ -174,33 +174,31 @@ namespace TPharmacy.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteStaff(int id)
         {
-            //Refactored
-            //var staff = await _context.Staffs.FindAsync(id);
             var staff = await _unitOfWork.Staffs.Get(q => q.ID == id);
             if (staff == null)
             {
                 return NotFound();
             }
-
-            //Refactored
-            //_context.Staffs.Remove(staff);
-            //await _context.SaveChangesAsync();
+            //Delete Staff
             await _unitOfWork.Staffs.Delete(id);
             await _unitOfWork.Save(HttpContext);
 
             var user = await userManager.FindByNameAsync(staff.StafName);
             if (user != null)
             {
-                await roleManager.FindByNameAsync("Staff");
-                var result = await userManager.RemoveFromRoleAsync(user, "Staff");
+                //Remove User
+                var result = await userManager.DeleteAsync(user);
                 if (result.Succeeded)
                 {
+                    //Remove user from the staff role
+                    await userManager.RemoveFromRoleAsync(user, "Staff");
                     return Ok();
                 }
             }
 
             return NoContent();
         }
+
 
         //Refactored
         //private bool StaffExists(int id)

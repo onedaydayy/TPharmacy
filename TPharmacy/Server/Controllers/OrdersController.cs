@@ -24,6 +24,7 @@ namespace TPharmacy.Server.Controllers
         //Refactored 
         //private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
+        private string username;
 
         //Refactored
         //public OrdersController(ApplicationDbContext context)
@@ -41,10 +42,12 @@ namespace TPharmacy.Server.Controllers
         //public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         public async Task<ActionResult> GetOrders()
         {
+            username = HttpContext.Session.GetString("username");
             var user = await userManager.GetUserAsync(User);
             if (user != null)
             {
                 logger.LogInformation($"User.Identity.Name: {user.UserName}");
+                logger.LogInformation(username);
             }
             //Refactored
             //return await _context.Orders.ToListAsync();
@@ -120,7 +123,6 @@ namespace TPharmacy.Server.Controllers
             await _unitOfWork.Save(HttpContext);
             return CreatedAtAction("GetOrder", new { id = order.ID }, order);
         }
-
         // DELETE: api/Orders/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(int id)
