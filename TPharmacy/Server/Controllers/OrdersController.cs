@@ -24,7 +24,6 @@ namespace TPharmacy.Server.Controllers
         //Refactored 
         //private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
-        private string username;
 
         //Refactored
         //public OrdersController(ApplicationDbContext context)
@@ -42,12 +41,10 @@ namespace TPharmacy.Server.Controllers
         //public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         public async Task<ActionResult> GetOrders()
         {
-            username = HttpContext.Session.GetString("username");
             var user = await userManager.GetUserAsync(User);
             if (user != null)
             {
                 logger.LogInformation($"User.Identity.Name: {user.UserName}");
-                logger.LogInformation(username);
             }
             //Refactored
             //return await _context.Orders.ToListAsync();
@@ -74,55 +71,59 @@ namespace TPharmacy.Server.Controllers
             return Ok(order);
         }
 
-        // PUT: api/Orders/5
+        // POST: api/Orders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(int id, Order order)
+        [HttpPost("checkout")]
+        public async Task<ActionResult<Order>> PostOrder(Order order)
         {
-            if (id != order.ID)
+            var username = HttpContext.Session.GetString("username");
+            if (username != null)
             {
-                return BadRequest();
-            }
-
-            //Refactored
-            //_context.Entry(order).State = EntityState.Modified;
-            _unitOfWork.Orders.Update(order);
-
-            try
-            {
-                //Refactored
-                //await _context.SaveChangesAsync();
-                await _unitOfWork.Save(HttpContext);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                //Refactored
-                //if (!OrderExists(id))
-                if (!await OrderExists(id))
+                var customer = await _unitOfWork.Customers.Get(c => c.CusEmail == username);
+                if (customer != null)
                 {
-                    return NotFound();
+                    int? orderId = HttpContext.Session.GetInt32("orderId");
+                    if (orderId.HasValue)
+                    {
+                        var existingOrder = await _unitOfWork.Orders.Get(o => o.ID == orderId);
+                        if (existingOrder != null)
+                        {
+                            decimal total = 0;
+                            var orderItems = await _unitOfWork.OrderItems.GetAll(o => o.OrderID == existingOrder.ID);
+                            foreach (var item in orderItems)
+                            {
+                                total += item.OrderItemTotal;
+                            }
+                            existingOrder.OrderTotal = total;
+                            existingOrder.OrderDateTime = order.OrderDateTime;
+                            existingOrder.OrderStatus = Order.Status.Completed; // Update the status to "Completed"
+                            _unitOfWork.Orders.Update(existingOrder);
+                            await _unitOfWork.Save(HttpContext);
+                            HttpContext.Session.Remove("orderId");
+                            return CreatedAtAction("GetOrder", new { id = existingOrder.ID }, existingOrder);
+                        }
+                        else
+                        {
+                            return NotFound();
+                        }
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
                 }
                 else
                 {
-                    throw;
+                    return NotFound();
                 }
             }
-
-            return NoContent();
+            else
+            {
+                return NotFound();
+            }
         }
 
-        // POST: api/Orders
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
-        {
-            //Refactored
-            //_context.Orders.Add(order);
-            //await _context.SaveChangesAsync();
-            await _unitOfWork.Orders.Insert(order);
-            await _unitOfWork.Save(HttpContext);
-            return CreatedAtAction("GetOrder", new { id = order.ID }, order);
-        }
+
         // DELETE: api/Orders/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(int id)
@@ -152,6 +153,58 @@ namespace TPharmacy.Server.Controllers
             //return _context.Orders.Any(e => e.ID == id);
             var order = await _unitOfWork.Orders.Get(q => q.ID == id);
             return order != null;
+        }
+
+        [HttpPut("checkout/{id}")]
+        public async Task<IActionResult> CheckoutOrder(int id)
+        {
+            var order = await _unitOfWork.Orders.Get(q => q.ID == id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            order.OrderStatus = Order.Status.Completed;
+            _unitOfWork.Orders.Update(order);
+            await _unitOfWork.Save(HttpContext);
+            return NoContent();
+        }
+
+        [HttpGet("checkout")]
+        public async Task<ActionResult<int>> GetCheckoutOrderId()
+        {
+            var username = HttpContext.Session.GetString("username");
+            if (username != null)
+            {
+                var customer = await _unitOfWork.Customers.Get(c => c.CusEmail == username);
+                if (customer != null)
+                {
+                    int? orderId = HttpContext.Session.GetInt32("orderId");
+                    if (orderId.HasValue)
+                    {
+                        var existingOrder = await _unitOfWork.Orders.Get(o => o.ID == orderId);
+                        if (existingOrder != null && existingOrder.OrderStatus != Order.Status.Completed)
+                        {
+                            return Ok(orderId);
+                        }
+                        else
+                        {
+                            return NotFound();
+                        }
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }

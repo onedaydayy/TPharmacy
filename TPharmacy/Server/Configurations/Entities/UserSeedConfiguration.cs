@@ -44,8 +44,8 @@ namespace TPharmacy.Server.Configurations.Entities
                 LockoutEnabled = true,
                 PhoneNumberConfirmed = true,
                 Address = "TPharmacy",
-                Password = "P@ssword1",
-                PasswordHash = hasher.HashPassword(null, "Woon1234*"),
+                Password = "June1234*",
+                PasswordHash = hasher.HashPassword(null, "June1234*"),
                 SecurityStamp = Guid.NewGuid().ToString()
             },
             new ApplicationUser
@@ -62,8 +62,8 @@ namespace TPharmacy.Server.Configurations.Entities
                 LockoutEnabled = true,
                 PhoneNumberConfirmed = true,
                 Address = "TPharmacy",
-                Password = "Kate1234*",
-                PasswordHash = hasher.HashPassword(null, "Kate1234*"),
+                Password = "June1234*",
+                PasswordHash = hasher.HashPassword(null, "June1234*"),
                 SecurityStamp = Guid.NewGuid().ToString()
             },
             new ApplicationUser
@@ -80,8 +80,8 @@ namespace TPharmacy.Server.Configurations.Entities
                 LockoutEnabled = true,
                 PhoneNumberConfirmed = true,
                 Address = "Tampines Ave 1",
-                Password = "James1234*",
-                PasswordHash = hasher.HashPassword(null, "James1234*"),
+                Password = "June1234*",
+                PasswordHash = hasher.HashPassword(null, "June1234*"),
                 SecurityStamp = Guid.NewGuid().ToString()
             },
             new ApplicationUser
@@ -98,8 +98,8 @@ namespace TPharmacy.Server.Configurations.Entities
                 LockoutEnabled = true,
                 PhoneNumberConfirmed = true,
                 Address = "Bedok Ave 1",
-                Password = "Alice1234*",
-                PasswordHash = hasher.HashPassword(null, "Alice1234*"),
+                Password = "June1234*",
+                PasswordHash = hasher.HashPassword(null, "June1234*"),
                 SecurityStamp = Guid.NewGuid().ToString()
             },
             new ApplicationUser
@@ -116,8 +116,8 @@ namespace TPharmacy.Server.Configurations.Entities
                 LockoutEnabled = true,
                 PhoneNumberConfirmed = true,
                 Address = "Jurong Ave 1",
-                Password = "Sheila1234*",
-                PasswordHash = hasher.HashPassword(null, "Sheila1234*"),
+                Password = "June1234*",
+                PasswordHash = hasher.HashPassword(null, "June1234*"),
                 SecurityStamp = Guid.NewGuid().ToString()
             });
         }

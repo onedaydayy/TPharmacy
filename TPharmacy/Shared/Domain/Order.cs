@@ -27,21 +27,18 @@ namespace TPharmacy.Shared.Domain
 
         [Column(TypeName = "decimal(7,2)")]
         public decimal OrderFee { get; set; }
+
         [Column(TypeName = "decimal(7,2)")]
         public decimal OrderTotal { get; set; }
+
+        [Column(TypeName = "decimal(7,2)")]
+        public decimal OrderItemTotal { get; set; }
+
         public virtual List<OrderItem> OrderItems { get; set; }
         public virtual List<Payment> Payments { get; set; }
         public void CalculateOrderTotal()
         {
-            decimal orderItemTotal = 0;
-            foreach (var orderItem in OrderItems)
-            {
-                if (orderItem.OrderID == this.ID)
-                {
-                    orderItemTotal += orderItem.OrderItemTotal;
-                }
-            }
-            if (orderItemTotal >= 100)
+            if (OrderItemTotal >= 100)
             {
                 OrderFee = 10;
             }
@@ -49,7 +46,7 @@ namespace TPharmacy.Shared.Domain
             {
                 OrderFee = 0;
             }
-            OrderTotal = OrderFee + orderItemTotal;
+            OrderTotal = OrderFee + OrderItemTotal;
         }
     }
 }

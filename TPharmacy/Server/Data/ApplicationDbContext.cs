@@ -34,12 +34,6 @@ namespace TPharmacy.Server.Data
 
             builder.ApplyConfiguration(new CustomerSeedConfiguration());
 
-            builder.ApplyConfiguration(new OrderSeedConfiguration());
-
-            builder.ApplyConfiguration(new OrderItemSeedConfiguration());
-
-            builder.ApplyConfiguration(new PaymentSeedConfiguration());
-
             builder.ApplyConfiguration(new PrescriptionSeedConfiguration());
 
             builder.ApplyConfiguration(new ConsultationSeedConfiguration());

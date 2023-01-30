@@ -43,20 +43,30 @@
 
 
 @code {
-    [Parameter] public int id { get; set; }
-    Product product = new Product();
-    OrderItem orderitem = new OrderItem();
-    protected async override Task OnParametersSetAsync()
+        [Parameter] public int id { get; set; }
+        Product product = new Product();
+        OrderItem orderitem = new OrderItem();
+
+
+protected async override Task OnParametersSetAsync()
     {
         product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/{id}");
     }
 
     private async Task CreateOrderItem()
     {
+
         orderitem.ProductID = product.ID;
-        orderitem.OrderID = 2;
-        await _client.PostAsJsonAsync(Endpoints.OrderItemsEndpoint, orderitem);
-        _navManager.NavigateTo("/shoppingcart");
+        var response = await Http.PostAsJsonAsync(Endpoints.OrderItemsEndpoint, orderitem);
+        if (response.IsSuccessStatusCode)
+        {
+            _navManager.NavigateTo("/shoppingcart");
+        }
+        else
+        {
+            // Handle error
+        }
+
     }
 }
 

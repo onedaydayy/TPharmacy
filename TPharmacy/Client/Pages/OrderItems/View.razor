@@ -1,0 +1,50 @@
+﻿@page "/orderitems/view/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<div class="container my-5">
+    <h1 class="header">View OrderItem- @orderitem.ID</h1>
+    <h3>OrderID- @orderitem.OrderID</h3>
+    <div class="card">
+        <div class="card-body">
+            @if (orderitem.Product != null)
+            {
+                <div class="row">
+                    <div class="col-md-5">
+                        <img src="img/@orderitem.Product.ProdName .jpeg" class="img-fluid" alt="Product Image">
+                    </div>
+                    <div class="col-md-7">
+                        <br />
+                        <h2 class="card-title">@orderitem.Product.ProdName</h2>
+                        <h5 class="card-subtitle text-muted">Product ID: @orderitem.Product.ID</h5>
+                        <br />
+                        <h4 class="price text">$ @orderitem.Product.ProdPrice</h4>
+                        <div class="form-group">
+                            <label>Quantity:</label>
+                            <h5>Quantity: @orderitem.OrderItemQtny</h5>
+                        </div>
+                        <div class="form-group">
+                            <label>Total: @orderitem.OrderItemTotal</label>
+                        </div>
+                        <p class="card-text">@orderitem.Product.ProdDesc</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@code
+{
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public int id { get; set; }
+    OrderItem orderitem = new OrderItem();
+    protected async override Task OnParametersSetAsync()
+    {
+        orderitem = await _client.GetFromJsonAsync<OrderItem>($"{Endpoints.OrderItemsEndpoint}/{id}");
+        if (orderitem.ProductID != null)
+        {
+            var product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/{orderitem.ProductID}");
+            orderitem.Product = product;
+        }
+    }
+}

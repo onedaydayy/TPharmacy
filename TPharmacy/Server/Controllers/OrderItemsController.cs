@@ -35,8 +35,27 @@ namespace TPharmacy.Server.Controllers
             this.logger = logger;
             this.roleManager = roleManager;
         }
-        // GET: api/OrderItems
-        [HttpGet]
+
+        // GET: api/OrderItems/orderid/{orderId}
+        [HttpGet("customer")]
+        public async Task<ActionResult> GetCustomerOrderItems()
+        {
+            // Get the orderId from the session
+            var orderId = HttpContext.Session.GetInt32("orderId");
+
+            if (orderId.HasValue)
+            {
+                // Use the orderId to retrieve all order items for the current order
+                var orderitems = await _unitOfWork.OrderItems.GetAll(q => q.OrderID == orderId.Value, includes: q => q.Include(x => x.Order).Include(x => x.Product));
+                return Ok(orderitems);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+            // GET: api/OrderItems
+            [HttpGet]
         //Refactored
         //public async Task<ActionResult<IEnumerable<OrderItem>>> GetOrderItems()
         public async Task<ActionResult> GetOrderItems()
@@ -52,14 +71,13 @@ namespace TPharmacy.Server.Controllers
             return Ok(orderitems);
         }
 
+
         // GET: api/OrderItems/5
-        [HttpGet("{id}")]
         //Refactored
         //public async Task<ActionResult<OrderItem>> GetOrderItem(int id)
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetOrderItem(int id)
         {
-            //Refactored
-            //var orderitem = await _context.OrderItems.FindAsync(id);
             var orderitem = await _unitOfWork.OrderItems.Get(q => q.ID == id);
 
             if (orderitem == null)
@@ -67,7 +85,9 @@ namespace TPharmacy.Server.Controllers
                 return NotFound();
             }
 
-            //Refactored
+            var product = await _unitOfWork.Products.Get(q => q.ID == orderitem.ProductID);
+            orderitem.Product = product;
+
             return Ok(orderitem);
         }
 
@@ -76,69 +96,106 @@ namespace TPharmacy.Server.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrderItem(int id, OrderItem orderitem)
         {
-            if (id != orderitem.ID)
-            {
-                return BadRequest();
-            }
+            // Retrieve the order's ID from the session variable
+            var orderId = HttpContext.Session.GetInt32("orderId");
 
-            //Refactored
-            //_context.Entry(orderitem).State = EntityState.Modified;
-            _unitOfWork.OrderItems.Update(orderitem);
+            if (orderId.HasValue)
+            {
+                // Use the order's ID to retrieve the correct order item
+                var existingOrderItem = await _unitOfWork.OrderItems.Get(q => q.ID == id && q.OrderID == orderId);
 
-            try
-            {
-                //Refactored
-                //await _context.SaveChangesAsync();
-                await _unitOfWork.Save(HttpContext);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                //Refactored
-                //if (!OrderItemExists(id))
-                if (!await OrderItemExists(id))
+                if (existingOrderItem == null)
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                existingOrderItem.OrderItemQtny = orderitem.OrderItemQtny;
+                _unitOfWork.OrderItems.Update(existingOrderItem);
+                await _unitOfWork.Save(HttpContext);
+                return NoContent();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
         // POST: api/OrderItems
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<OrderItem>> PostOrderItem(OrderItem orderitem)
         {
-            //Refactored
-            //_context.OrderItems.Add(orderitem);
-            //await _context.SaveChangesAsync();
-            await _unitOfWork.OrderItems.Insert(orderitem);
-            await _unitOfWork.Save(HttpContext);
-            return CreatedAtAction("GetOrderItem", new { id = orderitem.ID }, orderitem);
+            var username = HttpContext.Session.GetString("username");
+            if (username != null)
+            {
+                var customer = await _unitOfWork.Customers.Get(c => c.CusEmail == username);
+                if (customer != null)
+                {
+                    int? orderId = HttpContext.Session.GetInt32("orderId");
+                    if (!orderId.HasValue)
+                    {
+                        var order = new Order
+                        {
+                            CustomerID = customer.ID,
+                            OrderDateTime = DateTime.Now,
+                            StaffID = 3
+                        };
+                        await _unitOfWork.Orders.Insert(order);
+                        await _unitOfWork.Save(HttpContext);
+                        orderitem.OrderID = order.ID;
+                        HttpContext.Session.SetInt32("orderId", order.ID);
+                    }
+                    else
+                    {
+                        var order = await _unitOfWork.Orders.Get(q => q.ID == orderId.Value);
+                        if (order.OrderStatus == Order.Status.Completed)
+                        {
+                            return BadRequest("Cannot add more items to a checked out order");
+                        }
+                        orderitem.OrderID = orderId.Value;
+                    }
+                    await _unitOfWork.OrderItems.Insert(orderitem);
+                    await _unitOfWork.Save(HttpContext);
+                    return CreatedAtAction("GetOrderItem", new { id = orderitem.ID }, orderitem);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            else
+            {
+                return NotFound();
+            }
         }
-
         // DELETE: api/OrderItems/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrderItem(int id)
         {
-            //Refactored
-            //var orderitem = await _context.OrderItems.FindAsync(id);
             var orderitem = await _unitOfWork.OrderItems.Get(q => q.ID == id);
             if (orderitem == null)
             {
                 return NotFound();
             }
 
-            //Refactored
-            //_context.OrderItems.Remove(orderitem);
-            //await _context.SaveChangesAsync();
-            await _unitOfWork.OrderItems.Delete(id);
-            await _unitOfWork.Save(HttpContext);
+            // Retrieve the order's ID from the session variable
+            var orderId = HttpContext.Session.GetInt32("orderId");
+            if (orderId.HasValue)
+            {
+                // Use the order's ID to retrieve the correct order item
+                var existingOrderItem = await _unitOfWork.OrderItems.Get(q => q.ID == id && q.OrderID == orderId);
+                if (existingOrderItem == null)
+                {
+                    return NotFound();
+                }
 
-            return NoContent();
+                await _unitOfWork.OrderItems.Delete(existingOrderItem.ID);
+                await _unitOfWork.Save(HttpContext);
+                return NoContent();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         //Refactored

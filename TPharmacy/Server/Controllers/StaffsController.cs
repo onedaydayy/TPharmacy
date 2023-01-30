@@ -77,46 +77,49 @@ namespace TPharmacy.Server.Controllers
             {
                 return NotFound();
             }
-
             var currentRoles = await userManager.GetRolesAsync(user);
+            await userManager.RemoveFromRolesAsync(user, currentRoles);
             if (staff.StafRole == "Admin")
             {
-                await userManager.RemoveFromRolesAsync(user, currentRoles);
-                await roleManager.FindByNameAsync("Admin");
                 await userManager.AddToRoleAsync(user, "Admin");
             }
             if (staff.StafRole == "Pharmacist")
             {
-                await userManager.RemoveFromRolesAsync(user, currentRoles);
-                await roleManager.FindByNameAsync("Pharmacist");
                 await userManager.AddToRoleAsync(user, "Pharmacist");
             }
             if (staff.StafRole == "Packer")
             {
-                await userManager.RemoveFromRolesAsync(user, currentRoles);
-                await roleManager.FindByNameAsync("Packer");
                 await userManager.AddToRoleAsync(user, "Packer");
             }
-
             if (id != staff.ID)
             {
                 return BadRequest();
             }
 
-            //Refactored
-            //_context.Entry(staff).State = EntityState.Modified;
-            _unitOfWork.Staffs.Update(staff);
+            user.Id = staff.StafName;
+            user.UserName = staff.StafEmail;
+            user.Email = staff.StafEmail;
+            user.Name = staff.StafName;
+            user.Password = staff.StafPassword;
 
+            var updateResult = await userManager.UpdateAsync(user);
+            if (!updateResult.Succeeded)
+            {
+                return BadRequest();
+            }
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+            var passwordResetResult = await userManager.ResetPasswordAsync(user, token, staff.StafPassword);
+            if (!passwordResetResult.Succeeded)
+            {
+                return BadRequest();
+            }
+            _unitOfWork.Staffs.Update(staff);
             try
             {
-                //Refactored
-                //await _context.SaveChangesAsync();
                 await _unitOfWork.Save(HttpContext);
             }
             catch (DbUpdateConcurrencyException)
             {
-                //Refactored
-                //if (!StaffExists(id))
                 if (!await StaffExists(id))
                 {
                     return NotFound();
@@ -126,7 +129,6 @@ namespace TPharmacy.Server.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
@@ -137,7 +139,7 @@ namespace TPharmacy.Server.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = staff.StafEmail, Email = staff.StafEmail, Id = staff.StafName, Name= staff.StafName, Role= "Staff"};
+                var user = new ApplicationUser { UserName = staff.StafEmail, Email = staff.StafEmail, Id = staff.StafName, Name = staff.StafName, Role = "Staff" };
                 var result = await userManager.CreateAsync(user, staff.StafPassword);
                 if (result.Succeeded)
                 {

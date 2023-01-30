@@ -12,6 +12,10 @@
             {
                 <div class="alert alert-info text-center">Loading items...</div>
             }
+            else if (OrderItems.Count == 0)
+            {
+                <div class="alert alert-info text-center">No items in the shopping cart</div>
+            }
             else
             {
                 decimal total = 0;
@@ -46,7 +50,7 @@
                 }
                 <div class="cart-total text-left" style="padding-left: 900px;">
                     <h4>Total: $@total</h4>
-                    <div class="checkout-button text-right">
+                    <div class="checkout-button text-right" @onclick="@(()=>CheckOut())">
                         <button class="btn btn-primary">Checkout</button>
                     </div>
                 </div>
@@ -65,7 +69,7 @@
     {
         name = await GetUserName();
         await js.InvokeVoidAsync("console.log", "name:" + name);
-        OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}");
+        OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}/customer");
         Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
     }
 
@@ -77,14 +81,47 @@
 
     async Task Delete(int orderitemID)
     {
-        var orderitem = OrderItems.First(q => q.ID == orderitemID);
+        var orderitem = OrderItems.FirstOrDefault(q => q.ID == orderitemID);
+        if (orderitem == null)
+        {
+            await js.InvokeVoidAsync("alert", "Order item not found!");
+            return;
+        }
         var confirm = await js.InvokeAsync<bool>
-            ("confirm", $"Do you want to delete {orderitem.ID}?");
+        ("confirm", $"Do you want to delete {orderitem.ID}?");
         if (confirm)
         {
             await _client.DeleteAsync($"{Endpoints.OrderItemsEndpoint}/{orderitemID}");
-            OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}");
+            OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}/customer");
         }
     }
+
+    async Task CheckOut()
+    {
+        decimal total = 0;
+        foreach (var orderitem in OrderItems)
+        {
+            total += orderitem.OrderItemTotal;
+        }
+
+        var customer = Customers.FirstOrDefault(c => c.CusEmail == name);
+        if (customer == null)
+        {
+            await js.InvokeVoidAsync("alert", "Customer not found!");
+            return;
+        }
+
+        var order = new Order
+        {
+            StaffID = 3,
+            CustomerID = customer.ID,
+            OrderItemTotal = total,
+            OrderDateTime = DateTime.Now,
+            OrderItems = OrderItems
+        };
+        await _client.PostAsJsonAsync($"{Endpoints.OrdersEndpoint}/checkout", order);
+        OrderItems.Clear(); // added line to clear the shopping cart after checkout
+    }
+
 }
 

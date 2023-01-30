@@ -22,6 +22,7 @@
                     <th>ProductID</th>
                     <th>Quantity</th>
                     <th>Total</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,6 +34,11 @@
                         <td>@orderitem.ProductID</td>
                         <td>@orderitem.OrderItemQtny</td>
                         <td>@orderitem.OrderItemTotal</td>
+                        <td>
+                            <a href="/orderitems/view/@orderitem.ID" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                        </td>
                     </tr>
                 }
             </tbody>
