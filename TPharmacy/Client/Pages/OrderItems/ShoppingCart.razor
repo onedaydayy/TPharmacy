@@ -91,6 +91,7 @@
         }
     }
 
+
     async Task CheckOut()
     {
         decimal total = 0;
@@ -99,6 +100,7 @@
             total += orderitem.OrderItemTotal;
         }
 
+        Console.WriteLine("shoppingcart" + total);
         var customer = Customers.FirstOrDefault(c => c.CusEmail == name);
         if (customer == null)
         {
@@ -109,6 +111,8 @@
         var order = new Order
         {
             OrderDateTime = DateTime.Now,
+            OrderItemTotal = total // fixed this line
+
         };
         await _client.PutAsJsonAsync($"{Endpoints.OrdersEndpoint}/checkout", order);
         OrderItems.Clear(); // added line to clear the shopping cart after checkout

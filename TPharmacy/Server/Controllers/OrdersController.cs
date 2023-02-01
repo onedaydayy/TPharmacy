@@ -82,16 +82,11 @@ namespace TPharmacy.Server.Controllers
                     {
                         var existingOrder = await _unitOfWork.Orders.Get(o => o.ID == orderId);
                         if (existingOrder != null)
-                        {
-                            decimal total = 0;
-                            var orderItems = await _unitOfWork.OrderItems.GetAll(o => o.OrderID == existingOrder.ID);
-                            foreach (var item in orderItems)
-                            {
-                                total += item.OrderItemTotal;
-                            }
-                            existingOrder.OrderItemTotal = total;
+                        { 
+                            existingOrder.OrderItemTotal = order.OrderItemTotal;
                             existingOrder.OrderDateTime = order.OrderDateTime;
-                            existingOrder.OrderStatus = Order.Status.Completed; // Update the status to "Completed"
+                            existingOrder.OrderStatus = Order.Status.Completed;
+                            existingOrder.CalculateOrderTotal();
                             _unitOfWork.Orders.Update(existingOrder);
                             await _unitOfWork.Save(HttpContext);
                             HttpContext.Session.Remove("orderId");

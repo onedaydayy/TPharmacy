@@ -38,13 +38,13 @@ namespace TPharmacy.Shared.Domain
         public virtual List<Payment> Payments { get; set; }
         public void CalculateOrderTotal()
         {
-            if (OrderItemTotal >= 100)
+            if (OrderItemTotal >= 200)
             {
-                OrderFee = 10;
+                OrderFee = 0;
             }
             else
             {
-                OrderFee = 0;
+                OrderFee = 10;
             }
             OrderTotal = OrderFee + OrderItemTotal;
         }
