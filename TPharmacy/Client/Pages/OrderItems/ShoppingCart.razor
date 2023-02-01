@@ -1,6 +1,7 @@
 ﻿@page "/shoppingcart"
 @inject HttpClient _client
 @inject IJSRuntime js
+@inject NavigationManager _navManager
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @attribute [Authorize]
 
@@ -21,41 +22,36 @@
                 decimal total = 0;
                 @foreach (var orderitem in OrderItems)
                 {
-                    var customer = Customers.FirstOrDefault(c => c.CusEmail == name && c.ID == orderitem.Order.CustomerID);
-                    if (customer != null)
-                    {
-                        <div class="cart-item row">
-                            <div class="col-md-3 product-photo">
-                                <img src="img/@orderitem.Product.ProdName .jpeg" class="Product Image">
+                    <div class="cart-item row">
+                        <div class="col-md-3 product-photo">
+                            <img src="img/@orderitem.Product.ProdName .jpeg" class="Product Image">
+                        </div>
+                        <div class="col-md-6 product-info">
+                            <h3>Product ID: @orderitem.ProductID</h3>
+                            <h5>Quantity: @orderitem.OrderItemQtny</h5>
+                            <h5>Description: @orderitem.Product.ProdDesc</h5>
+                            <h5>Total: $@orderitem.OrderItemTotal</h5>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <div class="edit-item-button">
+                                <a href="/shoppingcart/edit/@orderitem.ID" class="btn btn-primary">
+                                    Edit
+                                </a>
                             </div>
-                            <div class="col-md-6 product-info">
-                                <h3>Product ID: @orderitem.ProductID</h3>
-                                <h5>Quantity: @orderitem.OrderItemQtny</h5>
-                                <h5>Description: @orderitem.Product.ProdDesc</h5>
-                                <h5>Total: $@orderitem.OrderItemTotal</h5>
-                            </div>
-                            <div class="col-md-3 text-center">
-                                <div class="edit-item-button">
-                                    <a href="/shoppingcart/edit/@orderitem.ID" class="btn btn-primary">
-                                        Edit
-                                    </a>
-                                </div>
-                                <div class="remove-item-button" @onclick="@(()=>Delete(orderitem.ID))">
-                                    <button class="btn btn-danger">Remove</button>
-                                </div>
+                            <div class="remove-item-button" @onclick="@(() => DeleteOrderItem(orderitem.ID))">
+                                <button class="btn btn-danger">Remove</button>
                             </div>
                         </div>
-                        total += orderitem.OrderItemTotal;
-                    }
+                    </div>
+                    total += orderitem.OrderItemTotal;
                 }
                 <div class="cart-total text-left" style="padding-left: 900px;">
                     <h4>Total: $@total</h4>
-                    <div class="checkout-button text-right" @onclick="@(()=>CheckOut())">
+                    <div class="checkout-button text-right" @onclick="@(() => CheckOut())">
                         <button class="btn btn-primary">Checkout</button>
                     </div>
                 </div>
             }
-
         </div>
     </div>
 </div>
@@ -68,7 +64,6 @@
     protected async override Task OnInitializedAsync()
     {
         name = await GetUserName();
-        await js.InvokeVoidAsync("console.log", "name:" + name);
         OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}/customer");
         Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
     }
@@ -79,7 +74,7 @@
         var user = authstate.User; return user.Identity.Name;
     }
 
-    async Task Delete(int orderitemID)
+    private async Task DeleteOrderItem(int orderitemID)
     {
         var orderitem = OrderItems.FirstOrDefault(q => q.ID == orderitemID);
         if (orderitem == null)
@@ -113,14 +108,11 @@
 
         var order = new Order
         {
-            StaffID = 3,
-            CustomerID = customer.ID,
-            OrderItemTotal = total,
             OrderDateTime = DateTime.Now,
-            OrderItems = OrderItems
         };
-        await _client.PostAsJsonAsync($"{Endpoints.OrdersEndpoint}/checkout", order);
+        await _client.PutAsJsonAsync($"{Endpoints.OrdersEndpoint}/checkout", order);
         OrderItems.Clear(); // added line to clear the shopping cart after checkout
+        _navManager.NavigateTo("/cusorders");
     }
 
 }

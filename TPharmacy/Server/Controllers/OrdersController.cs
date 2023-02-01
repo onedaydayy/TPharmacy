@@ -21,12 +21,8 @@ namespace TPharmacy.Server.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly ILogger<OrdersController> logger;
-        //Refactored 
-        //private readonly ApplicationDbContext _context;
         private readonly IUnitOfWork _unitOfWork;
 
-        //Refactored
-        //public OrdersController(ApplicationDbContext context)
         public OrdersController(IUnitOfWork unitOfWork, UserManager<ApplicationUser> userManager,
         ILogger<OrdersController> logger, RoleManager<IdentityRole> roleManager)
         {
@@ -35,10 +31,7 @@ namespace TPharmacy.Server.Controllers
             this.logger = logger;
             this.roleManager = roleManager;
         }
-        // GET: api/Orders
         [HttpGet]
-        //Refactored
-        //public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         public async Task<ActionResult> GetOrders()
         {
             var user = await userManager.GetUserAsync(User);
@@ -46,35 +39,37 @@ namespace TPharmacy.Server.Controllers
             {
                 logger.LogInformation($"User.Identity.Name: {user.UserName}");
             }
-            //Refactored
-            //return await _context.Orders.ToListAsync();
-            var orders = await _unitOfWork.Orders.GetAll(includes: q => q.Include(x => x.Customer).Include(x => x.Staff));
+            var orders = await _unitOfWork.Orders.GetAll(includes: q => q.Include(x => x.Customer).Include(x => x.Staff).Include(x => x.OrderItems));
             return Ok(orders);
         }
 
-        // GET: api/Orders/5
+
+        [HttpGet("customer")]
+        public async Task<IActionResult> GetOrdersByCustomer()
+        {
+            var username = HttpContext.Session.GetString("username");
+            var customer = await _unitOfWork.Customers.Get(q => q.CusEmail == username);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            var orders = await _unitOfWork.Orders.GetAll(q => q.CustomerID == customer.ID, includes: q => q.Include(x => x.Customer).Include(x => x.Staff).Include(x => x.OrderItems));
+            return Ok(orders);
+        }
+
         [HttpGet("{id}")]
-        //Refactored
-        //public async Task<ActionResult<Order>> GetOrder(int id)
         public async Task<IActionResult> GetOrder(int id)
         {
-            //Refactored
-            //var order = await _context.Orders.FindAsync(id);
-            var order = await _unitOfWork.Orders.Get(q => q.ID == id);
-
+            var order = await _unitOfWork.Orders.Get(q => q.ID == id, includes: q => q.Include(x => x.Customer).Include(x => x.Staff).Include(x => x.OrderItems));
             if (order == null)
             {
                 return NotFound();
             }
-
-            //Refactored
             return Ok(order);
         }
 
-        // POST: api/Orders
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost("checkout")]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        [HttpPut("checkout")]
+        public async Task<IActionResult> PutOrder(Order order)
         {
             var username = HttpContext.Session.GetString("username");
             if (username != null)
@@ -94,7 +89,7 @@ namespace TPharmacy.Server.Controllers
                             {
                                 total += item.OrderItemTotal;
                             }
-                            existingOrder.OrderTotal = total;
+                            existingOrder.OrderItemTotal = total;
                             existingOrder.OrderDateTime = order.OrderDateTime;
                             existingOrder.OrderStatus = Order.Status.Completed; // Update the status to "Completed"
                             _unitOfWork.Orders.Update(existingOrder);
@@ -124,25 +119,20 @@ namespace TPharmacy.Server.Controllers
         }
 
 
-        // DELETE: api/Orders/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder(int id)
         {
-            //Refactored
-            //var order = await _context.Orders.FindAsync(id);
-            var order = await _unitOfWork.Orders.Get(q => q.ID == id);
+            var order = await _unitOfWork.Orders.Get(q => q.ID == id, includes: q => q.Include(x => x.OrderItems));
             if (order == null)
             {
-                return NotFound();
+                return NotFound(new { message = $"Order with id {id} not found." });
             }
 
-            //Refactored
-            //_context.Orders.Remove(order);
-            //await _context.SaveChangesAsync();
+            _unitOfWork.OrderItems.DeleteRange(order.OrderItems);
             await _unitOfWork.Orders.Delete(id);
             await _unitOfWork.Save(HttpContext);
 
-            return NoContent();
+            return Ok(new { message = $"Order with id {id} deleted successfully." });
         }
 
         //Refactored
@@ -155,57 +145,6 @@ namespace TPharmacy.Server.Controllers
             return order != null;
         }
 
-        [HttpPut("checkout/{id}")]
-        public async Task<IActionResult> CheckoutOrder(int id)
-        {
-            var order = await _unitOfWork.Orders.Get(q => q.ID == id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-            order.OrderStatus = Order.Status.Completed;
-            _unitOfWork.Orders.Update(order);
-            await _unitOfWork.Save(HttpContext);
-            return NoContent();
-        }
-
-        [HttpGet("checkout")]
-        public async Task<ActionResult<int>> GetCheckoutOrderId()
-        {
-            var username = HttpContext.Session.GetString("username");
-            if (username != null)
-            {
-                var customer = await _unitOfWork.Customers.Get(c => c.CusEmail == username);
-                if (customer != null)
-                {
-                    int? orderId = HttpContext.Session.GetInt32("orderId");
-                    if (orderId.HasValue)
-                    {
-                        var existingOrder = await _unitOfWork.Orders.Get(o => o.ID == orderId);
-                        if (existingOrder != null && existingOrder.OrderStatus != Order.Status.Completed)
-                        {
-                            return Ok(orderId);
-                        }
-                        else
-                        {
-                            return NotFound();
-                        }
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-                else
-                {
-                    return NotFound();
-                }
-            }
-            else
-            {
-                return NotFound();
-            }
-        }
     }
 }
 

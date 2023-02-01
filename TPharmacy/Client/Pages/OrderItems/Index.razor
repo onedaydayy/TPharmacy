@@ -20,6 +20,7 @@
                     <th>OrderID</th>
                     <th>ID</th>
                     <th>ProductID</th>
+                    <th>ProductPrice</th>
                     <th>Quantity</th>
                     <th>Total</th>
                     <th>Actions</th>
@@ -28,18 +29,19 @@
             <tbody>
                 @foreach (var orderitem in OrderItems)
                 {
-                    <tr>
-                        <td>@orderitem.OrderID</td>
-                        <td>@orderitem.ID</td>
-                        <td>@orderitem.ProductID</td>
-                        <td>@orderitem.OrderItemQtny</td>
-                        <td>@orderitem.OrderItemTotal</td>
-                        <td>
-                            <a href="/orderitems/view/@orderitem.ID" class="btn btn-primary">
-                                <span class="oi oi-book"></span>
-                            </a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>@orderitem.OrderID</td>
+                    <td>@orderitem.ID</td>
+                    <td>@orderitem.ProductID</td>
+                    <td>@orderitem.Product.ProdPrice</td>
+                    <td>@orderitem.OrderItemQtny</td>
+                    <td>@orderitem.OrderItemTotal</td>
+                    <td>
+                        <a href="/orderitems/view/@orderitem.ID" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

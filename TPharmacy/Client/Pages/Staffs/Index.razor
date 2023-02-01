@@ -74,7 +74,6 @@
         js.InvokeVoidAsync("DataTablesDispose", "#staffsTable");
     }
 
-
     async Task Delete(int staffID)
     {
         var staff = Staffs.First(q => q.ID == staffID);
@@ -85,5 +84,4 @@
             await OnInitializedAsync();
         }
     }
-
 }
