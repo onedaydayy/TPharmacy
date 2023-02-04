@@ -1,0 +1,18 @@
+﻿@page "/prescriptions/create"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<div class="container mt-5">
+    <h1 class="header">Create New Prescriptions</h1>
+    <FormComponent ButtonText="Create Prescription" OnValidSubmit="CreatePrescription" prescription="prescription"></FormComponent>
+</div>
+
+@code
+{
+    Prescription prescription = new Prescription();
+    private async Task CreatePrescription()
+    {
+        await _client.PostAsJsonAsync(Endpoints.PrescriptionsEndpoint, prescription);
+        _navManager.NavigateTo("/prescriptions/");
+    }
+}

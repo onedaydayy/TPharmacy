@@ -1,0 +1,42 @@
+﻿@page "/consultation/checkin"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@attribute [Authorize]
+
+<div class="container mt-5">
+    <h1 class="header">Consultation</h1>
+    <div class="row">
+        <div class="col-3">
+            <span>
+                Consultation Check-In
+            </span>
+            <input />
+            <p>
+                Hello Username goes here
+
+                Welcome to your consultation
+                The first 3 minute will be free of charge
+                You’ll be charge by every 10 minute
+                additional time will be round-up or round-down
+
+                Every 10 Minute will be $9
+
+            </p>
+            <span>
+                Duration
+            </span>
+            <hr />
+            <span>
+                XX Min
+            </span>
+        </div>
+        <div class="col-9">
+            <img />S
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+}

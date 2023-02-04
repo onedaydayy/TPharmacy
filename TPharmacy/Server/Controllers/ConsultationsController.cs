@@ -49,7 +49,7 @@ namespace TPharmacy.Server.Controllers
             }
             //Refactored
             //return await _context.Consultations.ToListAsync(); includes: q => q.Include(x => x.OrderItems).Include(x => x.Prescriptions)
-            var consultations = await _unitOfWork.Consultations.GetAll();
+            var consultations = await _unitOfWork.Consultations.GetAll(includes: q => q.Include(x => x.Prescriptions).Include(x => x.Customer));
             return Ok(consultations);
         }
 

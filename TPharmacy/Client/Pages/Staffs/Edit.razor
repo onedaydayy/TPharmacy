@@ -3,14 +3,15 @@
 @inject NavigationManager _navManager
 
 <div class="container mt-5">
-    <h1 class="header">Create New Staffs</h1>
+    <h1 class="header">Edit Staffs</h1>
     <FormComponent ButtonText="Update" OnValidSubmit="EditStaff" staff="staff"></FormComponent>
 </div>
 
 @code
-{ [Parameter] public int id { get; set; }
-
+{ 
+    [Parameter] public int id { get; set; }
     Staff staff = new Staff();
+
     protected async override Task OnParametersSetAsync()
     {
         staff = await _client.GetFromJsonAsync<Staff>($"{Endpoints.StaffsEndpoint}/{id}");
@@ -20,5 +21,6 @@
     {
         await _client.PutAsJsonAsync($"{Endpoints.StaffsEndpoint}/{id}", staff);
         _navManager.NavigateTo("/staffs/");
-    } }
+    } 
+}
 

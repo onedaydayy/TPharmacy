@@ -1,0 +1,26 @@
+﻿@page "/consultations/cedit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<div class="container mt-5">
+    <h1 class="header">Create New Consultations</h1>
+    <FormComponent ButtonText="Update" OnValidSubmit="EditConsultation" consultation="consultation"></FormComponent>
+</div>
+
+@code
+{ 
+    [Parameter] public int id { get; set; }
+    Consultation consultation = new Consultation();
+    
+    protected async override Task OnParametersSetAsync()
+    {
+        consultation = await _client.GetFromJsonAsync<Consultation>($"{Endpoints.ConsultationsEndpoint}/{id}");
+    }
+
+    async Task EditConsultation()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.ConsultationsEndpoint}/{id}", consultation);
+        _navManager.NavigateTo("/consultations/");
+    } 
+}
+

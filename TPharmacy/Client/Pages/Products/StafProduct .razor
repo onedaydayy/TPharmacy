@@ -1,0 +1,91 @@
+﻿@page "/staffproducts"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@implements IDisposable
+
+
+<div class="container mt-5">
+    <h1 class="header">TPharmacy Products List</h1>
+    <br />
+    @if (Products == null)
+    {
+        <div class="alert alert-info">Loading Product...</div>
+    }
+    else
+    {
+        <table class="table table-striped align-middle table-bordered responsive-table" id="productsTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Brand</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Products)
+                {
+                    <tr>
+                        <td>@product.ID</td>
+                        <td>@product.ProdName</td>
+                        <td>@product.ProdBrand</td>
+                        <td>@product.ProdPrice</td>
+                        <td>@product.ProdCategory</td>
+                        <td>@product.ProdDesc</td>
+                        <td>
+                            <a href="/staffs/view/@product.ID" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/staffs/edit/@product.ID" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(()=>Delete(product.ID))">
+                                <span class="oi oi-delete"></span>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+@code
+{
+    private List<Product> Products;
+    private List<Prescription> Prescriptions;
+    private List<OrderItem> OrderItems;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+        Prescriptions = await _client.GetFromJsonAsync<List<Prescription>>($"{Endpoints.PrescriptionsEndpoint}");
+        OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}");
+
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#productsTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#productsTable");
+    }
+
+    async Task Delete(int productID)
+    {
+        var product = Products.First(q => q.ID == productID);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {product.ID} - {product.ProdName}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.ProductsEndpoint}/{productID}");
+            await OnInitializedAsync();
+        }
+    }
+}

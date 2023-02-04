@@ -1,0 +1,97 @@
+﻿@page "/consultations"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@implements IDisposable
+
+
+<div class="container mt-5">
+    <h1 class="header">TPharmacy Consultations List</h1>
+        <br />
+        @if (Consultations == null)
+        {
+            <div class="alert alert-info">Loading Consultation...</div>
+        }
+        else
+        {
+            <table class="table table-striped align-middle table-bordered responsive-table" id="consultationsTable">
+                <thead>
+                    <tr>
+                        <th>Customer Name</th>
+                        <th>ConID</th>
+                        <th>StaffID</th>
+                        <th>Date</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Fee</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var consultation in Consultations)
+                    {
+                    <tr>
+                        <td>@consultation.Customer.CusName</td>
+                        <td>@consultation.ID</td>
+                        <td>@consultation.StaffID</td>
+                        <td>@consultation.ConDate</td>
+                        <td>@consultation.ConStartTime</td>
+                        <td>@consultation.ConEndTime</td>
+                        <td>@consultation.ConFee</td>
+                        <td>@consultation.ConDesc</td>
+                        <td>@consultation.ConStatus</td>
+                        <td>
+                            <a href="/staffs/view/@consultation.ID" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/staffs/edit/@consultation.ID" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(()=>Delete(consultation.ID))">
+                                <span class="oi oi-delete"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        }
+   </div>
+
+@code 
+{
+    private List<Consultation> Consultations;
+    private List<Prescription> Prescriptions;
+    private List<Customer> Customers;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Consultations = await _client.GetFromJsonAsync<List<Consultation>>($"{Endpoints.ConsultationsEndpoint}");
+        Prescriptions = await _client.GetFromJsonAsync<List<Prescription>>($"{Endpoints.PrescriptionsEndpoint}");
+        Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#consultationsTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#consultationsTable");
+    }
+
+    async Task Delete(int consultationID)
+    {
+        var consultation = Consultations.First(q => q.ID == consultationID);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {consultation.ID} - Consultation with {consultation.Customer.CusName} on {consultation.ConDate}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.ConsultationsEndpoint}/{consultationID}");
+            await OnInitializedAsync();
+        }
+    }
+    }

@@ -15,7 +15,7 @@ namespace TPharmacy.Server.Configurations.Entities
                     {
                         ID = 1,
                         PresQty = 1,
-                        ConID = 1,
+                        ConsultationID = 1,
                         ProductID = 4,
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
@@ -26,7 +26,7 @@ namespace TPharmacy.Server.Configurations.Entities
                     {
                         ID = 2,
                         PresQty = 2,
-                        ConID = 2,
+                        ConsultationID = 2,
                         ProductID = 4,
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,

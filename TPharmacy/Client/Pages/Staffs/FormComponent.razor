@@ -48,11 +48,13 @@
     <button type="submit" class="btn btn-success btn-block">
         @ButtonText
     </button>}
-
     </EditForm>
 </div>
 
-@code { [Parameter] public bool Disabled { get; set; } = false;
+@code 
+{ 
+    [Parameter] public bool Disabled { get; set; } = false;
     [Parameter] public Staff staff { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
-    [Parameter] public EventCallback OnValidSubmit { get; set; } }
+    [Parameter] public EventCallback OnValidSubmit { get; set; } 
+}

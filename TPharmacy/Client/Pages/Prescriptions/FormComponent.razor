@@ -1,0 +1,45 @@
+﻿@inject HttpClient _client
+
+<div class="container mt-5">
+    <EditForm Model="@prescription" OnValidSubmit="@OnValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <fieldset disabled="@Disabled">
+            <div class="form-group">
+                <label>First Name</label>
+                <div>
+                    <InputNumber @bind-Value="@prescription.ConsultationID" class="form-control" />
+                    <ValidationMessage For="@(()=>prescription.ConsultationID)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Driving License</label>
+                <div>
+                    <InputNumber @bind-Value="@prescription.ProductID" class="form-control" />
+                    <ValidationMessage For="@(()=>prescription.ProductID)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Address</label>
+                <div>
+                    <InputNumber @bind-Value="@prescription.PresQty" class="form-control" />
+                    <ValidationMessage For="@(()=>prescription.PresQty)" />
+                </div>
+            </div>
+        </fieldset>
+        @if (!Disabled)
+        {
+            <button type="submit" class="btn btn-success btn-block">
+                @ButtonText
+            </button>
+        }
+    </EditForm>
+</div>
+
+@code
+{
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Prescription prescription { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}

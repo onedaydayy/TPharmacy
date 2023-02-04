@@ -1,0 +1,89 @@
+﻿@page "/customer/view"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@implements IDisposable
+@inject HttpInterceptorService _interceptor
+
+<div class="container mt-5">
+    <h1 class="header">Customers </h1>
+    <br />
+    @if (Customers == null)
+    {
+        <div class="alert alert-info">Loading Customer...</div>
+    }
+    else
+    {
+        <table class="table table-striped align-middle table-bordered responsive-table" id="customersTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email Address</th>
+                    <th>Contact Number</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var customer in Customers)
+                {
+                    <tr>
+                        <td>@customer.ID</td>
+                        <td>@customer.CusName</td>
+                        <td>@customer.CusEmail</td>
+                        <td>@customer.CusNumber</td>
+                        <td>@customer.CusAddress</td>
+                        <td>
+                            <a href="/staffs/view/@customer.ID" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/staffs/edit/@customer.ID" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(()=>Delete(customer.ID))">
+                                <span class="oi oi-delete"></span>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+@code {
+    private List<Customer> Customers;
+
+    protected async override Task OnInitializedAsync()
+    {
+        _interceptor.MonitorEvent();
+        Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#customersTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#customersTable");
+    }
+
+    async Task Delete(int customerID)
+    {
+        var customer = Customers.First(q => q.ID == customerID);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {customer.ID}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.CustomersEndpoint}/{customerID}");
+            await OnInitializedAsync();
+        }
+    }
+    
+    public void Disposes()
+    {
+        _interceptor.DisposeEvent();
+    }
+}

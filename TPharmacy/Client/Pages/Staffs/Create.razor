@@ -6,9 +6,10 @@
     <h1 class="header">Create New Staffs</h1>
     <FormComponent ButtonText="Create Staff" OnValidSubmit="CreateStaff" staff="staff"></FormComponent>
 </div>
-@code {
-    Staff staff = new Staff();
 
+@code 
+{
+    Staff staff = new Staff();
     private async Task CreateStaff()
     {
         await _client.PostAsJsonAsync(Endpoints.StaffsEndpoint, staff);

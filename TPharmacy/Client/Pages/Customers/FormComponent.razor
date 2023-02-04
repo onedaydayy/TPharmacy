@@ -1,0 +1,53 @@
+﻿@inject HttpClient _client
+
+<div class="container mt-5">
+    <EditForm Model="@customer" OnValidSubmit="@OnValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <fieldset disabled="@Disabled">
+            <div class="form-group">
+                <label>First Name</label>
+                <div>
+                    <InputText @bind-Value="customer.CusName" class="form-control" />
+                    <ValidationMessage For="@(()=>customer.CusName)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Driving License</label>
+                <div>
+                    <InputText @bind-Value="customer.CusEmail" class="form-control" />
+                    <ValidationMessage For="@(()=>customer.CusEmail)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Address</label>
+                <div>
+                    <InputText @bind-Value="customer.CusNumber" class="form-control" />
+                    <ValidationMessage For="@(()=>customer.CusNumber)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Contact Number</label>
+                <div>
+                    <InputText @bind-Value="customer.CusAddress" class="form-control" />
+                    <ValidationMessage For="@(()=>customer.CusAddress)" />
+                </div>
+            </div>
+        </fieldset>
+        @if (!Disabled)
+        {
+            <button type="submit" class="btn btn-success btn-block">
+                @ButtonText
+            </button>
+        }
+        <TPharmacy.Client.Components.BackToList Target="customers" />
+    </EditForm>
+</div>
+
+@code 
+{
+        [Parameter] public bool Disabled { get; set; } = false;
+        [Parameter] public Customer customer { get; set; }
+        [Parameter] public string ButtonText { get; set; } = "Save";
+        [Parameter] public EventCallback OnValidSubmit { get; set; }
+}

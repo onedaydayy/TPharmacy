@@ -1,0 +1,71 @@
+﻿@inject HttpClient _client
+
+<div class="container mt-5">
+    <EditForm Model="@product" OnValidSubmit="@OnValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <fieldset disabled="@Disabled">
+            <div class="form-group">
+                <label>Name: </label>
+                <div>
+                    <InputText @bind-Value="@product.ProdName" class="form-control" />
+                    <ValidationMessage For="@(() => product.ProdName)" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Email: </label>
+                <div>
+                    <InputText @bind-Value="@product.ProdBrand" class="form-control" />
+                    <ValidationMessage For="@(() => product.ProdBrand)" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Password: </label>
+                <div>
+                    <InputNumber @bind-Value="@product.ProdPrice" class="form-control" />
+                    <ValidationMessage For="@(() => product.ProdPrice)" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Password: </label>
+                <div>
+                    <InputText @bind-Value="@product.ProdDesc" class="form-control" />
+                    <ValidationMessage For="@(() => product.ProdDesc)" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Role: </label>
+                <div>
+                    <InputSelect @bind-Value="@product.ProdCategory" class="form-control">
+                        <option value="">--Select Category--</option>
+                        <option value="Supplements">Supplements</option>
+                        <option value="Prescriptions">Prescriptions</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Baby">Baby</option>
+                    </InputSelect>
+                    <ValidationMessage For="@(() => product.ProdCategory)"></ValidationMessage>
+                </div>
+            </div>
+            <br />
+        </fieldset>
+        @if (!Disabled)
+        {
+            <button type="submit" class="btn btn-success btn-block">
+                @ButtonText
+            </button>
+        }
+        <TPharmacy.Client.Components.BackToList Target="customers" />
+    </EditForm>
+</div>
+
+@code
+{
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Product product { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}
