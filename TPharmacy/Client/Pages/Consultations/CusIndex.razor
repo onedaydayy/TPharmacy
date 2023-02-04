@@ -1,36 +1,45 @@
-﻿@page "/consultations"
+﻿@page "/consultations/cindex"
 @inject HttpClient _client
 @inject IJSRuntime js
+@inject NavigationManager _navManager
+@using System.Security.Claims
+
 @attribute [Authorize]
 @implements IDisposable
 
+<div class="container mt-5">
+    <button type="submit" class="btn btn-success btn-block">
+        Add New Consultations
+    </button>
+    <br />
+</div>
 
 <div class="container mt-5">
     <h1 class="header">TPharmacy Consultations List</h1>
-        <br />
-        @if (Consultations == null)
-        {
-            <div class="alert alert-info">Loading Consultation...</div>
-        }
-        else
-        {
-            <table class="table table-striped align-middle table-bordered responsive-table" id="consultationsTable">
-                <thead>
-                    <tr>
-                        <th>Customer Name</th>
-                        <th>ConID</th>
-                        <th>StaffID</th>
-                        <th>Date Time</th>
-                        <th>Duration</th>
-                        <th>Fee</th>
-                        <th>Description</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var consultation in Consultations)
-                    {
+    <br />
+    @if (Consultations == null)
+    {
+        <div class="alert alert-info">Loading Consultation...</div>
+    }
+    else
+    {
+        <table class="table table-striped align-middle table-bordered responsive-table" id="consultationsTable">
+            <thead>
+                <tr>
+                    <th>Customer Name</th>
+                    <th>ConID</th>
+                    <th>StaffID</th>
+                    <th>Date Time</th>
+                    <th>Duration</th>
+                    <th>Fee</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var consultation in Consultations)
+                {
                     <tr>
                         <td>@consultation.Customer.CusName</td>
                         <td>@consultation.ID</td>
@@ -41,10 +50,7 @@
                         <td>@consultation.ConDesc</td>
                         <td>@consultation.ConStatus</td>
                         <td>
-                            <a href="/staffs/view/@consultation.ID" class="btn btn-primary">
-                                <span class="oi oi-book"></span>
-                            </a>
-                            <a href="/staffs/edit/@consultation.ID" class="btn btn-warning">
+                            <a href="/consultations/cedit/@consultation.ID" class="btn btn-warning">
                                 <span class="oi oi-pencil"></span>
                             </a>
                             <button class="btn btn-danger" @onclick="@(()=>Delete(consultation.ID))">
@@ -52,21 +58,47 @@
                             </button>
                         </td>
                     </tr>
-                    }
-                </tbody>
-            </table>
-        }
-   </div>
+                }
+            </tbody>
+        </table>
+    }
+</div>
 
-@code 
+@code
+
+
+
+
+
 {
     private List<Consultation> Consultations;
     private List<Prescription> Prescriptions;
     private List<Customer> Customers;
 
+    [Parameter] public string OnBacktoWhere { get; set; } = "/consultations/createsuccess";
+    Consultation consultation = new Consultation();
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthTask { get; set; }
+    private ClaimsPrincipal user;
+
     protected async override Task OnInitializedAsync()
     {
-        Consultations = await _client.GetFromJsonAsync<List<Consultation>>($"{Endpoints.ConsultationsEndpoint}");
+        if (AuthTask == null)
+        {
+            return;
+        }
+
+        try
+        {
+            var authState = await AuthTask;
+            this.user = authState.User;
+        }
+        catch (Exception ex)
+        {
+            // Handle exception
+        }
+        Consultations = await _client.GetFromJsonAsync<List<Consultation>>($"{Endpoints.ConsultationsEndpoint}/GetMyConsultation/" + user.Identity.Name);
         Prescriptions = await _client.GetFromJsonAsync<List<Prescription>>($"{Endpoints.PrescriptionsEndpoint}");
         Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
 
@@ -92,4 +124,4 @@
             await OnInitializedAsync();
         }
     }
-    }
+}

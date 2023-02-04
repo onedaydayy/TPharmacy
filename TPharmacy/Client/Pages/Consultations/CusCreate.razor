@@ -2,22 +2,48 @@
 @inject HttpClient _client
 @inject NavigationManager _navManager
 @attribute [Authorize]
+@using System.Security.Claims
 
 <div class="container mt-5">
     <h1 class="header">Consultation</h1>
     <FormComponent ButtonText="Create Consultation" OnValidSubmit="CreateConsultation" consultation="consultation"></FormComponent>
 </div>
 
-@code 
+@code
 {
-    [Parameter] public string OnBacktoWhere { get; set; } = "/consultation/createsuccess";
+    [Parameter] public string OnBacktoWhere { get; set; } = "/consultations/createsuccess";
     Consultation consultation = new Consultation();
-    private IList<Prescription>Prescriptions;
+    private IList<Prescription> Prescriptions;
+    private Customer customer;
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthTask { get; set; }
+
+    private ClaimsPrincipal user;
+
 
     protected async override Task OnInitializedAsync()
     {
-        Prescriptions = await _client.GetFromJsonAsync<List<Prescription>>($"{Endpoints.PrescriptionsEndpoint}");
-        //consultation.DateOut = DateTime.Now;
+        if (AuthTask == null)
+        {
+            return;
+        }
+
+        try
+        {
+            var authState = await AuthTask;
+            this.user = authState.User;
+        }
+        catch (Exception ex)
+        {
+            // Handle exception
+        }
+
+        customer = await _client.GetFromJsonAsync<Customer>($"{Endpoints.CustomersEndpoint}/getcustomer/" + user.Identity.Name);
+        consultation.CustomerID = customer.ID;
+
+
+
     }
 
     private async Task CreateConsultation()

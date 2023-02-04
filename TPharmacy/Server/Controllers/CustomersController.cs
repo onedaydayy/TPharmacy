@@ -71,6 +71,21 @@ namespace TPharmacy.Server.Controllers
             return Ok(customer);
         }
 
+        [HttpGet("{action}/{id}")]
+        public async Task<IActionResult> GetCustomer(string id)
+        {
+            //Refactored
+            //var customer = await _context.Customers.FindAsync(id);
+            var customer = await _unitOfWork.Customers.Get(q => q.CusEmail == id);
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            //Refactored
+            return Ok(customer);
+        }
+
         // PUT: api/Customers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]

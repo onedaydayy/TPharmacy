@@ -5,21 +5,20 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TPharmacy.Shared.Domain
 {
-    public class Consultation : BaseDomainModel, IValidatableObject
+    public class Consultation : BaseDomainModel
     {
         public virtual Customer Customer { get; set; }
-        [Required]
+        //[Required]
         [ForeignKey("Customer")]
         public int? CustomerID { get; set; }
         public virtual Staff Staff { get; set; }
-        [Required]
+        //[Required]
         [ForeignKey("Staff")]
         public int? StaffID { get; set; }
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime ConDate { get; set; }
-        public DateTime? ConStartTime { get; set; }
-        public DateTime ConEndTime { get; set; }
+        public int ConDuration { get; set; }
         [Required]
         [DataType(DataType.Currency)]
         [Column(TypeName = "decimal(7,2)")]
@@ -29,16 +28,5 @@ namespace TPharmacy.Shared.Domain
         public string ConDesc { get; set; }
         public string ConStatus { get; set; }
         public virtual List<Prescription> Prescriptions { get; set; }
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            //throw new NotImplementedException();
-            if (ConStartTime != null)
-            {
-                if (ConEndTime <= ConStartTime)
-                {
-                    yield return new ValidationResult("Consultation End Time must be greater than Consultation Start Time", new[] { "Consultation End Time" });
-                }
-            }
-        }
     }
 }

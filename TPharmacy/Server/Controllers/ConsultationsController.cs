@@ -36,20 +36,28 @@ namespace TPharmacy.Server.Controllers
             this.roleManager = roleManager;
         }
 
+
+        // GET: api/Consultations/id
+        [HttpGet("{action}/{id}")]
+        //Refactored
+        //public async Task<ActionResult<IEnumerable<Consultation>>> GetConsultations()
+        public async Task<ActionResult> GetMyConsultation(string id)
+        {
+            //Refactored
+            //return await _context.Consultations.ToListAsync(); includes: q => q.Include(x => x.OrderItems).Include(x => x.Prescriptions)
+            var consultations = await _unitOfWork.Consultations.GetAll(q => q.Customer.CusEmail == id, includes: q => q.Include(x => x.Customer).Include(x => x.Prescriptions));
+            return Ok(consultations);
+        }
+
         // GET: api/Consultations
         [HttpGet]
         //Refactored
         //public async Task<ActionResult<IEnumerable<Consultation>>> GetConsultations()
         public async Task<ActionResult> GetConsultations()
         {
-            var user = await userManager.GetUserAsync(User);
-            if (user != null)
-            {
-                logger.LogInformation($"User.Identity.Name: {user.UserName}");
-            }
             //Refactored
             //return await _context.Consultations.ToListAsync(); includes: q => q.Include(x => x.OrderItems).Include(x => x.Prescriptions)
-            var consultations = await _unitOfWork.Consultations.GetAll(includes: q => q.Include(x => x.Prescriptions).Include(x => x.Customer));
+            var consultations = await _unitOfWork.Consultations.GetAll(includes: q => q.Include(x => x.Customer).Include(x => x.Prescriptions));
             return Ok(consultations);
         }
 
@@ -114,11 +122,24 @@ namespace TPharmacy.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Consultation>> PostConsultation(Consultation consultation)
         {
-            //Refactored
-            //_context.Consultations.Add(consultation);
-            //await _context.SaveChangesAsync();
-            await _unitOfWork.Consultations.Insert(consultation);
-            await _unitOfWork.Save(HttpContext);
+            try
+            {
+                //Refactored
+                //_context.Consultations.Add(consultation);
+                //await _context.SaveChangesAsync();
+
+                consultation.StaffID = 2;
+                consultation.ConStatus = "Pending";
+                consultation.CreatedBy = "System";
+                consultation.UpdatedBy = "System";
+                consultation.ConFee = 35;
+
+                await _unitOfWork.Consultations.Insert(consultation);
+                await _unitOfWork.Save(HttpContext);
+            }catch (Exception ex)
+            {
+                var whatthe = ex.Message;
+            }
             return CreatedAtAction("GetConsultation", new { id = consultation.ID }, consultation);
         }
 
