@@ -1,7 +1,7 @@
 ﻿@page "/staffs"
 @inject HttpClient _client
 @inject IJSRuntime js
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Admin, Packer, Pharmacist, Staff")]
 @implements IDisposable
 
 <div class="container mt-5">

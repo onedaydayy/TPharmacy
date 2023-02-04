@@ -8,9 +8,9 @@
 @implements IDisposable
 
 <div class="container mt-5">
-    <button type="submit" class="btn btn-success btn-block">
-        Add New Consultations
-    </button>
+    <a class="btn btn-success btn-block" href="/consultation/create">
+        Book Consultation
+    </a>
     <br />
 </div>
 
@@ -26,9 +26,7 @@
         <table class="table table-striped align-middle table-bordered responsive-table" id="consultationsTable">
             <thead>
                 <tr>
-                    <th>Customer Name</th>
-                    <th>ConID</th>
-                    <th>StaffID</th>
+                    <th>CID</th>
                     <th>Date Time</th>
                     <th>Duration</th>
                     <th>Fee</th>
@@ -41,15 +39,16 @@
                 @foreach (var consultation in Consultations)
                 {
                     <tr>
-                        <td>@consultation.Customer.CusName</td>
                         <td>@consultation.ID</td>
-                        <td>@consultation.StaffID</td>
                         <td>@consultation.ConDate</td>
                         <td>@consultation.ConDuration</td>
                         <td>@consultation.ConFee</td>
                         <td>@consultation.ConDesc</td>
                         <td>@consultation.ConStatus</td>
                         <td>
+                            <a href="/consultations/checkin/@consultation.ID" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
                             <a href="/consultations/cedit/@consultation.ID" class="btn btn-warning">
                                 <span class="oi oi-pencil"></span>
                             </a>
@@ -99,8 +98,6 @@
             // Handle exception
         }
         Consultations = await _client.GetFromJsonAsync<List<Consultation>>($"{Endpoints.ConsultationsEndpoint}/GetMyConsultation/" + user.Identity.Name);
-        Prescriptions = await _client.GetFromJsonAsync<List<Prescription>>($"{Endpoints.PrescriptionsEndpoint}");
-        Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
 
     }
 

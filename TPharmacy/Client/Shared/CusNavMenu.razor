@@ -3,6 +3,8 @@
 
 @inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
+@inject NavigationManager _navigationManager
+@using System.Security.Claims
 
 <nav class="navbar navbar-expand-md navbar-dark cus-z-index" style="width: -webkit-fill-available;">
     <div class="container">
@@ -19,147 +21,183 @@
                             <span class="oi oi-home" aria-hidden="true"></span> Home
                         </NavLink>
                     </li>
-                <AuthorizeView>
-                    <Authorized>
-                        <li class="nav-item dropdown show">
-                            <NavLink class="nav-link mr-auto dropdown-toggle" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
-                                <span class="oi oi-cart" aria-hidden="true"></span> Shop
-                            </NavLink>
-                            @if (expandShopNavSetting)
-                            {
-                            <li class="dropdown-menu show" aria-labelledby="navbarDropdown" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
-                            <li class="nav-item px-3">
-                                <NavLink class="nav-link" href="cusproducts">
-                                    <span class="oi oi-align-left" aria-hidden="true"></span> Supplement
+                    <AuthorizeView>
+                        <Authorized>
+                            <li class="nav-item dropdown show">
+                                <NavLink class="nav-link mr-auto dropdown-toggle" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
+                                    <span class="oi oi-cart" aria-hidden="true"></span> Shop
                                 </NavLink>
-                            </li>
-                            <li class="nav-item px-3">
-                                <NavLink class="nav-link" href="cusproducts">
-                                    <span class="oi oi-align-left" aria-hidden="true"></span> Sport
-                                </NavLink>
-                            </li>
-                            <li class="nav-item px-3">
-                                <NavLink class="nav-link" href="cusproducts">
-                                    <span class="oi oi-align-left" aria-hidden="true"></span> Baby
-                                </NavLink>
-                            </li>
-                            </li>
-                        }
-                            </li>
-                            <li class="nav-item mr-auto">
-                                <NavLink class="nav-link" href="consultations/cindex">
-                                    <span class="oi oi-chat" aria-hidden="true"></span> Consultation
-                                </NavLink>
-                            </li>
-                        </Authorized>
-                    <NotAuthorized>
-                        <li class="nav-item dropdown show">
-                            <NavLink class="nav-link mr-auto dropdown-toggle" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
-                                <span class="oi oi-cart" aria-hidden="true"></span> Shop
-                            </NavLink>
-                            @if (expandShopNavSetting)
-                            {
-                            <li class="dropdown-menu show" aria-labelledby="navbarDropdown" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
-                            <li class="nav-item px-3">
-                                <NavLink class="nav-link" href="authentication/login">
-                                    <span class="oi oi-align-left" aria-hidden="true"></span> Supplement
-                                </NavLink>
-                            </li>
-                            <li class="nav-item px-3">
-                                <NavLink class="nav-link" href="authentication/login">
-                                    <span class="oi oi-align-left" aria-hidden="true"></span> Sport
-                                </NavLink>
-                            </li>
-                            <li class="nav-item px-3">
-                                <NavLink class="nav-link" href="authentication/login">
-                                    <span class="oi oi-align-left" aria-hidden="true"></span> Baby
-                                </NavLink>
-                            </li>
-                            </li>
-                        }
-                            </li>
-                            <li class="nav-item mr-auto">
-                                <NavLink class="nav-link" href="authentication/login">
-                                    <span class="oi oi-chat" aria-hidden="true"></span> Consultation
-                                </NavLink>
-                            </li>
-                        </NotAuthorized>
-                </AuthorizeView>
+                                @if (expandShopNavSetting)
+                                {
+                                <li class="dropdown-menu show" aria-labelledby="navbarDropdown" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
+                                <li class="nav-item px-3">
+                                    <NavLink class="nav-link" href="" @onclick="@(() => NevigateToYourUrl(""))">
+                                        <span class="oi oi-align-left" aria-hidden="true"></span> All Products
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item px-3">
+                                    <NavLink class="nav-link" href="" @onclick="@(() => NevigateToYourUrl("supplement"))">
+                                        <span class="oi oi-align-left" aria-hidden="true"></span> Supplement
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item px-3">
+                                    <NavLink class="nav-link" href="" @onclick="@(() => NevigateToYourUrl("sports"))">
+                                        <span class="oi oi-align-left" aria-hidden="true"></span> Sport
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item px-3">
+                                    <NavLink class="nav-link" href="" @onclick="@(() => NevigateToYourUrl("baby"))">
+                                        <span class="oi oi-align-left" aria-hidden="true"></span> Baby
+                                    </NavLink>
+                                </li>
+                                </li>
+                            }
+                                </li>
+                                <li class="nav-item mr-auto">
+                                    <NavLink class="nav-link" href="consultations/cindex">
+                                        <span class="oi oi-chat" aria-hidden="true"></span> Consultation
+                                    </NavLink>
+                                </li>
+                            </Authorized>
+                            <NotAuthorized>
+                                <li class="nav-item dropdown show">
+                                    <NavLink class="nav-link mr-auto dropdown-toggle" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
+                                        <span class="oi oi-cart" aria-hidden="true"></span> Shop
+                                    </NavLink>
+                                    @if (expandShopNavSetting)
+                                    {
+                                    <li class="dropdown-menu show" aria-labelledby="navbarDropdown" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
+                                    <li class="nav-item px-3">
+                                        <NavLink class="nav-link" href="authentication/login">
+                                            <span class="oi oi-align-left" aria-hidden="true"></span> Supplement
+                                        </NavLink>
+                                    </li>
+                                    <li class="nav-item px-3">
+                                        <NavLink class="nav-link" href="authentication/login">
+                                            <span class="oi oi-align-left" aria-hidden="true"></span> Sport
+                                        </NavLink>
+                                    </li>
+                                    <li class="nav-item px-3">
+                                        <NavLink class="nav-link" href="authentication/login">
+                                            <span class="oi oi-align-left" aria-hidden="true"></span> Baby
+                                        </NavLink>
+                                    </li>
+                                    </li>
+                                }
+                                    </li>
+                                    <li class="nav-item mr-auto">
+                                        <NavLink class="nav-link" href="authentication/login">
+                                            <span class="oi oi-chat" aria-hidden="true"></span> Consultation
+                                        </NavLink>
+                                    </li>
+                                </NotAuthorized>
+                            </AuthorizeView>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <ul class="navbar-nav ml-auto">
+                        <AuthorizeView>
+                            <Authorized>
+                                <li class="nav-item mr-auto">
+                                    <NavLink class="nav-link" href="@ccbblink" Match="NavLinkMatch.All">
+                                        <span class="oi oi-star" aria-hidden="true"></span> User Profile
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item mr-auto">
+                                    <NavLink class="nav-link" href="authentication/profile" Match="NavLinkMatch.All">
+                                        <span class="oi oi-person" aria-hidden="true"></span> Hello, @context.User.Identity.Name!
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item mr-auto">
+                                    <NavLink class="nav-link" href="authentication/logout" Match="NavLinkMatch.All" @onclick="BeginSignOut">
+                                        <span class="oi oi-account-logout" aria-hidden="true"></span> Log out
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item mr-auto">
+                                    <NavLink class="nav-link" href="shoppingcart" Match="NavLinkMatch.All">
+                                        <span class="oi oi-cart" aria-hidden="true"></span>
+                                    </NavLink>
+                                </li>
+                            </Authorized>
+                            <NotAuthorized>
+                                <li class="nav-item mr-auto">
+                                    <NavLink class="nav-link" href="authentication/register" Match="NavLinkMatch.All">
+                                        <span class="oi oi-person" aria-hidden="true"></span> Register
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item mr-auto">
+                                    <NavLink class="nav-link" href="authentication/login" Match="NavLinkMatch.All">
+                                        <span class="oi oi-account-login" aria-hidden="true"></span> Log in
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item mr-auto">
+                                    <NavLink class="nav-link" href="authentication/login" Match="NavLinkMatch.All">
+                                        <span class="oi oi-cart" aria-hidden="true"></span>
+                                    </NavLink>
+                                </li>
+                            </NotAuthorized>
+                        </AuthorizeView>
                     </ul>
                 </div>
             </div>
-            <div>
-                <ul class="navbar-nav ml-auto">
-                    <AuthorizeView>
-                        <Authorized>
-                            <li class="nav-item mr-auto">
-                                <NavLink class="nav-link" href="cusprofile" Match="NavLinkMatch.All">
-                                    <span class="oi oi-star" aria-hidden="true"></span> User Profile
-                                </NavLink>
-                            </li>
-                            <li class="nav-item mr-auto">
-                                <NavLink class="nav-link" href="authentication/profile" Match="NavLinkMatch.All">
-                                    <span class="oi oi-person" aria-hidden="true"></span> Hello, @context.User.Identity.Name!
-                                </NavLink>
-                            </li>
-                            <li class="nav-item mr-auto">
-                                <NavLink class="nav-link" href="authentication/logout" Match="NavLinkMatch.All" @onclick="BeginSignOut">
-                                    <span class="oi oi-account-logout" aria-hidden="true"></span> Log out
-                                </NavLink>
-                            </li>
-                            <li class="nav-item mr-auto">
-                                <NavLink class="nav-link" href="shoppingcart" Match="NavLinkMatch.All">
-                                    <span class="oi oi-cart" aria-hidden="true"></span>
-                                </NavLink>
-                            </li>
-                        </Authorized>
-                        <NotAuthorized>
-                            <li class="nav-item mr-auto">
-                                <NavLink class="nav-link" href="authentication/register" Match="NavLinkMatch.All">
-                                    <span class="oi oi-person" aria-hidden="true"></span> Register
-                                </NavLink>
-                            </li>
-                            <li class="nav-item mr-auto">
-                                <NavLink class="nav-link" href="authentication/login" Match="NavLinkMatch.All">
-                                    <span class="oi oi-account-login" aria-hidden="true"></span> Log in
-                                </NavLink>
-                            </li>
-                            <li class="nav-item mr-auto">
-                                <NavLink class="nav-link" href="authentication/login" Match="NavLinkMatch.All">
-                                    <span class="oi oi-cart" aria-hidden="true"></span>
-                                </NavLink>
-                            </li>
-                        </NotAuthorized>
-                    </AuthorizeView>
-                </ul>
-            </div>
-        </div>
-    </nav>
+        </nav>
 
-    @code {
-        private bool collapseNavMenu = true;
+        @code {
+            private bool collapseNavMenu = true;
 
-        private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-        private bool expandShopNavSetting;
+            private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+            private bool expandShopNavSetting;
 
-        string baseMenuClass = "navbar-collapse d-sm-inline-flex flex-sm-row-reverse";
+            [CascadingParameter]
+            public Task<AuthenticationState> AuthTask { get; set; }
+
+            private ClaimsPrincipal duser;
+
+            string ccbblink = "";
+            string baseMenuClass = "navbar-collapse d-sm-inline-flex flex-sm-row-reverse";
 
 
-        private void ToggleNavMenu()
-        {
-
-            if (!expandShopNavSetting)
+            protected async override Task OnInitializedAsync()
             {
-                collapseNavMenu = !collapseNavMenu;
+                if (AuthTask == null)
+                {
+                    return;
+                }
+
+                try
+                {
+                    var authState = await AuthTask;
+                    this.duser = authState.User;
+                }
+                catch (Exception ex)
+                {
+                    // Handle exception
+                }
+                ccbblink = "profile/"+ duser.Identity.Name;
+
             }
+
+            private void ToggleNavMenu()
+            {
+
+                if (!expandShopNavSetting)
+                {
+                    collapseNavMenu = !collapseNavMenu;
+                }
+            }
+
+            private async Task BeginSignOut(MouseEventArgs args)
+            {
+                await SignOutManager.SetSignOutState();
+                Navigation.NavigateTo("authentication/logout");
+            }
+
+            private bool expandProductMenu2;
+            void NevigateToYourUrl(string result)
+            {
+                Console.WriteLine(result);
+                _navigationManager.NavigateTo("/cusproducts/" + result, true);
+            }
+
         }
-
-        private async Task BeginSignOut(MouseEventArgs args)
-        {
-            await SignOutManager.SetSignOutState();
-            Navigation.NavigateTo("authentication/logout");
-        }
-
-        private bool expandProductMenu2;
-
-    }

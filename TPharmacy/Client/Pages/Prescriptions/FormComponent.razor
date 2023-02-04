@@ -6,21 +6,30 @@
         <ValidationSummary />
         <fieldset disabled="@Disabled">
             <div class="form-group">
-                <label>First Name</label>
+                <label>Consultant ID</label>
                 <div>
-                    <InputNumber @bind-Value="@prescription.ConsultationID" class="form-control" />
+                    <InputNumber @bind-Value="@prescription.ConsultationID" class="form-control" disabled="true" />
                     <ValidationMessage For="@(()=>prescription.ConsultationID)" />
                 </div>
             </div>
             <div class="form-group">
-                <label>Driving License</label>
+                <label>Product</label>
                 <div>
-                    <InputNumber @bind-Value="@prescription.ProductID" class="form-control" />
+                    <InputSelect @bind-Value="@prescription.ProductID" class="form-control">
+                        <option value="">-- Select Product --</option>
+                        @if (products != null)
+                        {
+                            foreach (var pd in products)
+                            {
+                                <option value="@pd.ID">@pd.ProdName - @pd.ProdPrice </option>
+                            }
+                        }
+                    </InputSelect>
                     <ValidationMessage For="@(()=>prescription.ProductID)" />
                 </div>
             </div>
             <div class="form-group">
-                <label>Address</label>
+                <label>Quantity</label>
                 <div>
                     <InputNumber @bind-Value="@prescription.PresQty" class="form-control" />
                     <ValidationMessage For="@(()=>prescription.PresQty)" />
@@ -42,4 +51,12 @@
     [Parameter] public Prescription prescription { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public IList<Product> products { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+    }
+
+
 }

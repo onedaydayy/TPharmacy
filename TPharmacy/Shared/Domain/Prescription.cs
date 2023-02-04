@@ -7,7 +7,6 @@ namespace TPharmacy.Shared.Domain
 {
     public class Prescription : BaseDomainModel
     {
-        [Required]
         public virtual Consultation Consultation { get; set; }
         [Required]
         [ForeignKey("Consultation")]

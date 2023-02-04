@@ -1,4 +1,4 @@
-﻿@page "/products/edit/{id:int}"
+﻿@page "/staffproducts/edit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
@@ -20,7 +20,7 @@
     async Task EditProduct()
     {
         await _client.PutAsJsonAsync($"{Endpoints.ProductsEndpoint}/{id}", product);
-        _navManager.NavigateTo("/products/");
+        _navManager.NavigateTo("/staffproducts/");
     }
 }
 

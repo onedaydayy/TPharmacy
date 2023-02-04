@@ -89,6 +89,7 @@ namespace TPharmacy.Server.Controllers
             {
                 return BadRequest();
             }
+            consultation.ConFee = Convert.ToDecimal((consultation.ConDuration/10.0)*9.0);
 
             //Refactored
             //_context.Entry(consultation).State = EntityState.Modified;

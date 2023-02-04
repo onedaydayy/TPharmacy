@@ -4,63 +4,119 @@
 @inject HttpClient Http
 @inject HttpClient _client
 @inject IJSRuntime js
-@page "/cusproducts"
+@page "/cusproducts/{id?}"
+@inject NavigationManager _navigationManager
+
+<div class="lgrayback">
+    <div class="container">
+        <h1 class="title-cate">TPharmacy</h1>
+        <span class="desc-pro">Desc here Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah </span>
+    </div>
+</div>
 
 <div class="container mt-5">
-
-<h1>Products</h1>
-
-    @code {
-    }
-    @if (Products == null)
-    {
-        <div class="alert alert-info">Loading Products...</div> }
-    else
-    {
-        int count = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(Products.Count) / Convert.ToDecimal(4)));
-        int card = 0;
-        @for (int g = 0; g < count; g++)
-        {
-            <div class="row">
-                @for (int i = 0; i < 4; i++)
+    <div class="row">
+        <div class="col-3">
+            <div class="filter-head">
+                <h4>
+                    Category
+                </h4>
+            </div>
+            <div class="filter">
+                @for (int i = 0; i < category.Count; i++)
                 {
-                    if (card < Products.Count)
-                    {
-                        <div class="col-sm-6 col-md-3 col-xl-3">
-                            <div class="product-card mt-5">
-                                <div class="content-card">
-                                    <img src="img/@Products[card].ProdName .jpeg" class="product-img" />
-                                </div>
-                                <div class="content-text">
-                                    <h3>
-                                        @Products[card].ProdName
-                                    </h3>
-                                </div>
-                                <div class="align-bottom">
-                                    <h2 class="price float-right">@Products[card].ProdPrice</h2>
-                                </div>
-                                <div>
-                                    <a href="/productview/@Products[card].ID" class="btn btn-primary">
-                                        <span class="oi oi-book"></span> 
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        card++;
-                    }
+                    var text = @category[i];
+                    <div class="filter-card">
+                        <a href="" @onclick="@(() => NevigateToYourUrl(text))" @onclick:preventDefault>
+                            @category[i]
+                        </a>
+                        <span class="float-right">
+                            @count[i]
+                        </span>
+                    </div>
                 }
             </div>
-        }
-    }
+        </div>
+        <div class="col-9">
+            @code {
+            }
+            @if (Products == null)
+            {
+                <div class="alert alert-info">Loading Products...</div> }
+            else
+            {
+                int count = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(Products.Count) / Convert.ToDecimal(3)));
+
+                int card = 0;
+                @for (int g = 0; g < count; g++)
+                {
+                    <div class="row">
+                        @for (int i = 0; i < 3; i++)
+                        {
+                            if (card < Products.Count)
+                            {
+                                <div class="col-sm-6 col-md-4 col-xl-4">
+                                    <div class="product-card mt-5">
+                                        <div class="content-card">
+                                            <img src="img/@Products[card].ProdName .jpeg" class="product-img" />
+                                        </div>
+                                        <div class="content-text">
+                                            <h3>
+                                                @Products[card].ProdName
+                                            </h3>
+                                        </div>
+                                        <div class="align-bottom">
+                                            <h2 class="price float-right">@Products[card].ProdPrice</h2>
+                                        </div>
+                                        <div>
+                                            <a href="/productview/@Products[card].ID" class="btn btn-primary">
+                                                <span class="oi oi-book"></span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                card++;
+                            }
+                        }
+                    </div>
+                }
+            }
+        </div>
+    </div>
 </div>
 
 @code {
+    [Parameter] public string id { get; set; }
     private List<Product> Products;
+    private List<string> category = new List<string>();
+    private List<int> count = new List<int>();
 
 
     protected async override Task OnInitializedAsync()
     {
-        Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+        Console.WriteLine("Hi Hi");
+
+        if (id != null)
+        {
+            Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}/GetCategoryProducts/{id}");
+        }
+        else
+        {
+            Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+        }
+        var numberGroups = Products.GroupBy(i => i.ProdCategory);
+        foreach (var grp in numberGroups)
+        {
+            var number = grp.Key;
+            var total = grp.Count();
+            category.Add(number);
+            count.Add(total);
+        }
     }
 
+    void NevigateToYourUrl(string result)
+    {
+        Console.WriteLine(result);
+        _navigationManager.NavigateTo("/cusproducts/"+ result, true);
+    }
 }

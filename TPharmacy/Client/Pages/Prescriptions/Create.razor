@@ -1,6 +1,7 @@
-﻿@page "/prescriptions/create"
+﻿@page "/prescriptions/create/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
+@attribute [Authorize(Roles = "Admin, Packer, Pharmacist, Staff")]
 
 <div class="container mt-5">
     <h1 class="header">Create New Prescriptions</h1>
@@ -9,10 +10,16 @@
 
 @code
 {
+    [Parameter] public int id { get; set; }
     Prescription prescription = new Prescription();
+    protected override void OnParametersSet()
+    {
+        prescription.ConsultationID = id;
+    }
+
     private async Task CreatePrescription()
     {
         await _client.PostAsJsonAsync(Endpoints.PrescriptionsEndpoint, prescription);
-        _navManager.NavigateTo("/prescriptions/");
+        _navManager.NavigateTo("/consultations/sedit/" + id);
     }
 }

@@ -53,6 +53,15 @@ namespace TPharmacy.Server.Controllers
             return Ok(products);
         }
 
+        [HttpGet("{action}/{id}")]
+        public async Task<ActionResult> GetCategoryProducts(string id)
+        {
+            //Refactored
+            //return await _context.Products.ToListAsync(); includes: q => q.Include(x => x.OrderItems).Include(x => x.Prescriptions)
+            var products = await _unitOfWork.Products.GetAll(q => q.ProdCategory == id);
+            return Ok(products);
+        }
+
         // GET: api/Products/5
         [HttpGet("{id}")]
         //Refactored

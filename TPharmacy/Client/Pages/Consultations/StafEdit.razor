@@ -1,25 +1,107 @@
 ﻿@page "/consultations/sedit/{id:int}"
 @inject HttpClient _client
+@inject IJSRuntime js
 @inject NavigationManager _navManager
+@attribute [Authorize(Roles = "Admin, Packer, Pharmacist, Staff")]
 
 <div class="container mt-5">
-    <h1 class="header">Edit Consultations</h1>
-    <FormComponent ButtonText="Update" OnValidSubmit="EditConsultation" consultation="consultation"></FormComponent>
+    <h1 class="header">Consultations > Consultation List > Edit Consultation Details</h1>
+
+    <hr />
+    <StafFormComponent ButtonText="Update Consultation" OnValidSubmit="EditConsultation" consultation="consultation"></StafFormComponent>
+
+    <hr />
+    @if (Prescriptions == null)
+    {
+        <div class="alert alert-info">No Prescriptions Given Yet</div>
+    }
+    else
+    {
+        <table class="table table-striped align-middle table-bordered responsive-table" id="prescriptionsTable">
+            <thead>
+                <tr>
+                    <th>Product SKU</th>
+                    <th>Product Name</th>
+                    <th>Pres Qty</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            @if (Prescriptions.Count == 0)
+            {
+                <tbody>
+                    <tr>
+                        <td colspan="3" class="alert alert-info">No Prescriptions Given Yet</td>
+                    </tr>
+                </tbody>
+            }
+            else
+            {
+                @foreach (var prescription in Prescriptions)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@prescription.ProductID</td>
+                            <td>@prescription.Product.ProdName</td>
+                            <td>@prescription.PresQty</td>
+                            <td>
+                                <a href="/prescriptions/edit/@prescription.ID" class="btn btn-warning">
+                                    <span class="oi oi-pencil"></span>
+                                </a>
+                                <button class="btn btn-danger" @onclick="@(()=>Delete(prescription.ID))">
+                                    <span class="oi oi-delete"></span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+            }
+
+
+        </table>
+    }
+    <hr />
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <a href="/prescriptions/create/@consultation.ID" class="btn btn-primary">
+                    <span class="oi oi-cart"></span> Add Prescription
+                </a>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <TPharmacy.Client.Components.BackToList Target="consultations/sindex" />
 </div>
 
 @code
-{ 
+{
     [Parameter] public int id { get; set; }
     Consultation consultation = new Consultation();
+    private IList<Prescription> Prescriptions;
 
     protected async override Task OnParametersSetAsync()
     {
         consultation = await _client.GetFromJsonAsync<Consultation>($"{Endpoints.ConsultationsEndpoint}/{id}");
+        Prescriptions = await _client.GetFromJsonAsync<IList<Prescription>>($"{Endpoints.PrescriptionsEndpoint}/GetConstultationPrescriptions/{id}");
     }
 
     async Task EditConsultation()
     {
+
         await _client.PutAsJsonAsync($"{Endpoints.ConsultationsEndpoint}/{id}", consultation);
-        _navManager.NavigateTo("/consultations/");
-    } 
+        var confirm = await js.InvokeAsync<bool>("confirm", "Update Completed");
+    }
+
+    async Task Delete(int pID)
+    {
+        var p = Prescriptions.First(q => q.ID == pID);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {p.ID} - {p.Product.ProdName}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.PrescriptionsEndpoint}/{pID}");
+            await OnInitializedAsync();
+        }
+    }
+
 }
