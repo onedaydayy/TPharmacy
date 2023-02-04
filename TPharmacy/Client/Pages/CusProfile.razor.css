@@ -1,0 +1,9 @@
+.header {
+    background-position: center center;
+    top: 100px;
+}
+
+.t {
+    position: inherit;
+    top: 70px;
+}

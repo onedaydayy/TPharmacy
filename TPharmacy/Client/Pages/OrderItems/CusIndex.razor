@@ -1,0 +1,66 @@
+﻿@page "/cusorderitems"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+@implements IDisposable
+
+<div class="container mt-5">
+    <h1 class="header">Overview of TPharmacy OrderItem's</h1>
+    <h3>Welcome to the OrderItem Home! </h3>
+    <br />
+    @if (OrderItems == null)
+    {
+        <div class="alert alert-info">Loading OrderItems...</div>
+    }
+    else
+    {
+        <table class="table table-striped align-middle table-bordered responsive-table" id="orderitemsTable" style="border-top-width: 0px;">
+            <thead>
+                <tr>
+                    <th>OrderID</th>
+                    <th>ID</th>
+                    <th>ProductID</th>
+                    <th>ProductPrice</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var orderitem in OrderItems)
+                {
+                <tr>
+                    <td>@orderitem.OrderID</td>
+                    <td>@orderitem.ID</td>
+                    <td>@orderitem.ProductID</td>
+                    <td>@orderitem.Product.ProdPrice</td>
+                    <td>@orderitem.OrderItemQtny</td>
+                    <td>@orderitem.OrderItemTotal</td>
+                    <td>
+                        <a href="/orderitems/view/@orderitem.ID" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+@code {
+    private List<OrderItem> OrderItems;
+    protected async override Task OnInitializedAsync()
+    {
+        OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}/customer");
+    }
+
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#orderitemsTable");
+    }
+
+    public void Dispose()
+    {
+        js.InvokeVoidAsync("DataTablesDispose", "#orderitemsTable");
+    }
+}

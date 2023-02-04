@@ -37,7 +37,7 @@ namespace TPharmacy.Server.Controllers
         }
 
         // GET: api/OrderItems/orderid/{orderId}
-        [HttpGet("customer")]
+        [HttpGet("shoppingcart")]
         public async Task<ActionResult> GetCustomerOrderItems()
         {
             // Get the orderId from the session
@@ -47,13 +47,15 @@ namespace TPharmacy.Server.Controllers
             {
                 // Use the orderId to retrieve all order items for the current order
                 var orderitems = await _unitOfWork.OrderItems.GetAll(q => q.OrderID == orderId.Value, includes: q => q.Include(x => x.Order).Include(x => x.Product));
-                return Ok(orderitems);
+                if (orderitems.Any())
+                {
+                    return Ok(orderitems);
+                }
             }
-            else
-            {
-                return NotFound();
-            }
+            return NotFound();
         }
+
+
         // GET: api/OrderItems
         [HttpGet]
         //Refactored
@@ -68,6 +70,20 @@ namespace TPharmacy.Server.Controllers
             //Refactored
             //return await _context.OrderItems.ToListAsync();
             var orderitems = await _unitOfWork.OrderItems.GetAll(includes: q => q.Include(x => x.Order).Include(x => x.Product));
+            return Ok(orderitems);
+        }
+
+
+        [HttpGet("customer")]
+        public async Task<IActionResult> GetOrderItemsByCustomer()
+        {
+            var username = HttpContext.Session.GetString("username");
+            var customer = await _unitOfWork.Customers.Get(q => q.CusEmail == username);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            var orderitems = await _unitOfWork.OrderItems.GetAll(q => q.Order.CustomerID == customer.ID && q.Order.ID == q.OrderID, includes: q => q.Include(x => x.Order).Include(x => x.Product));
             return Ok(orderitems);
         }
 

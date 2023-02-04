@@ -15,7 +15,7 @@
             }
             else if (OrderItems.Count == 0)
             {
-                <div class="alert alert-info text-center">No items in the shopping cart</div>
+                <div class="alert alert-info text-center">No items in the shopping cart. Please go to shop!</div>
             }
             else
             {
@@ -48,7 +48,7 @@
                 <div class="cart-total text-left" style="padding-left: 900px;">
                     <h4>Total: $@total</h4>
                     <div class="checkout-button text-right" @onclick="@(() => CheckOut())">
-                        <button class="btn btn-primary">Checkout</button>
+                        <button class="btn btn-success">Checkout</button>
                     </div>
                 </div>
             }
@@ -64,7 +64,7 @@
     protected async override Task OnInitializedAsync()
     {
         name = await GetUserName();
-        OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}/customer");
+        OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}/shoppingcart");
         Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
     }
 
@@ -82,12 +82,11 @@
             await js.InvokeVoidAsync("alert", "Order item not found!");
             return;
         }
-        var confirm = await js.InvokeAsync<bool>
-        ("confirm", $"Do you want to delete {orderitem.ID}?");
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {orderitem.ID}?");
         if (confirm)
         {
             await _client.DeleteAsync($"{Endpoints.OrderItemsEndpoint}/{orderitemID}");
-            OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}/customer");
+            OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}/shoppingcart");
         }
     }
 
