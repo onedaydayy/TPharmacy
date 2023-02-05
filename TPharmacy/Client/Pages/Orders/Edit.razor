@@ -1,0 +1,111 @@
+﻿@page "/orders/edit/{id:int}"
+@inject HttpClient _client
+@inject IJSRuntime js
+@attribute [Authorize]
+
+<div class="container mt-5">
+    @if (order != null)
+    {
+        <EditForm Model="@order" OnValidSubmit="EditOrder">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="form-group">
+                <label> Order ID:</label>
+                <div>
+                    <InputNumber @bind-Value="@order.ID" class="form-control" disabled />
+                    <ValidationMessage For="@(() => order.ID)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label> Customer ID:</label>
+                <div>
+                    <InputNumber @bind-Value="@order.CustomerID" class="form-control" disabled />
+                    <ValidationMessage For="@(() => order.CustomerID)" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label> Staff ID:</label>
+                <div>
+                    <InputSelect @bind-Value="@order.StaffID" class="form-control">
+                        <option value="">--Select Staff--</option>
+                        @foreach (var staff in staffList)
+                            {
+                            <option value="@staff.ID">@staff.ID</option>
+                            }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => order.StaffID)" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label> Order Status: </label>
+                <div>
+                    <InputSelect @bind-Value="@order.OrderStatus" class="form-control">
+                        <option value="">--Select Status--</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </InputSelect>
+                    <ValidationMessage For="@(() => order.OrderStatus)"></ValidationMessage>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label> Order Date & Time:</label>
+                <div>
+                    <input type="text" disabled class="form-control"
+                           value="@order.OrderDateTime.ToString("yyyy-MM-dd HH:mm:ss")" />
+                    <ValidationMessage For="@(() => order.OrderDateTime)" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label> Order Fee:</label>
+                <div>
+                    <InputNumber @bind-Value="@order.OrderFee" class="form-control" disabled />
+                    <ValidationMessage For="@(() => order.OrderFee)" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label> OrderItem Total:</label>
+                <div>
+                    <InputNumber @bind-Value="@order.OrderItemTotal" class="form-control" disabled />
+                    <ValidationMessage For="@(() => order.OrderItemTotal)" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label> Order Total:</label>
+                <div>
+                    <InputNumber @bind-Value="@order.OrderTotal" class="form-control" disabled />
+                    <ValidationMessage For="@(() => order.OrderTotal)" />
+                </div>
+            </div>
+
+            <button class="btn btn-success btn-block" @onclick="EditOrder">Save</button>
+            <button class="btn btn-outline-dark btn-block" @onclick="GoBack">Go Back</button>
+        </EditForm>
+    }
+</div>
+@code {
+    [Parameter] public int id { get; set; }
+    private Order order = new Order();
+    private List<Staff> staffList = new List<Staff>();
+
+    protected async override Task OnInitializedAsync()
+    {
+        order = await _client.GetFromJsonAsync<Order>($"{Endpoints.OrdersEndpoint}/{id}");
+        staffList = await _client.GetFromJsonAsync<List<Staff>>(Endpoints.StaffsEndpoint);
+    }
+
+    private async Task EditOrder()
+    {
+        await _client.PutAsJsonAsync($"{Endpoints.OrdersEndpoint}/orderstatus/{id}", order);
+    }
+
+    private async Task GoBack()
+    {
+        await js.InvokeAsync<object>("history.back");
+    }
+}

@@ -6,6 +6,8 @@
 @inject IJSRuntime js
 @page "/cusproducts/{id?}"
 @inject NavigationManager _navigationManager
+    <div class="container mt-5">
+
 
 
 <div class="lgrayback">
@@ -48,74 +50,75 @@
             {
                 int count = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(Products.Count) / Convert.ToDecimal(3)));
 
-                int card = 0;
-                @for (int g = 0; g < count; g++)
-                {
-                    <div class="row">
-                        @for (int i = 0; i < 3; i++)
+                        int card = 0;
+                        @for (int g = 0; g < count; g++)
                         {
-                            if (card < Products.Count)
-                            {
-                                <div class="col-sm-6 col-md-4 col-xl-4">
-                                    <div class="product-card mt-5">
-                                        <div class="content-card">
-                                            <img src="img/@Products[card].ProdName .jpeg" class="product-img" />
+                            <div class="row">
+                                @for (int i = 0; i < 3; i++)
+                                {
+                                    if (card < Products.Count)
+                                    {
+                                        <div class="col-sm-6 col-md-4 col-xl-4">
+                                            <div class="product-card mt-5">
+                                                <div class="content-card">
+                                                    <img src="img/@Products[card].ProdName .jpeg" class="product-img" />
+                                                </div>
+                                                <br />
+                                                <br />
+                                                <div class="content-text">
+                                                    <h3>
+                                                        @Products[card].ProdName
+                                                    </h3>
+                                                </div>
+                                                <div class="align-bottom">
+                                                    <h2 class="price float-right">@Products[card].ProdPrice</h2>
+                                                </div>
+                                                <div>
+                                                    <a href="/productview/@Products[card].ID" class="btn btn-primary">
+                                                        <span class="oi oi-book"></span>
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <br />
-                                        <br />
-                                        <div class="content-text">
-                                            <h3>
-                                                @Products[card].ProdName
-                                            </h3>
-                                        </div>
-                                        <div class="align-bottom">
-                                            <h2 class="price float-right">@Products[card].ProdPrice</h2>
-                                        </div>
-                                        <div>
-                                            <a href="/productview/@Products[card].ID" class="btn btn-primary">
-                                                <span class="oi oi-book"></span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                card++;
-                            }
+                                        card++;
+                                    }
+                                }
+                            </div>
                         }
-                    </div>
+                    }
+                </div>
+            </div>
+        </div>
+        </div>
+
+        @code {
+            [Parameter] public string id { get; set; }
+            private List<Product> Products;
+            private List<string> category = new List<string>();
+            private List<int> count = new List<int>();
+
+
+            protected async override Task OnInitializedAsync()
+            {
+                Console.WriteLine("Products");
+
+                if (id != null)
+                {
+                    Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}/GetCategoryProducts/{id}");
+                }
+                else
+                {
+                    Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+                }
+                var numberGroups = Products.GroupBy(i => i.ProdCategory);
+                foreach (var grp in numberGroups)
+                {
+                    var number = grp.Key;
+                    var total = grp.Count();
+                    category.Add(number);
+                    count.Add(total);
                 }
             }
-        </div>
-    </div>
-</div>
-
-@code {
-    [Parameter] public string id { get; set; }
-    private List<Product> Products;
-    private List<string> category = new List<string>();
-    private List<int> count = new List<int>();
-
-
-    protected async override Task OnInitializedAsync()
-    {
-        Console.WriteLine("Products");
-
-        if (id != null)
-        {
-            Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}/GetCategoryProducts/{id}");
-        }
-        else
-        {
-            Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
-        }
-        var numberGroups = Products.GroupBy(i => i.ProdCategory);
-        foreach (var grp in numberGroups)
-        {
-            var number = grp.Key;
-            var total = grp.Count();
-            category.Add(number);
-            count.Add(total);
-        }
-    }
 
     void NevigateToYourUrl(string result)
     {

@@ -45,12 +45,11 @@
                     </div>
                     total += orderitem.OrderItemTotal;
                 }
-                <div class="cart-total text-left" style="padding-left: 900px;">
+                <div class="cart-total text-center" style="padding-left: 500px;">
                     <h4>Total: $@total</h4>
-                    <div class="checkout-button text-right" @onclick="@(() => CheckOut())">
-                        <button class="btn btn-success">Checkout</button>
-                    </div>
                 </div>
+                    <button class="btn btn-outline-success btn-block" @onclick="@(() => CheckOut())">Checkout</button>
+                <button class="btn btn-outline-info btn-block" @onclick="@(() => NevigateToYourUrl(""))">Continue Shopping</button>
             }
         </div>
     </div>
@@ -66,6 +65,12 @@
         name = await GetUserName();
         OrderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}/shoppingcart");
         Customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+    }
+
+    void NevigateToYourUrl(string result)
+    {
+        Console.WriteLine(result);
+        _navManager.NavigateTo("/cusproducts/" + result, true);
     }
 
     private async Task<string> GetUserName()
@@ -110,13 +115,16 @@
         var order = new Order
         {
             OrderDateTime = DateTime.Now,
-            OrderItemTotal = total // fixed this line
+            OrderItemTotal = total,
+            StaffID= 3,
+            OrderStatus= Order.Status.Completed
 
         };
         await _client.PutAsJsonAsync($"{Endpoints.OrdersEndpoint}/checkout", order);
         OrderItems.Clear(); // added line to clear the shopping cart after checkout
         _navManager.NavigateTo("/cusorders");
     }
+
 
 }
 

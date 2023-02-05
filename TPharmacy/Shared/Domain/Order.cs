@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TPharmacy.Shared.Domain
@@ -16,10 +17,12 @@ namespace TPharmacy.Shared.Domain
 
         public Status OrderStatus { get; set; }
 
+        [Required]
         [ForeignKey("Customer")]
         public int CustomerID { get; set; }
         public virtual Customer Customer { get; set; }
 
+        [Required]
         [ForeignKey("Staff")]
         public int StaffID { get; set; }
         public virtual Staff Staff { get; set; }

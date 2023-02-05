@@ -52,7 +52,7 @@ namespace TPharmacy.Server.Controllers
                     return Ok(orderitems);
                 }
             }
-            return NotFound();
+            return BadRequest("Error: No orderId found");
         }
 
 

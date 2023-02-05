@@ -79,15 +79,15 @@ namespace TPharmacy.Server.Controllers
             }
             var currentRoles = await userManager.GetRolesAsync(user);
             await userManager.RemoveFromRolesAsync(user, currentRoles);
-            if (staff.StafRole == "Admin")
+            if (staff.StafRole == Staff.Role.Admin)
             {
                 await userManager.AddToRoleAsync(user, "Admin");
             }
-            if (staff.StafRole == "Pharmacist")
+            if (staff.StafRole == Staff.Role.Pharmacist)
             {
                 await userManager.AddToRoleAsync(user, "Pharmacist");
             }
-            if (staff.StafRole == "Packer")
+            if (staff.StafRole == Staff.Role.Packer)
             {
                 await userManager.AddToRoleAsync(user, "Packer");
             }
@@ -147,17 +147,17 @@ namespace TPharmacy.Server.Controllers
                     await roleManager.RoleExistsAsync("Staff");
                     await userManager.AddToRoleAsync(user, "Staff");
 
-                    if (staff.StafRole == "Admin")
+                    if (staff.StafRole == Staff.Role.Admin)
                     {
                         await roleManager.RoleExistsAsync("Admin");
                         await userManager.AddToRoleAsync(user, "Admin");
                     }
-                    if (staff.StafRole == "Pharmacist")
+                    if (staff.StafRole == Staff.Role.Pharmacist)
                     {
                         await roleManager.RoleExistsAsync("Pharmacist");
                         await userManager.AddToRoleAsync(user, "Pharmacist");
                     }
-                    if (staff.StafRole == "Packer")
+                    if (staff.StafRole == Staff.Role.Packer)
                     {
                         await roleManager.RoleExistsAsync("Packer");
                         await userManager.AddToRoleAsync(user, "Packer");
