@@ -44,43 +44,43 @@
                                     </NavLink>
                                 </li>
                             </Authorized>
-                        <NotAuthorized>
-                            <li class="nav-item dropdown show">
-                                <NavLink class="nav-link mr-auto dropdown-toggle" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
-                                    <span class="oi oi-cart" aria-hidden="true"></span> Shop
-                                </NavLink>
-                                @if (expandShopNavSetting)
-                                {
-                                <li class="dropdown-menu show" aria-labelledby="navbarDropdown" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
-                                <li class="nav-item px-3">
-                                    <NavLink class="nav-link" href="authentication/login">
-                                        <span class="oi oi-align-left" aria-hidden="true"></span> Supplements
+                            <NotAuthorized>
+                                <li class="nav-item dropdown show">
+                                    <NavLink class="nav-link mr-auto dropdown-toggle" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
+                                        <span class="oi oi-cart" aria-hidden="true"></span> Shop
                                     </NavLink>
-                                </li>
-                                <li class="nav-item px-3">
-                                    <NavLink class="nav-link" href="authentication/login">
-                                        <span class="oi oi-align-left" aria-hidden="true"></span> Sports
-                                    </NavLink>
-                                </li>
-                                <li class="nav-item px-3">
-                                    <NavLink class="nav-link" href="authentication/login">
-                                        <span class="oi oi-align-left" aria-hidden="true"></span> Baby
-                                    </NavLink>
-                                </li>
-                                <li class="nav-item px-3">
-                                    <NavLink class="nav-link" href="authentication/login">
-                                        <span class="oi oi-align-left" aria-hidden="true"></span> Prescription
-                                    </NavLink>
-                                </li>
-                                </li>
+                                    @if (expandShopNavSetting)
+                                    {
+                                    <li class="dropdown-menu show" aria-labelledby="navbarDropdown" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
+                                    <li class="nav-item px-3">
+                                        <NavLink class="nav-link" href="authentication/login">
+                                            <span class="oi oi-align-left" aria-hidden="true"></span> Supplements
+                                        </NavLink>
+                                    </li>
+                                    <li class="nav-item px-3">
+                                        <NavLink class="nav-link" href="authentication/login">
+                                            <span class="oi oi-align-left" aria-hidden="true"></span> Sports
+                                        </NavLink>
+                                    </li>
+                                    <li class="nav-item px-3">
+                                        <NavLink class="nav-link" href="authentication/login">
+                                            <span class="oi oi-align-left" aria-hidden="true"></span> Baby
+                                        </NavLink>
+                                    </li>
+                                    <li class="nav-item px-3">
+                                        <NavLink class="nav-link" href="authentication/login">
+                                            <span class="oi oi-align-left" aria-hidden="true"></span> Prescription
+                                        </NavLink>
+                                    </li>
+                                    </li>
                                 }
-                                </li>
-                                <li class="nav-item mr-auto">
-                                    <NavLink class="nav-link" href="authentication/login">
-                                        <span class="oi oi-chat" aria-hidden="true"></span> Consultation
-                                    </NavLink>
-                                </li>
-                            </NotAuthorized>
+                                    </li>
+                                    <li class="nav-item mr-auto">
+                                        <NavLink class="nav-link" href="authentication/login">
+                                            <span class="oi oi-chat" aria-hidden="true"></span> Consultation
+                                        </NavLink>
+                                    </li>
+                                </NotAuthorized>
                             </AuthorizeView>
                         </ul>
                     </div>
@@ -96,6 +96,21 @@
                                     @if (expandUserNavSetting)
                                     {
                                     <li class="dropdown-menu show" aria-labelledby="navbarDropdown" @onclick="() => expandUserNavSetting = !expandUserNavSetting">
+                                    <li class="nav-item px-3">
+                                        <NavLink class="nav-link" href="/cuspayments" Match="NavLinkMatch.All">
+                                            <span class="oi oi-list" aria-hidden="true"></span> Payment
+                                        </NavLink>
+                                    </li>
+                                    <li class="nav-item px-3">
+                                        <NavLink class="nav-link" href="/cusorderitems" Match="NavLinkMatch.All">
+                                            <span class="oi oi-list" aria-hidden="true"></span> OrderItems
+                                        </NavLink>
+                                    </li>
+                                    <li class="nav-item px-3">
+                                        <NavLink class="nav-link" href="/cusorders" Match="NavLinkMatch.All">
+                                            <span class="oi oi-list" aria-hidden="true"></span> Orders
+                                        </NavLink>
+                                    </li>
                                     <li class="nav-item px-3">
                                         <NavLink class="nav-link" href="@ccbblink" Match="NavLinkMatch.All">
                                             <span class="oi oi-people" aria-hidden="true"></span> Profile
@@ -125,82 +140,82 @@
                                         </NavLink>
                                     </li>
                                 </Authorized>
-                            <NotAuthorized>
-                                <li class="nav-item mr-auto">
-                                    <NavLink class="nav-link" href="authentication/register" Match="NavLinkMatch.All">
-                                        <span class="oi oi-person" aria-hidden="true"></span> Register
-                                    </NavLink>
-                                </li>
-                                <li class="nav-item mr-auto">
-                                    <NavLink class="nav-link" href="authentication/login" Match="NavLinkMatch.All">
-                                        <span class="oi oi-account-login" aria-hidden="true"></span> Log in
-                                    </NavLink>
-                                </li>
-                                <li class="nav-item mr-auto">
-                                    <NavLink class="nav-link" href="authentication/login" Match="NavLinkMatch.All">
-                                        <span class="oi oi-cart" aria-hidden="true"></span>
-                                    </NavLink>
-                                </li>
-                            </NotAuthorized>
-                        </AuthorizeView>
-                    </ul>
+                                <NotAuthorized>
+                                    <li class="nav-item mr-auto">
+                                        <NavLink class="nav-link" href="authentication/register" Match="NavLinkMatch.All">
+                                            <span class="oi oi-person" aria-hidden="true"></span> Register
+                                        </NavLink>
+                                    </li>
+                                    <li class="nav-item mr-auto">
+                                        <NavLink class="nav-link" href="authentication/login" Match="NavLinkMatch.All">
+                                            <span class="oi oi-account-login" aria-hidden="true"></span> Log in
+                                        </NavLink>
+                                    </li>
+                                    <li class="nav-item mr-auto">
+                                        <NavLink class="nav-link" href="authentication/login" Match="NavLinkMatch.All">
+                                            <span class="oi oi-cart" aria-hidden="true"></span>
+                                        </NavLink>
+                                    </li>
+                                </NotAuthorized>
+                            </AuthorizeView>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
 
-        @code {
-            private bool collapseNavMenu = true;
-            private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-            private bool expandShopNavSetting;
-            private bool expandUserNavSetting;
+            @code {
+                private bool collapseNavMenu = true;
+                private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+                private bool expandShopNavSetting;
+                private bool expandUserNavSetting;
 
-            [CascadingParameter]
-            public Task<AuthenticationState> AuthTask { get; set; }
-            private ClaimsPrincipal user;
+                [CascadingParameter]
+                public Task<AuthenticationState> AuthTask { get; set; }
+                private ClaimsPrincipal user;
 
-            string ccbblink = "";
-            string baseMenuClass = "navbar-collapse d-sm-inline-flex flex-sm-row-reverse";
+                string ccbblink = "";
+                string baseMenuClass = "navbar-collapse d-sm-inline-flex flex-sm-row-reverse";
 
 
-            protected async override Task OnInitializedAsync()
-            {
-                if (AuthTask == null)
+                protected async override Task OnInitializedAsync()
                 {
-                    return;
+                    if (AuthTask == null)
+                    {
+                        return;
+                    }
+
+                    try
+                    {
+                        var authState = await AuthTask;
+                        this.user = authState.User;
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle exception
+                    }
+                    ccbblink = "profile/" + user.Identity.Name;
+
                 }
 
-                try
+                private void ToggleNavMenu()
                 {
-                    var authState = await AuthTask;
-                    this.user = authState.User;
+
+                    if (!expandShopNavSetting)
+                    {
+                        collapseNavMenu = !collapseNavMenu;
+                    }
                 }
-                catch (Exception ex)
+
+                private async Task BeginSignOut(MouseEventArgs args)
                 {
-                    // Handle exception
+                    await SignOutManager.SetSignOutState();
+                    Navigation.NavigateTo("authentication/logout");
                 }
-                ccbblink = "profile/"+ user.Identity.Name;
 
-            }
-
-            private void ToggleNavMenu()
-            {
-
-                if (!expandShopNavSetting)
+                private bool expandProductMenu2;
+                void NevigateToYourUrl(string result)
                 {
-                    collapseNavMenu = !collapseNavMenu;
+                    Console.WriteLine(result);
+                    _navigationManager.NavigateTo("/cusproducts/" + result, true);
                 }
             }
-
-            private async Task BeginSignOut(MouseEventArgs args)
-            {
-                await SignOutManager.SetSignOutState();
-                Navigation.NavigateTo("authentication/logout");
-            }
-
-            private bool expandProductMenu2;
-            void NevigateToYourUrl(string result)
-            {
-                Console.WriteLine(result);
-                _navigationManager.NavigateTo("/cusproducts/" + result, true);
-            }
-        }

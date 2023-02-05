@@ -97,7 +97,7 @@ nav.same-line {
 .dropdown-menu {
     display: inline-block;
     position: relative;
-    background-color: #008F42;
+    background-color: #0B763D;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
@@ -117,7 +117,7 @@ nav.same-line {
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropdown-menu {
-    background-color: #008F42;
+    background-color: #0B763D;
 }
 
 @media (min-width: 768px) {

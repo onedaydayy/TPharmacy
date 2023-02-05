@@ -1,4 +1,4 @@
-﻿@page "/payments"
+﻿@page "/cuspayments"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -8,10 +8,10 @@
     <h1 class="header">Overview of TPharmacy Payment's</h1>
     <h3>Welcome to the Payment Home! </h3>
     <div class="row">
-        <br />
-        <a href="/payments/create" class="btn btn-success btn-block" role="button">
-            Make Payment
-        </a>
+            <br />
+            <a href="/payments/create" class="btn btn-success btn-block" role="button">
+                Make Payment
+            </a>
     </div>
     <br />
     @if (payments == null)
@@ -50,7 +50,7 @@
 
     protected async override Task OnInitializedAsync()
     {
-        payments = await _client.GetFromJsonAsync<List<Payment>>($"{Endpoints.PaymentsEndpoint}");
+        payments = await _client.GetFromJsonAsync<List<Payment>>($"{Endpoints.PaymentsEndpoint}/customer");
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
