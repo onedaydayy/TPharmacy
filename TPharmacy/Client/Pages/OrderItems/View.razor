@@ -1,5 +1,6 @@
 ﻿@page "/orderitems/view/{id:int}"
 @inject HttpClient _client
+@inject IJSRuntime js
 @inject NavigationManager _navManager
 
 <div class="container my-5">
@@ -32,6 +33,7 @@
             }
         </div>
     </div>
+    <button class="btn btn-outline-dark btn-block" @onclick="GoBack">Go Back</button>
 </div>
 @code
 {
@@ -46,5 +48,10 @@
             var product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/{orderitem.ProductID}");
             orderitem.Product = product;
         }
+    }
+
+    private async Task GoBack()
+    {
+        await js.InvokeAsync<object>("history.back");
     }
 }
