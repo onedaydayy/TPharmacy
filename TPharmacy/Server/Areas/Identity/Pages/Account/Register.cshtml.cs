@@ -15,6 +15,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using TPharmacy.Shared.Domain;
+using TPharmacy.Server.Controllers;
+using TPharmacy.Server.IRepository;
+using System.Net.Http;
+using TPharmacy.Server.Static;
 
 namespace TPharmacy.Server.Areas.Identity.Pages.Account
 {
@@ -26,19 +30,23 @@ namespace TPharmacy.Server.Areas.Identity.Pages.Account
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-
+        private readonly IUnitOfWork _unitOfWork;
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             RoleManager<IdentityRole> roleManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _unitOfWork = unitOfWork;
+
+
         }
 
         [BindProperty]
@@ -84,12 +92,15 @@ namespace TPharmacy.Server.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, Name= Input.UserName, Role= "Customer" };
+                Customer newCustomer = new Customer { CusEmail = Input.Email, CusName = Input.UserName, CusPassword = Input.Password, CreatedBy = "System", UpdatedBy = "System", DateCreated = DateTime.Now, DateUpdated = DateTime.Now, CusAddress = "NA", CusNumber = "88888888" };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+                    _unitOfWork.Customers.Insert(newCustomer);
                     _logger.LogInformation("User created a new account with password.");
                     await _roleManager.FindByNameAsync("Customer");
                     await _userManager.AddToRoleAsync(user, "Customer");
+
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(

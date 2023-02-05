@@ -8,7 +8,7 @@
             <div class="form-group">
                 <label>OrderID: </label>
                 <div>
-                    <InputSelect @bind-Value="payment.OrderID" class="form-control" @onchange="OnOrderIDSelected">
+                    <InputSelect @bind-Value="payment.OrderID" class="form-control" onchange="UpdatePayFee(payment.OrderID)">
                         <option value="">--Select Order--</option>
                         @if (Orders != null)
                         {
@@ -59,34 +59,28 @@
     protected async override Task OnInitializedAsync()
     {
         Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
-        if (payment.OrderID != null)
-        {
-            foreach (var order in Orders)
-            {
-                if (payment.OrderID == order.ID)
-                {
-                    payment.PayFee = order.OrderTotal;
-                    break;
-                }
-            }
-        }
-
     }
 
-    private async Task OnOrderIDSelected()
+    private async Task UpdatePayFee(int orderID)
     {
-        if (payment.OrderID != null)
+        if (Orders == null || orderID == 0)
         {
-            foreach (var order in Orders)
-            {
-                if (payment.OrderID == order.ID)
-                {
-                    payment.PayFee = order.OrderTotal;
-                    StateHasChanged();
-                    break;
-                }
-            }
+            return;
         }
+
+        var order = Orders.FirstOrDefault(x => x.ID == orderID);
+        if (order != null)
+        {
+            payment.PayFee = order.OrderTotal;
+        }
+        StateHasChanged();
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            UpdatePayFee(payment.OrderID);
+        }
+    }
 }

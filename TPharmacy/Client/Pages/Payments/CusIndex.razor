@@ -14,7 +14,7 @@
             </a>
     </div>
     <br />
-    @if (payments == null)
+    @if (Payments == null)
     {
         <div class="alert alert-info">Loading payments...</div>
     }
@@ -27,17 +27,29 @@
                     <th>OrderID</th>
                     <th>PayFee</th>
                     <th>CardInfo</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var payment in payments)
+                @foreach (var payment in Payments)
                 {
-                    <tr>
-                        <td>@payment.ID</td>
-                        <td>@payment.OrderID</td>
-                        <td>@payment.PayFee</td>
-                        <td>@payment.PayCardInfo</td>
-                    </tr>
+                <tr>
+                    <td>@payment.ID</td>
+                    <td>@payment.OrderID</td>
+                    <td>@payment.PayFee</td>
+                    <td>@payment.PayCardInfo</td>
+                    <td>
+                        <a href="/payments/view/@payment.ID" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/payments/edit/@payment.ID" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(payment.ID))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>
@@ -46,11 +58,11 @@
 
 
 @code {
-    private List<Payment> payments;
+    private List<Payment> Payments;
 
     protected async override Task OnInitializedAsync()
     {
-        payments = await _client.GetFromJsonAsync<List<Payment>>($"{Endpoints.PaymentsEndpoint}/customer");
+        Payments = await _client.GetFromJsonAsync<List<Payment>>($"{Endpoints.PaymentsEndpoint}/customer");
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -61,5 +73,16 @@
     public void Dispose()
     {
         js.InvokeVoidAsync("DataTablesDispose", "#paymentsTable");
+    }
+
+    async Task Delete(int paymentID)
+    {
+        var payment = Payments.First(q => q.ID == paymentID);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {payment.ID}?");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"{Endpoints.PaymentsEndpoint}/{paymentID}");
+            await OnInitializedAsync();
+        }
     }
 }
