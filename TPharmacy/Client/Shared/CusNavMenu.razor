@@ -32,22 +32,7 @@
                                 <li class="dropdown-menu show" aria-labelledby="navbarDropdown" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
                                 <li class="nav-item px-3">
                                     <NavLink class="nav-link" href="" @onclick="@(() => NevigateToYourUrl(""))">
-                                        <span class="oi oi-align-left" aria-hidden="true"></span> All Products
-                                    </NavLink>
-                                </li>
-                                <li class="nav-item px-3">
-                                    <NavLink class="nav-link" href="" @onclick="@(() => NevigateToYourUrl("supplement"))">
-                                        <span class="oi oi-align-left" aria-hidden="true"></span> Supplement
-                                    </NavLink>
-                                </li>
-                                <li class="nav-item px-3">
-                                    <NavLink class="nav-link" href="" @onclick="@(() => NevigateToYourUrl("sports"))">
-                                        <span class="oi oi-align-left" aria-hidden="true"></span> Sport
-                                    </NavLink>
-                                </li>
-                                <li class="nav-item px-3">
-                                    <NavLink class="nav-link" href="" @onclick="@(() => NevigateToYourUrl("baby"))">
-                                        <span class="oi oi-align-left" aria-hidden="true"></span> Baby
+                                        <span class="oi oi-align-left" aria-hidden="true"></span> Supplements
                                     </NavLink>
                                 </li>
                                 </li>
@@ -59,38 +44,43 @@
                                     </NavLink>
                                 </li>
                             </Authorized>
-                            <NotAuthorized>
-                                <li class="nav-item dropdown show">
-                                    <NavLink class="nav-link mr-auto dropdown-toggle" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
-                                        <span class="oi oi-cart" aria-hidden="true"></span> Shop
+                        <NotAuthorized>
+                            <li class="nav-item dropdown show">
+                                <NavLink class="nav-link mr-auto dropdown-toggle" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
+                                    <span class="oi oi-cart" aria-hidden="true"></span> Shop
+                                </NavLink>
+                                @if (expandShopNavSetting)
+                                {
+                                <li class="dropdown-menu show" aria-labelledby="navbarDropdown" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
+                                <li class="nav-item px-3">
+                                    <NavLink class="nav-link" href="authentication/login">
+                                        <span class="oi oi-align-left" aria-hidden="true"></span> Supplements
                                     </NavLink>
-                                    @if (expandShopNavSetting)
-                                    {
-                                    <li class="dropdown-menu show" aria-labelledby="navbarDropdown" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
-                                    <li class="nav-item px-3">
-                                        <NavLink class="nav-link" href="authentication/login">
-                                            <span class="oi oi-align-left" aria-hidden="true"></span> Supplement
-                                        </NavLink>
-                                    </li>
-                                    <li class="nav-item px-3">
-                                        <NavLink class="nav-link" href="authentication/login">
-                                            <span class="oi oi-align-left" aria-hidden="true"></span> Sport
-                                        </NavLink>
-                                    </li>
-                                    <li class="nav-item px-3">
-                                        <NavLink class="nav-link" href="authentication/login">
-                                            <span class="oi oi-align-left" aria-hidden="true"></span> Baby
-                                        </NavLink>
-                                    </li>
-                                    </li>
-                                }
-                                    </li>
-                                    <li class="nav-item mr-auto">
-                                        <NavLink class="nav-link" href="authentication/login">
-                                            <span class="oi oi-chat" aria-hidden="true"></span> Consultation
-                                        </NavLink>
-                                    </li>
-                                </NotAuthorized>
+                                </li>
+                                <li class="nav-item px-3">
+                                    <NavLink class="nav-link" href="authentication/login">
+                                        <span class="oi oi-align-left" aria-hidden="true"></span> Sports
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item px-3">
+                                    <NavLink class="nav-link" href="authentication/login">
+                                        <span class="oi oi-align-left" aria-hidden="true"></span> Baby
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item px-3">
+                                    <NavLink class="nav-link" href="authentication/login">
+                                        <span class="oi oi-align-left" aria-hidden="true"></span> Prescription
+                                    </NavLink>
+                                </li>
+                                </li>
+                            }
+                                </li>
+                                <li class="nav-item mr-auto">
+                                    <NavLink class="nav-link" href="authentication/login">
+                                        <span class="oi oi-chat" aria-hidden="true"></span> Consultation
+                                    </NavLink>
+                                </li>
+                            </NotAuthorized>
                             </AuthorizeView>
                         </ul>
                     </div>

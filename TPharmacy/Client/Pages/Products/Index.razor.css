@@ -125,7 +125,7 @@ hr {
 }
 
 .gray-card {
-    background-color: #D9D9D9;
+    background-color: #dee2e6;
     border-radius: 5px;
     height: 90%;
 }
@@ -232,7 +232,7 @@ input.qtyminus {
 .lgrayback {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-color: lightgray;
+    background-color: #F8F9FA;
 }
 
 .filter-head {
