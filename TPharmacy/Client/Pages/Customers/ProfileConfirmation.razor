@@ -1,4 +1,4 @@
-﻿@page "/customers/updatesuccess"
+﻿@page "/customers/updatesuccess/{id}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 @attribute [Authorize]
@@ -7,10 +7,15 @@
 <div class="container mt-5">
     <h3>Profile Updated!</h3>
     <br />
-    <TPharmacy.Client.Components.BackToList Target="/" />
+    <TPharmacy.Client.Components.BackToList Target="@url" />
 </div>
 
-
 @code {
+        [Parameter] public string id { get; set; }
+        string url;
+        protected override void OnParametersSet()
+        {
+            url = "Profile/"+ id;
+        }
 
 }

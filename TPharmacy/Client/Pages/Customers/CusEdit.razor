@@ -1,4 +1,4 @@
-﻿@page "/Profile/{id:int}"
+﻿@page "/Profile/{id}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
@@ -8,6 +8,8 @@
     <button class="btn btn-primary" @onclick="ViewOrders">View Orders</button>
     <br />
     <FormComponent ButtonText="Update" OnValidSubmit="EditCustomer" customer="customer"></FormComponent>
+    <br />
+    <TPharmacy.Client.Components.BackToList Target="" />
 </div>
 
 @code
@@ -23,7 +25,7 @@
     async Task EditCustomer()
     {
         await _client.PutAsJsonAsync($"{Endpoints.CustomersEndpoint}/{customer.ID}", customer);
-        _navManager.NavigateTo("/customers/updatesuccess");
+        _navManager.NavigateTo("/customers/updatesuccess/"+ id);
     }
     private void ViewOrderItems()
     {

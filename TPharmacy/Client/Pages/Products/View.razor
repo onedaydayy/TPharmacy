@@ -7,64 +7,66 @@
 @inject IJSRuntime js
 @page "/productview/{id:int}"
 
-    <EditForm Model="@orderitem" OnValidSubmit="CreateOrderItem">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-        <div class="card">
-            <div class="card-body">
-                <h2 class="card-title text-center">@product.ProdName </h2>
-                <div class="row">
-                    <div class="col-md-6">
-                        <img src="img/@product.ProdName .jpeg" class="img-fluid img-thumbnail" alt="Product Image">
-                    </div>
-                    <div class="col-md-6">
-                        <h2 class="price text-left" style="padding-top: 30px;">$ @product.ProdPrice</h2>
-                        <div class="form-group" style="padding-top: 20px;">
-                            <h5>Quantity</h5>
-                            <InputNumber @bind-Value="@orderitem.OrderItemQtny" class="form-control" Min=1 Max=100 />
-                            <ValidationMessage For="@(() => orderitem.OrderItemQtny)" />
+    <div class="container mt-5">
+        <EditForm Model="@orderitem" OnValidSubmit="CreateOrderItem">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="card-title text-center">@product.ProdName </h2>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="img/@product.ProdName .jpeg" class="img-fluid img-thumbnail" alt="Product Image">
                         </div>
-                        <h5 class="text-left" style="padding-top: 20px; padding-bottom: 20px;">
-                            Free Shipping
-                        </h5>
-                        <button type="submit" class="btn btn-success btn-block">
-                            <span class="oi oi-cart"></span> Add to Cart
-                        </button>
-                        <div class="card-text" style="padding-top: 30px;">
-                            @product.ProdDesc
+                        <div class="col-md-6">
+                            <h2 class="price text-left" style="padding-top: 30px;">$ @product.ProdPrice</h2>
+                            <div class="form-group" style="padding-top: 20px;">
+                                <h5>Quantity</h5>
+                                <InputNumber @bind-Value="@orderitem.OrderItemQtny" class="form-control" Min=1 Max=100 />
+                                <ValidationMessage For="@(() => orderitem.OrderItemQtny)" />
+                            </div>
+                            <h5 class="text-left" style="padding-top: 20px; padding-bottom: 20px;">
+                                Free Shipping
+                            </h5>
+                            <button type="submit" class="btn btn-success btn-block">
+                                <span class="oi oi-cart"></span> Add to Cart
+                            </button>
+                            <div class="card-text" style="padding-top: 30px;">
+                                @product.ProdDesc
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </EditForm>
         </div>
-    </EditForm>
 
-@code {
-        [Parameter] public int id { get; set; }
-        Product product = new Product();
-        OrderItem orderitem = new OrderItem();
+        @code {
+            [Parameter] public int id { get; set; }
+            Product product = new Product();
+            OrderItem orderitem = new OrderItem();
 
 
-protected async override Task OnParametersSetAsync()
-    {
-        product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/{id}");
-    }
+            protected async override Task OnParametersSetAsync()
+            {
+                product = await _client.GetFromJsonAsync<Product>($"{Endpoints.ProductsEndpoint}/{id}");
+            }
 
-    private async Task CreateOrderItem()
-    {
+            private async Task CreateOrderItem()
+            {
 
-        orderitem.ProductID = product.ID;
-        var response = await Http.PostAsJsonAsync(Endpoints.OrderItemsEndpoint, orderitem);
-        if (response.IsSuccessStatusCode)
-        {
-            _navManager.NavigateTo("/shoppingcart");
+                orderitem.ProductID = product.ID;
+                var response = await Http.PostAsJsonAsync(Endpoints.OrderItemsEndpoint, orderitem);
+                if (response.IsSuccessStatusCode)
+                {
+                    _navManager.NavigateTo("/shoppingcart");
+                }
+                else
+                {
+                    // Handle error
+                }
+
+            }
         }
-        else
-        {
-            // Handle error
-        }
-
-    }
-}
 
 
