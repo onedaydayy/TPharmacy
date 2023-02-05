@@ -9,8 +9,12 @@
 
 <div class="lgrayback">
     <div class="container">
-        <h1 class="title-cate">TPharmacy</h1>
-        <span class="desc-pro">Desc here Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah Blah </span>
+        <h1 class="title-cate" style="color:green"> Our Supplements  </h1>
+        <br />
+        <span class="desc-pro">
+            A nutritional supplement is taken by mouth, and usually contains one or more dietary ingredient
+            such as vitamin, mineral, herb, amino acid, and enzyme.
+        </span>
     </div>
 </div>
 
@@ -18,9 +22,7 @@
     <div class="row">
         <div class="col-3">
             <div class="filter-head">
-                <h4>
-                    Category
-                </h4>
+                <h4 class="card-title text-center">Category</h4>
             </div>
             <div class="filter">
                 @for (int i = 0; i < category.Count; i++)
@@ -60,6 +62,8 @@
                                         <div class="content-card">
                                             <img src="img/@Products[card].ProdName .jpeg" class="product-img" />
                                         </div>
+                                        <br />
+                                        <br />
                                         <div class="content-text">
                                             <h3>
                                                 @Products[card].ProdName
@@ -94,7 +98,7 @@
 
     protected async override Task OnInitializedAsync()
     {
-        Console.WriteLine("Hi Hi");
+        Console.WriteLine("Products");
 
         if (id != null)
         {

@@ -4,7 +4,7 @@
 @attribute [Authorize(Roles = "Admin, Packer, Pharmacist, Staff")]
 
 <div class="container mt-5">
-    <h1 class="header">Consultations > Consultation List > Consultation Details</h1>
+    <h1 class="header">View Consultation Details</h1>
     <hr />
     <StafFormComponent consultation="consultation" Disabled="true" />
     <hr />
@@ -17,7 +17,7 @@
         <table class="table table-striped align-middle table-bordered responsive-table" id="prescriptionsTable">
             <thead>
                 <tr>
-                    <th>Product SKU</th>
+                    <th>Product ID</th>
                     <th>Product Name</th>
                     <th>Pres Qty</th>
                 </tr>
