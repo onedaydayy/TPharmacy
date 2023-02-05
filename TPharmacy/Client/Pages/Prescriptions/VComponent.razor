@@ -15,16 +15,7 @@
             <div class="form-group">
                 <label>Product</label>
                 <div>
-                    <InputSelect @bind-Value="@prescription.ProductID" class="form-control">
-                        <option value="">-- Select Product --</option>
-                        @if (products != null)
-                        {
-                            foreach (var pd in products)
-                            {
-                                <option value="@pd.ID">@pd.ProdName - @pd.ProdPrice </option>
-                            }
-                        }
-                    </InputSelect>
+                    <InputNumber @bind-Value="@prescription.ProductID" class="form-control" disabled="true" />
                     <ValidationMessage For="@(()=>prescription.ProductID)" />
                 </div>
             </div>

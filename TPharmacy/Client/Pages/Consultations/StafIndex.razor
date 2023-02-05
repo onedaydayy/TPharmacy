@@ -100,7 +100,7 @@ async Task Delete(int consultationID)
     var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {consultation.ID} - Consultation with {consultation.Customer.CusName} on {consultation.ConDate}?");
     if (confirm)
     {
-        await _client.DeleteAsync($"{Endpoints.ConsultationsEndpoint}/{consultationID}");
+        await _client.DeleteAsync($"{Endpoints.ConsultationsEndpoint}/{consultation.ID}");
         await OnInitializedAsync();
     }
 }

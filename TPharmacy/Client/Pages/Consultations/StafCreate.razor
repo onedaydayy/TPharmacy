@@ -1,14 +1,41 @@
 ﻿@page "/staffconsultations/create"
 @inject HttpClient _client
+@inject IJSRuntime js
 @inject NavigationManager _navManager
+@using System.Security.Claims
+@attribute [Authorize(Roles = "Admin, Packer, Pharmacist, Staff")]
 
 <div class="container mt-5">
     <h1 class="header">Create New Consultations</h1>
-    <FormComponent ButtonText="Create Consultation" OnValidSubmit="CreateConsultation" consultation="consultation"></FormComponent>
+    <StafCreFormComponent ButtonText="Create Consultation" OnValidSubmit="CreateConsultation" consultation="consultation"></StafCreFormComponent>
 </div>
 @code
 {
     Consultation consultation = new Consultation();
+    private Customer customer;
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthTask { get; set; }
+
+    private ClaimsPrincipal user;
+
+    protected async override Task OnInitializedAsync()
+    {
+        if (AuthTask == null)
+        {
+            return;
+        }
+
+        try
+        {
+            var authState = await AuthTask;
+            this.user = authState.User;
+        }
+        catch (Exception ex)
+        {
+            // Handle exception
+        }
+    }
 
     private async Task CreateConsultation()
     {

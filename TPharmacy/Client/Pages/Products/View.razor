@@ -7,7 +7,6 @@
 @inject IJSRuntime js
 @page "/productview/{id:int}"
 
-<div class="container mt-5">
     <EditForm Model="@orderitem" OnValidSubmit="CreateOrderItem">
         <DataAnnotationsValidator />
         <ValidationSummary />
@@ -39,8 +38,6 @@
             </div>
         </div>
     </EditForm>
-</div>
-
 
 @code {
         [Parameter] public int id { get; set; }

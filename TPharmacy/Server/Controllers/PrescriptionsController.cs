@@ -70,7 +70,7 @@ namespace TPharmacy.Server.Controllers
         {
             //Refactored
             //var prescription = await _context.Prescriptions.FindAsync(id);
-            var prescription = await _unitOfWork.Prescriptions.Get(q => q.ID == id);
+            var prescription = await _unitOfWork.Prescriptions.Get(q => q.ID == id, includes: q => q.Include(x => x.Product).Include(x => x.Consultation));
 
             if (prescription == null)
             {

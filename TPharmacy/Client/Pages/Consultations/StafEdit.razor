@@ -88,7 +88,8 @@
     {
 
         await _client.PutAsJsonAsync($"{Endpoints.ConsultationsEndpoint}/{id}", consultation);
-        var confirm = await js.InvokeAsync<bool>("Confirm", "Update Completed");
+
+        var confirmedit = await js.InvokeAsync<bool>("confirm", $"Updates Successful");
     }
 
     async Task Delete(int pID)

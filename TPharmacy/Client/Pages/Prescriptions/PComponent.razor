@@ -1,4 +1,5 @@
 ﻿@inject HttpClient _client
+@using System.Security.Claims
 
 <div class="container mt-5">
     <EditForm Model="@prescription" OnValidSubmit="@OnValidSubmit">
@@ -6,10 +7,18 @@
         <ValidationSummary />
         <fieldset disabled="@Disabled">
             <div class="form-group">
-                <label>Consultant ID</label>
+                <label>Consultant ID: </label>
                 <div>
-                    <InputNumber @bind-Value="@prescription.ConsultationID" class="form-control" disabled="true" />
-                    <ValidationMessage For="@(()=>prescription.ConsultationID)" />
+                    <InputSelect @bind-Value="@prescription.ConsultationID" class="form-control">
+                        <option value="">-- Select Consultation --</option>
+                        @if (Consultations != null)
+                        {
+                            foreach (var con in Consultations)
+                            {
+                                <option value="@con.ID">@con.Customer.CusName Consultation on @con.ConDate</option>
+                            }
+                        }
+                    </InputSelect>
                 </div>
             </div>
             <div class="form-group">
@@ -42,7 +51,6 @@
                 @ButtonText
             </button>
         }
-        <TPharmacy.Client.Components.BackToList Target="/staffprescriptions" />
     </EditForm>
 </div>
 
@@ -54,9 +62,31 @@
     [Parameter] public EventCallback OnValidSubmit { get; set; }
     [Parameter] public IList<Product> products { get; set; }
 
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthTask { get; set; }
+
+    private ClaimsPrincipal user;
+    private List<Consultation> Consultations;
+
     protected async override Task OnInitializedAsync()
     {
+        if (AuthTask == null)
+        {
+            return;
+        }
+
+        try
+        {
+            var authState = await AuthTask;
+            this.user = authState.User;
+        }
+        catch (Exception ex)
+        {
+            // Handle exception
+        }
+        Consultations = await _client.GetFromJsonAsync<List<Consultation>>($"{Endpoints.ConsultationsEndpoint}");
         products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+
     }
 
 

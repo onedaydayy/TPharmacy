@@ -1,0 +1,22 @@
+﻿@page "/prescriptions/creates"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@attribute [Authorize(Roles = "Admin, Packer, Pharmacist, Staff")]
+
+<div class="container mt-5">
+    <h1 class="header">Create New Prescriptions</h1>
+    <PComponent ButtonText="Create Prescription" OnValidSubmit="CreatePrescription" prescription="prescription"></PComponent>
+</div>
+
+@code
+{
+
+    Prescription prescription = new Prescription();
+    
+
+    private async Task CreatePrescription()
+    {
+        await _client.PostAsJsonAsync(Endpoints.PrescriptionsEndpoint, prescription);
+        _navManager.NavigateTo("/staffprescriptions/");
+    }
+}
