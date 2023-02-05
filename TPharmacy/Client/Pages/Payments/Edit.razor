@@ -11,16 +11,24 @@
 { 
     [Parameter] public int id { get; set; }
     Payment payment = new Payment();
+    private IList<Order> Orders;
 
     protected async override Task OnParametersSetAsync()
     {
         payment = await _client.GetFromJsonAsync<Payment>($"{Endpoints.PaymentsEndpoint}/{id}");
+        Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}/customer");
     }
 
     async Task EditPayment()
     {
+        var order = Orders.FirstOrDefault(x => x.ID == payment.OrderID);
+        if (order != null)
+        {
+            payment.OrderID = order.ID;
+            payment.PayFee = order.OrderTotal;
+        }
         await _client.PutAsJsonAsync($"{Endpoints.PaymentsEndpoint}/{id}", payment);
         _navManager.NavigateTo("/cuspayments");
-    } 
+    }
 }
 

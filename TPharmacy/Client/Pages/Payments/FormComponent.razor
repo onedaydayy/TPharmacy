@@ -8,7 +8,7 @@
             <div class="form-group">
                 <label>OrderID: </label>
                 <div>
-                    <InputSelect @bind-Value="payment.OrderID" class="form-control" onchange="UpdatePayFee(payment.OrderID)">
+                    <InputSelect @bind-Value="payment.OrderID" class="form-control" @onchange="() => UpdatePayFee(payment.OrderID)">
                         <option value="">--Select Order--</option>
                         @if (Orders != null)
                         {
@@ -18,14 +18,6 @@
                             }
                         }
                     </InputSelect>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>PayFee: </label>
-                <div>
-                    <InputNumber @bind-Value="payment.PayFee" class="form-control" readonly="true" />
-                    <ValidationMessage For="@(() => payment.PayFee)" />
                 </div>
             </div>
 
@@ -43,7 +35,7 @@
             <button type="submit" class="btn btn-success btn-block">
                 @ButtonText
             </button>}
-        <TPharmacy.Client.Components.BackToList Target="payments" />
+        <TPharmacy.Client.Components.BackToList Target="cuspayments" />
     </EditForm>
 </div>
 
@@ -58,7 +50,7 @@
 
     protected async override Task OnInitializedAsync()
     {
-        Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
+        Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}/customer");
     }
 
     private async Task UpdatePayFee(int orderID)
@@ -71,10 +63,12 @@
         var order = Orders.FirstOrDefault(x => x.ID == orderID);
         if (order != null)
         {
+            payment.OrderID = order.ID;
             payment.PayFee = order.OrderTotal;
         }
-        StateHasChanged();
+        await InvokeAsync(StateHasChanged);
     }
+
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -83,4 +77,5 @@
             UpdatePayFee(payment.OrderID);
         }
     }
+
 }

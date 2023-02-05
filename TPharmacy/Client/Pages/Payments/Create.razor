@@ -14,11 +14,17 @@
 
     protected async override Task OnInitializedAsync()
     {
-        Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
+        Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}/customer");
     }
 
     private async Task CreatePayment()
     {
+        var order = Orders.FirstOrDefault(x => x.ID == payment.OrderID);
+        if (order != null)
+        {
+            payment.OrderID = order.ID;
+            payment.PayFee = order.OrderTotal;
+        }
         await _client.PostAsJsonAsync(Endpoints.PaymentsEndpoint, payment);
         _navManager.NavigateTo("/cuspayments/");
     }
