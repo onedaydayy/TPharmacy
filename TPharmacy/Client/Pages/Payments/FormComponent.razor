@@ -1,0 +1,92 @@
+﻿@inject HttpClient _client
+
+<div class="container mt-5">
+    <EditForm Model="@payment" OnValidSubmit="@OnValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <fieldset disabled="@Disabled">
+            <div class="form-group">
+                <label>OrderID: </label>
+                <div>
+                    <InputSelect @bind-Value="payment.OrderID" class="form-control" @onchange="OnOrderIDSelected">
+                        <option value="">--Select Order--</option>
+                        @if (Orders != null)
+                        {
+                            foreach (var order in Orders)
+                            {
+                                <option value="@order.ID">@order.ID</option>
+                            }
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>PayFee: </label>
+                <div>
+                    <InputNumber @bind-Value="payment.PayFee" class="form-control" readonly="true" />
+                    <ValidationMessage For="@(() => payment.PayFee)" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Card Info: </label>
+                <div>
+                    <InputText @bind-Value="@payment.PayCardInfo" class="form-control" />
+                    <ValidationMessage For="@(() => payment.PayCardInfo)" />
+                </div>
+            </div>
+            <br />
+        </fieldset>
+        @if (!Disabled)
+        {
+            <button type="submit" class="btn btn-success btn-block">
+                @ButtonText
+            </button>}
+        <TPharmacy.Client.Components.BackToList Target="payments" />
+    </EditForm>
+</div>
+
+@code
+{
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Payment payment { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Order> Orders;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
+        if (payment.OrderID != null)
+        {
+            foreach (var order in Orders)
+            {
+                if (payment.OrderID == order.ID)
+                {
+                    payment.PayFee = order.OrderTotal;
+                    break;
+                }
+            }
+        }
+
+    }
+
+    private async Task OnOrderIDSelected()
+    {
+        if (payment.OrderID != null)
+        {
+            foreach (var order in Orders)
+            {
+                if (payment.OrderID == order.ID)
+                {
+                    payment.PayFee = order.OrderTotal;
+                    StateHasChanged();
+                    break;
+                }
+            }
+        }
+    }
+
+}
