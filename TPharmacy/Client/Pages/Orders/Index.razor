@@ -26,6 +26,7 @@
                     <th>Fee</th>
                     <th>OrderTotal</th>
                     <th>OrderItemTotal</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -40,6 +41,11 @@
                     <td>@order.OrderFee</td>
                     <td>@order.OrderTotal</td>
                     <td>@order.OrderItemTotal</td>
+                    <td>
+                        <a href="/orders/edit/@order.ID" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                    </td>
                 </tr>
                 }
             </tbody>

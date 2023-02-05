@@ -85,7 +85,8 @@ namespace TPharmacy.Server.Controllers
                         { 
                             existingOrder.OrderItemTotal = order.OrderItemTotal;
                             existingOrder.OrderDateTime = order.OrderDateTime;
-                            existingOrder.OrderStatus = Order.Status.Completed;
+                            existingOrder.StaffID = order.StaffID;
+                            existingOrder.OrderStatus = order.OrderStatus;
                             existingOrder.CalculateOrderTotal();
                             _unitOfWork.Orders.Update(existingOrder);
                             await _unitOfWork.Save(HttpContext);
@@ -111,6 +112,41 @@ namespace TPharmacy.Server.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [HttpPut("orderstatus/{id}")]
+        public async Task<IActionResult> PutOrderStatus(int id, Order order)
+        {
+            if (id != order.ID)
+            {
+                return BadRequest();
+            }
+
+            //Refactored
+            //_context.Entry(customer).State = EntityState.Modified;
+            _unitOfWork.Orders.Update(order);
+
+            try
+            {
+                //Refactored
+                //await _context.SaveChangesAsync();
+                await _unitOfWork.Save(HttpContext);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                //Refactored
+                //if (!CustomerExists(id))
+                if (!await OrderExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
 

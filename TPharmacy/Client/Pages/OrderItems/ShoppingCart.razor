@@ -110,7 +110,9 @@
         var order = new Order
         {
             OrderDateTime = DateTime.Now,
-            OrderItemTotal = total // fixed this line
+            OrderItemTotal = total,
+            StaffID= 3,
+            OrderStatus= Order.Status.Completed
 
         };
         await _client.PutAsJsonAsync($"{Endpoints.OrdersEndpoint}/checkout", order);
