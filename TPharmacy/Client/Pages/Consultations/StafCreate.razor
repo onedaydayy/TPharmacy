@@ -1,0 +1,18 @@
+﻿@page "/staffconsultations/create"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<div class="container mt-5">
+    <h1 class="header">Create New Consultations</h1>
+    <FormComponent ButtonText="Create Consultation" OnValidSubmit="CreateConsultation" consultation="consultation"></FormComponent>
+</div>
+@code
+{
+    Consultation consultation = new Consultation();
+
+    private async Task CreateConsultation()
+    {
+        await _client.PostAsJsonAsync(Endpoints.ConsultationsEndpoint, consultation);
+        _navManager.NavigateTo("/staffconsultations");
+    }
+}
