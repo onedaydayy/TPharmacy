@@ -1,4 +1,4 @@
-﻿@page "/consultations/sindex"
+﻿@page "/staffconsultations"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize(Roles = "Admin, Packer, Pharmacist, Staff")]
@@ -6,7 +6,7 @@
 
 
 <div class="container mt-5">
-    <h1 class="header">TPharmacy Consultations List</h1>
+    <h1 class="header">Consultations List</h1>
     <br />
     @if (Consultations == null)
     {

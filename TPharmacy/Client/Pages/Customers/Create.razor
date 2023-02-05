@@ -3,7 +3,7 @@
 @inject NavigationManager _navManager
 
 <div class="container mt-5">
-    <h1 class="header">Create New Customers</h1>
+    <h1 class="header">Create New Customer</h1>
     <FormComponent ButtonText="Create Customer" OnValidSubmit="CreateCustomer" customer="customer"></FormComponent>
 </div>
 @code 
@@ -13,6 +13,6 @@
     private async Task CreateCustomer()
     {
         await _client.PostAsJsonAsync(Endpoints.CustomersEndpoint, customer);
-        _navManager.NavigateTo("/customers/");
+        _navManager.NavigateTo("/customer/view");
     }
 }

@@ -6,15 +6,24 @@
 @inject HttpInterceptorService _interceptor
 
 <div class="container mt-5">
-    <h1 class="header">Customers </h1>
+    <h1 class="header">TPharmacy's Customers</h1>
+    <div class="row">
+        <div class="col-md-8">
+            <br />
+            <a href="/customers/create" class="btn btn-success" role="button">
+                Create Customer
+            </a>
+        </div>
+    </div>
     <br />
+
     @if (Customers == null)
     {
         <div class="alert alert-info">Loading Customer...</div>
     }
     else
     {
-        <table class="table table-striped align-middle table-bordered responsive-table" id="customersTable">
+        <table id="customersTable" class="table table-striped align-middle table-bordered responsive-table" >
             <thead>
                 <tr>
                     <th>ID</th>
@@ -35,10 +44,10 @@
                         <td>@customer.CusNumber</td>
                         <td>@customer.CusAddress</td>
                         <td>
-                            <a href="/staffs/view/@customer.ID" class="btn btn-primary">
+                            <a href="/customers/view/@customer.ID" class="btn btn-primary">
                                 <span class="oi oi-book"></span>
                             </a>
-                            <a href="/staffs/edit/@customer.ID" class="btn btn-warning">
+                            <a href="/customers/edit/@customer.ID" class="btn btn-warning">
                                 <span class="oi oi-pencil"></span>
                             </a>
                             <button class="btn btn-danger" @onclick="@(()=>Delete(customer.ID))">
@@ -74,7 +83,7 @@
     async Task Delete(int customerID)
     {
         var customer = Customers.First(q => q.ID == customerID);
-        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {customer.ID}?");
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {customer.ID} - {customer.CusName}?");
         if (confirm)
         {
             await _client.DeleteAsync($"{Endpoints.CustomersEndpoint}/{customerID}");

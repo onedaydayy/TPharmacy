@@ -1,4 +1,4 @@
-﻿@page "/prescription/view"
+﻿@page "/staffprescriptions"
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
@@ -6,7 +6,15 @@
 @inject HttpInterceptorService _interceptor
 
 <div class="container mt-5">
-    <h1 class="header">Prescriptions </h1>
+    <h1 class="header">TPharmacy's Prescriptions </h1>
+    <div class="row">
+        <div class="col-md-8">
+            <br />
+            <a href="/prescriptions/create" class="btn btn-success" role="button">
+                Create Prescriptions
+            </a>
+        </div>
+    </div>
     <br />
     @if (Prescriptions == null)
     {

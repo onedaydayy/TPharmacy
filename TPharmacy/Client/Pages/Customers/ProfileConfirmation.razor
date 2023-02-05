@@ -1,0 +1,16 @@
+﻿@page "/customers/updatesuccess"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+@attribute [Authorize]
+
+
+<div class="container mt-5">
+    <h3>Profile Updated!</h3>
+    <br />
+    <TPharmacy.Client.Components.BackToList Target="/" />
+</div>
+
+
+@code {
+
+}

@@ -31,7 +31,6 @@ namespace TPharmacy.Server.Areas.Identity.Pages.Account
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             RoleManager<IdentityRole> roleManager,
-
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {

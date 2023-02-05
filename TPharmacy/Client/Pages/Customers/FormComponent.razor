@@ -6,28 +6,28 @@
         <ValidationSummary />
         <fieldset disabled="@Disabled">
             <div class="form-group">
-                <label>First Name</label>
+                <label>Name: </label>
                 <div>
                     <InputText @bind-Value="customer.CusName" class="form-control" />
                     <ValidationMessage For="@(()=>customer.CusName)" />
                 </div>
             </div>
             <div class="form-group">
-                <label>Email</label>
+                <label>Email: </label>
                 <div>
                     <InputText @bind-Value="customer.CusEmail" class="form-control" />
                     <ValidationMessage For="@(()=>customer.CusEmail)" />
                 </div>
             </div>
             <div class="form-group">
-                <label>Contact Number</label>
+                <label>Contact Number: </label>
                 <div>
                     <InputText @bind-Value="customer.CusNumber" class="form-control" />
                     <ValidationMessage For="@(()=>customer.CusNumber)" />
                 </div>
             </div>
             <div class="form-group">
-                <label>Address</label>
+                <label>Address: </label>
                 <div>
                     <InputText @bind-Value="customer.CusAddress" class="form-control" />
                     <ValidationMessage For="@(()=>customer.CusAddress)" />
@@ -40,7 +40,7 @@
                 @ButtonText
             </button>
         }
-        <TPharmacy.Client.Components.BackToList Target="customers" />
+        <TPharmacy.Client.Components.BackToList Target="customer/view" />
     </EditForm>
 </div>
 

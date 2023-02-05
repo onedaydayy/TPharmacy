@@ -1,4 +1,4 @@
-﻿@page "/Profile/{id}"
+﻿@page "/Profile/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
@@ -20,7 +20,7 @@
     async Task EditCustomer()
     {
         await _client.PutAsJsonAsync($"{Endpoints.CustomersEndpoint}/{customer.ID}", customer);
-        _navManager.NavigateTo("/");
+        _navManager.NavigateTo("/customers/updatesuccess");
     }
 }
 

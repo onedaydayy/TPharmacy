@@ -73,7 +73,7 @@
                                     </NavLink>
                                 </li>
                                 </li>
-                            }
+                                }
                                 </li>
                                 <li class="nav-item mr-auto">
                                     <NavLink class="nav-link" href="authentication/login">
@@ -89,27 +89,42 @@
                     <ul class="navbar-nav ml-auto">
                         <AuthorizeView>
                             <Authorized>
-                                <li class="nav-item mr-auto">
-                                    <NavLink class="nav-link" href="@ccbblink" Match="NavLinkMatch.All">
+                                <li class="nav-item dropdown show">
+                                    <NavLink class="nav-link mr-auto dropdown-toggle" @onclick="() => expandUserNavSetting = !expandUserNavSetting">
                                         <span class="oi oi-star" aria-hidden="true"></span> User Profile
                                     </NavLink>
-                                </li>
-                                <li class="nav-item mr-auto">
-                                    <NavLink class="nav-link" href="authentication/profile" Match="NavLinkMatch.All">
-                                        <span class="oi oi-person" aria-hidden="true"></span> Hello, @context.User.Identity.Name!
-                                    </NavLink>
-                                </li>
-                                <li class="nav-item mr-auto">
-                                    <NavLink class="nav-link" href="authentication/logout" Match="NavLinkMatch.All" @onclick="BeginSignOut">
-                                        <span class="oi oi-account-logout" aria-hidden="true"></span> Log out
-                                    </NavLink>
-                                </li>
-                                <li class="nav-item mr-auto">
-                                    <NavLink class="nav-link" href="shoppingcart" Match="NavLinkMatch.All">
-                                        <span class="oi oi-cart" aria-hidden="true"></span>
-                                    </NavLink>
-                                </li>
-                            </Authorized>
+                                    @if (expandUserNavSetting)
+                                    {
+                                    <li class="dropdown-menu show" aria-labelledby="navbarDropdown" @onclick="() => expandUserNavSetting = !expandUserNavSetting">
+                                    <li class="nav-item px-3">
+                                        <NavLink class="nav-link" href="@ccbblink" Match="NavLinkMatch.All">
+                                            <span class="oi oi-people" aria-hidden="true"></span> Profile
+                                        </NavLink>
+                                    </li>
+                                    <li class="nav-item px-3">
+                                        <NavLink class="nav-link" href="/debug" Match="NavLinkMatch.All">
+                                            <span class="oi oi-bug" aria-hidden="true"></span> Debug
+                                        </NavLink>
+                                    </li>
+                                    </li>
+                                }
+                                    </li>
+                                    <li class="nav-item mr-auto">
+                                        <NavLink class="nav-link" href="authentication/profile" Match="NavLinkMatch.All">
+                                            <span class="oi oi-person" aria-hidden="true"></span> Hello, @context.User.Identity.Name!
+                                        </NavLink>
+                                    </li>
+                                    <li class="nav-item mr-auto">
+                                        <NavLink class="nav-link" href="authentication/logout" Match="NavLinkMatch.All" @onclick="BeginSignOut">
+                                            <span class="oi oi-account-logout" aria-hidden="true"></span> Log out
+                                        </NavLink>
+                                    </li>
+                                    <li class="nav-item mr-auto">
+                                        <NavLink class="nav-link" href="shoppingcart" Match="NavLinkMatch.All">
+                                            <span class="oi oi-cart" aria-hidden="true"></span>
+                                        </NavLink>
+                                    </li>
+                                </Authorized>
                             <NotAuthorized>
                                 <li class="nav-item mr-auto">
                                     <NavLink class="nav-link" href="authentication/register" Match="NavLinkMatch.All">
@@ -135,14 +150,13 @@
 
         @code {
             private bool collapseNavMenu = true;
-
             private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
             private bool expandShopNavSetting;
+            private bool expandUserNavSetting;
 
             [CascadingParameter]
             public Task<AuthenticationState> AuthTask { get; set; }
-
-            private ClaimsPrincipal duser;
+            private ClaimsPrincipal user;
 
             string ccbblink = "";
             string baseMenuClass = "navbar-collapse d-sm-inline-flex flex-sm-row-reverse";
@@ -158,13 +172,13 @@
                 try
                 {
                     var authState = await AuthTask;
-                    this.duser = authState.User;
+                    this.user = authState.User;
                 }
                 catch (Exception ex)
                 {
                     // Handle exception
                 }
-                ccbblink = "profile/"+ duser.Identity.Name;
+                ccbblink = "profile/"+ user.Identity.Name;
 
             }
 
@@ -189,5 +203,4 @@
                 Console.WriteLine(result);
                 _navigationManager.NavigateTo("/cusproducts/" + result, true);
             }
-
         }

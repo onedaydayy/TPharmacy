@@ -7,6 +7,7 @@
 @page "/cusproducts/{id?}"
 @inject NavigationManager _navigationManager
 
+
 <div class="lgrayback">
     <div class="container">
         <h1 class="title-cate" style="color:green"> Our Supplements  </h1>
@@ -40,8 +41,6 @@
             </div>
         </div>
         <div class="col-9">
-            @code {
-            }
             @if (Products == null)
             {
                 <div class="alert alert-info">Loading Products...</div> }
@@ -121,6 +120,6 @@
     void NevigateToYourUrl(string result)
     {
         Console.WriteLine(result);
-        _navigationManager.NavigateTo("/cusproducts/"+ result, true);
+        _navigationManager.NavigateTo("/cusproducts/" + result, true);
     }
 }
