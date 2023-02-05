@@ -4,8 +4,6 @@
 
 <div class="container mt-5">
     <h1 class="header">Your Profile</h1>
-    <button class="btn btn-primary" @onclick="ViewOrderItems">View Order Items</button>
-    <button class="btn btn-primary" @onclick="ViewOrders">View Orders</button>
     <br />
     <FormComponent ButtonText="Update" OnValidSubmit="EditCustomer" customer="customer"></FormComponent>
     <br />
@@ -26,15 +24,6 @@
     {
         await _client.PutAsJsonAsync($"{Endpoints.CustomersEndpoint}/{customer.ID}", customer);
         _navManager.NavigateTo("/customers/updatesuccess/"+ id);
-    }
-    private void ViewOrderItems()
-    {
-        _navManager.NavigateTo("/cusorderitems");
-    }
-
-    private void ViewOrders()
-    {
-        _navManager.NavigateTo("/cusorders");
     }
 }
 
