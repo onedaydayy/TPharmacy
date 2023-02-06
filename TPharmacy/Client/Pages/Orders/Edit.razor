@@ -2,6 +2,7 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 @attribute [Authorize]
+@inject NavigationManager _navManager
 
 <div class="container mt-5">
     @if (order != null)
@@ -102,6 +103,7 @@
     private async Task EditOrder()
     {
         await _client.PutAsJsonAsync($"{Endpoints.OrdersEndpoint}/orderstatus/{id}", order);
+        _navManager.NavigateTo("/orders");
     }
 
     private async Task GoBack()
