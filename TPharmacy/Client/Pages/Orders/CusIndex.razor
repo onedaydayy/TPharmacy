@@ -42,6 +42,9 @@
                 <td>@order.OrderTotal</td>
                 <td>@order.OrderItemTotal</td>
                 <td>
+                    <a href="/orders/view/@order.ID" class="btn btn-primary">
+                        <span class="oi oi-book"></span>
+                    </a>
                     <button class="btn btn-danger" @onclick="@(()=>Delete(order.ID))">
                         <span class="oi oi-delete"></span>
                     </button>

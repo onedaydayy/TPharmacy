@@ -2,12 +2,123 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using TPharmacy.Shared
+@inject HttpClient _client
 @attribute [Authorize]
 @inject HttpClient Http
 
 <div class="container mt-5">
-    <h4 class="header">
-        Overview of TPharmacy’s
-    </h4>
+    <h4 class="header">Overview of TPharmacy’s</h4>
     <h1>Welcome to the Staff Home! </h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card text-center">
+                    <div class="card-header bg-primary text-white">Orders</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Total Orders: @OrdersCount</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card text-center">
+                    <div class="card-header bg-warning text-white">Order Items</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Total OrderItems: @OrderItemsCount</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card text-center">
+                    <div class="card-header bg-success text-white">Products</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Total Products: @ProductsCount</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card text-center">
+                    <div class="card-header bg-info text-white">Staffs</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Total Staffs: @StaffCount</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card text-center">
+                    <div class="card-header bg-secondary text-white">Customers</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Total Customers: @CustomersCount</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card text-center">
+                    <div class="card-header bg-light text-dark">Consultations</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Total Consultation: @ConsultationsCount</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card text-center">
+                    <div class="card-header bg-danger text-white">Payments</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Total Payments: @PaymentsCount</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card text-center">
+                    <div class="card-header bg-light text-dark">Prescriptions</div>
+                    <div class="card-body">
+                        <h5 class="card-title">Total Prescriptions: @PrescriptionsCount</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+@code {
+    private int OrdersCount { get; set; }
+    private int OrderItemsCount { get; set; }
+    private int ProductsCount { get; set; }
+    private int CustomersCount { get; set; }
+    private int StaffCount { get; set; }
+    private int PaymentsCount { get; set; }
+    private int ConsultationsCount { get; set; }
+    private int PrescriptionsCount { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        var orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}");
+        OrdersCount = orders.Count();
+
+        var orderItems = await _client.GetFromJsonAsync<List<OrderItem>>($"{Endpoints.OrderItemsEndpoint}");
+        OrderItemsCount = orderItems.Count();
+
+        var products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+        ProductsCount = products.Count();
+
+        var customers = await _client.GetFromJsonAsync<List<Customer>>($"{Endpoints.CustomersEndpoint}");
+        CustomersCount = customers.Count();
+
+        var staff = await _client.GetFromJsonAsync<List<Staff>>($"{Endpoints.StaffsEndpoint}");
+        StaffCount = staff.Count();
+
+        var payments = await _client.GetFromJsonAsync<List<Payment>>($"{Endpoints.PaymentsEndpoint}");
+        PaymentsCount = payments.Count();
+
+        var consultations = await _client.GetFromJsonAsync<List<Consultation>>($"{Endpoints.ConsultationsEndpoint}");
+        ConsultationsCount = consultations.Count();
+
+        var prescriptions = await _client.GetFromJsonAsync<List<Prescription>>($"{Endpoints.PrescriptionsEndpoint}");
+        PrescriptionsCount = prescriptions.Count();
+    }
+
+}
+
+
+

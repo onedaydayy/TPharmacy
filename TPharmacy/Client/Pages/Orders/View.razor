@@ -4,8 +4,55 @@
 
 <div class="container mt-5">
     <h1 class="header">View Order</h1>
-
-\</div>
+    <div class="form-group">
+        <label>Order ID: </label>
+        <div>
+            <p>@order.ID</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Customer ID: </label>
+        <div>
+            <p>@order.CustomerID</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Staff ID: </label>
+        <div>
+            <p>@order.StaffID</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Order DateTime: </label>
+        <div>
+            <p>@order.OrderDateTime</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Order Fee: </label>
+        <div>
+            <p>@order.OrderFee</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Order Total: </label>
+        <div>
+            <p>@order.OrderTotal</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Order Item Total: </label>
+        <div>
+            <p>@order.OrderItemTotal</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Order Status: </label>
+        <div>
+            <p>@order.OrderStatus</p>
+        </div>
+    </div>
+</div>
 
 @code { [Parameter]
     public int id { get; set; }
