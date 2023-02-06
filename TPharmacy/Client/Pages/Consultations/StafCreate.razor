@@ -5,8 +5,9 @@
 @using System.Security.Claims
 @attribute [Authorize(Roles = "Admin, Packer, Pharmacist, Staff")]
 
-<div class="container mt-5">
+<div class="container mt-6">
     <h1 class="header">Create New Consultations</h1>
+    <br />
     <StafCreFormComponent ButtonText="Create Consultation" OnValidSubmit="CreateConsultation" consultation="consultation"></StafCreFormComponent>
 </div>
 @code

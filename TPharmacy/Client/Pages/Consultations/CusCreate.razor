@@ -41,9 +41,6 @@
 
         customer = await _client.GetFromJsonAsync<Customer>($"{Endpoints.CustomersEndpoint}/getcustomer/" + user.Identity.Name);
         consultation.CustomerID = customer.ID;
-
-
-
     }
 
     private async Task CreateConsultation()

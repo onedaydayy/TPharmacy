@@ -15,7 +15,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label>Information: </label>
+            <label>Description: </label>
             <div>
                 <InputTextArea placeholder="Description" @bind-Value="@consultation.ConDesc" class="form-control" />
             </div>
@@ -28,7 +28,7 @@
             <br />
         }
     </fieldset>
-    <TPharmacy.Client.Components.BackToList Target="/" />
+    <TPharmacy.Client.Components.BackToList Target="" />
 </EditForm>
 
 @code
@@ -40,7 +40,6 @@
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthTask { get; set; }
-
     private ClaimsPrincipal user;
 
     protected async override Task OnInitializedAsync()
