@@ -11,8 +11,9 @@ namespace TPharmacy.Shared.Domain
         {
             InProgress,
             Completed,
-            Cancelled,
-            Delivered
+            Paid,
+            Delivered,
+            Cancelled
         }
 
         public Status OrderStatus { get; set; }

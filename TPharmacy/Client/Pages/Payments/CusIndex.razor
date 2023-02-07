@@ -7,6 +7,12 @@
 <div class="container mt-5">
     <h1 class="header">Overview of TPharmacy Payment's</h1>
     <h3>Welcome to the Payment Home! </h3>
+    <div class="row">
+        <br />
+        <a href="/payments/create" class="btn btn-success btn-block" role="button">
+            Make Payment
+        </a>
+    </div>
     <br />
     @if (Payments == null)
     {
@@ -28,24 +34,21 @@
             <tbody>
                 @foreach (var payment in Payments)
                 {
-                <tr>
-                    <td>@payment.ID</td>
-                    <td>@payment.OrderID</td>
-                    <td>@payment.Order.OrderTotal</td>
-                    <td>@payment.PayFee</td>
-                    <td>@payment.PayCardInfo</td>
-                    <td>
-                        <a href="/payments/view/@payment.ID" class="btn btn-primary">
-                            <span class="oi oi-book"></span>
-                        </a>
-                        <a href="/payments/edit/@payment.ID" class="btn btn-warning">
-                            <span class="oi oi-pencil"></span>
-                        </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(payment.ID))">
-                            <span class="oi oi-delete"></span>
-                        </button>
-                    </td>
-                </tr>
+                    <tr>
+                        <td>@payment.ID</td>
+                        <td>@payment.OrderID</td>
+                        <td>@payment.Order.OrderTotal</td>
+                        <td>@payment.PayFee</td>
+                        <td>@payment.PayCardInfo</td>
+                        <td>
+                            <a href="/payments/view/@payment.ID" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/payments/edit/@payment.ID" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>
@@ -71,14 +74,4 @@
         js.InvokeVoidAsync("DataTablesDispose", "#paymentsTable");
     }
 
-    async Task Delete(int paymentID)
-    {
-        var payment = Payments.First(q => q.ID == paymentID);
-        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {payment.ID}?");
-        if (confirm)
-        {
-            await _client.DeleteAsync($"{Endpoints.PaymentsEndpoint}/{paymentID}");
-            await OnInitializedAsync();
-        }
-    }
 }

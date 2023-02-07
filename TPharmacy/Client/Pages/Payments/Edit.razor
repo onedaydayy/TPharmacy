@@ -1,34 +1,54 @@
 ﻿@page "/payments/edit/{id:int}"
 @inject HttpClient _client
+@inject IJSRuntime js
 @inject NavigationManager _navManager
 
 <div class="container mt-5">
     <h1 class="header">Edit Payments</h1>
-    <FormComponent ButtonText="Update" OnValidSubmit="EditPayment" payment="payment"></FormComponent>
+    <EditForm Model="payment" OnValidSubmit="@EditPayment">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form-group">
+            <label>OrderID: </label>
+            <div>
+                <InputNumber @bind-Value="payment.OrderID" class="form-control" readonly />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Card Info: </label>
+            <div>
+                <InputText @bind-Value="@payment.PayCardInfo" class="form-control" />
+                <ValidationMessage For="@(() => payment.PayCardInfo)" />
+            </div>
+        </div>
+        <br />
+        <button type="submit" class="btn btn-success btn-block">
+            Update the Payment
+        </button>
+        <br />
+        <button class="btn btn-outline-dark btn-block" @onclick="GoBack">Go Back</button>
+    </EditForm>
 </div>
 
 @code
-{ 
+{
     [Parameter] public int id { get; set; }
     Payment payment = new Payment();
-    private IList<Order> Orders;
 
     protected async override Task OnParametersSetAsync()
     {
         payment = await _client.GetFromJsonAsync<Payment>($"{Endpoints.PaymentsEndpoint}/{id}");
-        Orders = await _client.GetFromJsonAsync<List<Order>>($"{Endpoints.OrdersEndpoint}/customer");
     }
 
     async Task EditPayment()
     {
-        var order = Orders.FirstOrDefault(x => x.ID == payment.OrderID);
-        if (order != null)
-        {
-            payment.OrderID = order.ID;
-            payment.PayFee = order.OrderTotal;
-        }
         await _client.PutAsJsonAsync($"{Endpoints.PaymentsEndpoint}/{id}", payment);
         _navManager.NavigateTo("/cuspayments");
+    }
+
+    private async Task GoBack()
+    {
+        await js.InvokeAsync<object>("history.back");
     }
 }
 

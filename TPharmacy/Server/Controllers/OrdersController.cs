@@ -57,6 +57,20 @@ namespace TPharmacy.Server.Controllers
             return Ok(orders);
         }
 
+
+        [HttpGet("payment")]
+        public async Task<IActionResult> GetOrdersForPayment()
+        {
+            var username = HttpContext.Session.GetString("username");
+            var customer = await _unitOfWork.Customers.Get(q => q.CusEmail == username);
+            if (customer == null)
+            {
+                return NotFound();
+            }
+            var orders = await _unitOfWork.Orders.GetAll(q => q.CustomerID == customer.ID && q.OrderStatus == Order.Status.Completed, includes: q => q.Include(x => x.Customer).Include(x => x.Staff).Include(x => x.OrderItems));
+            return Ok(orders);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrder(int id)
         {

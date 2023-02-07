@@ -128,12 +128,13 @@ namespace TPharmacy.Server.Controllers
 
         // POST: api/Payments
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        // POST: api/Payments
         [HttpPost]
         public async Task<ActionResult<Payment>> PostPayment(Payment payment)
         {
-            //Refactored
-            //_context.Payments.Add(payment);
-            //await _context.SaveChangesAsync();
+            var order = await _unitOfWork.Orders.Get(o => o.ID == payment.OrderID);
+            order.OrderStatus = Order.Status.Paid;
+            _unitOfWork.Orders.Update(order);
             await _unitOfWork.Payments.Insert(payment);
             await _unitOfWork.Save(HttpContext);
             return CreatedAtAction("GetPayment", new { id = payment.ID }, payment);

@@ -4,8 +4,12 @@
 @inject NavigationManager _navManager
 
 <div class="container my-5">
-    <h1 class="header">View OrderItem- @orderitem.ID</h1>
-    <h3>OrderID- @orderitem.OrderID</h3>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="header">View OrderItem- @orderitem.ID</h1>
+        <button class="btn btn-outline-secondary" @onclick="GoBack">
+            <i class="fas fa-arrow-left"></i> Go Back
+        </button>
+    </div>
     <div class="card">
         <div class="card-body">
             @if (orderitem.Product != null)
@@ -21,11 +25,12 @@
                         <br />
                         <h4 class="price text">$ @orderitem.Product.ProdPrice</h4>
                         <div class="form-group">
-                            <label>Quantity:</label>
-                            <h5>Quantity: @orderitem.OrderItemQtny</h5>
+                            <label class="font-weight-bold">Quantity:</label>
+                            <h5>@orderitem.OrderItemQtny</h5>
                         </div>
                         <div class="form-group">
-                            <label>Total: @orderitem.OrderItemTotal</label>
+                            <label class="font-weight-bold">Total:</label>
+                            <h5>@orderitem.OrderItemTotal</h5>
                         </div>
                         <p class="card-text">@orderitem.Product.ProdDesc</p>
                     </div>
@@ -33,7 +38,6 @@
             }
         </div>
     </div>
-    <button class="btn btn-outline-dark btn-block" @onclick="GoBack">Go Back</button>
 </div>
 @code
 {

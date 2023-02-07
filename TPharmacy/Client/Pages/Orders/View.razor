@@ -1,64 +1,63 @@
 ﻿@page "/orders/view/{id:int}"
 @inject HttpClient _client
+@inject IJSRuntime js
 @inject NavigationManager _navManager
 
-<div class="container mt-5">
-    <h1 class="header">View Order</h1>
-    <div class="form-group">
-        <label>Order ID: </label>
-        <div>
-            <p>@order.ID</p>
+<div class="d-flex justify-content-center align-items-center mt-5">
+    <div class="card w-50">
+        <div class="card-header bg-light text-black">
+            <h3 class="text-center">View order Details</h3>
         </div>
-    </div>
-    <div class="form-group">
-        <label>Customer ID: </label>
-        <div>
-            <p>@order.CustomerID</p>
+        <div class="card-body">
+            <div class="form-group">
+                <label>OrderID:</label>
+                <p class="form-control-plaintext">@order.ID</p>
+            </div>
+            <div class="form-group">
+                <label>CustomerID:</label>
+                <p class="form-control-plaintext">@order.CustomerID</p>
+            </div>
+            <div class="form-group">
+                <label>StaffID:</label>
+                <p class="form-control-plaintext">@order.StaffID</p>
+            </div>
+            <div class="form-group">
+                <label>Order DateTime:</label>
+                <p class="form-control-plaintext">@order.OrderDateTime</p>
+            </div>
+            <div class="form-group">
+                <label>Order Fee:</label>
+                <p class="form-control-plaintext">@order.OrderFee</p>
+            </div>
+            <div class="form-group">
+                <label>Order Total:</label>
+                <p class="form-control-plaintext">@order.OrderTotal</p>
+            </div>
+            <div class="form-group">
+                <label>Order OrderItemTotal:</label>
+                <p class="form-control-plaintext">@order.OrderItemTotal</p>
+            </div>
+            <div class="form-group">
+                <label>Order Status:</label>
+                <p class="form-control-plaintext">@order.OrderStatus</p>
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label>Staff ID: </label>
-        <div>
-            <p>@order.StaffID</p>
-        </div>
-    </div>
-    <div class="form-group">
-        <label>Order DateTime: </label>
-        <div>
-            <p>@order.OrderDateTime</p>
-        </div>
-    </div>
-    <div class="form-group">
-        <label>Order Fee: </label>
-        <div>
-            <p>@order.OrderFee</p>
-        </div>
-    </div>
-    <div class="form-group">
-        <label>Order Total: </label>
-        <div>
-            <p>@order.OrderTotal</p>
-        </div>
-    </div>
-    <div class="form-group">
-        <label>Order Item Total: </label>
-        <div>
-            <p>@order.OrderItemTotal</p>
-        </div>
-    </div>
-    <div class="form-group">
-        <label>Order Status: </label>
-        <div>
-            <p>@order.OrderStatus</p>
+        <div class="card-footer">
+            <button class="btn btn-outline-info btn-block" @onclick="GoBack">Go Back</button>
         </div>
     </div>
 </div>
 
-@code { [Parameter]
-    public int id { get; set; }
-    Order order = new Order();
+@code{ [Parameter] public int id { get; set; }
+            Order order = new Order();
 
-    protected async override Task OnParametersSetAsync()
-    {
-        order = await _client.GetFromJsonAsync<Order>($"{Endpoints.OrdersEndpoint}/{id}");
-    } }
+            protected async override Task OnParametersSetAsync()
+            {
+                order = await _client.GetFromJsonAsync<Order>($"{Endpoints.OrdersEndpoint}/{id}");
+            }
+
+            private async Task GoBack()
+            {
+                await js.InvokeAsync<object>("history.back");
+            } }
+
