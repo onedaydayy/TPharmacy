@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-8">
             <br />
-            <a href="/prescriptions/creates" class="btn btn-success" role="button">
+            <a href="/prescriptions/prelistcreate" class="btn btn-success" role="button">
                 <span class="oi oi-basket"></span> Create Prescriptions
             </a>
         </div>
@@ -41,10 +41,10 @@
                         <td>@prescription.ProductID</td>
                         <td>@prescription.PresQty</td>
                         <td>
-                            <a href="/prescriptions/view/@prescription.ID" class="btn btn-primary">
+                            <a href="/prescriptions/prelistview/@prescription.ID" class="btn btn-primary">
                                 <span class="oi oi-book"></span>
                             </a>
-                            <a href="/prescriptions/edit/@prescription.ID" class="btn btn-warning">
+                            <a href="/prescriptions/prelistedit/@prescription.ID" class="btn btn-warning">
                                 <span class="oi oi-pencil"></span>
                             </a>
                             <button class="btn btn-danger" @onclick="@(()=>Delete(prescription.ID))">

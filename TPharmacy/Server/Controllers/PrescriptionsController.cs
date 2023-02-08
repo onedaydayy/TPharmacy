@@ -93,6 +93,8 @@ namespace TPharmacy.Server.Controllers
 
             //Refactored
             //_context.Entry(prescription).State = EntityState.Modified;
+            prescription.DateUpdated = DateTime.Now;
+            prescription.Product = null;
             _unitOfWork.Prescriptions.Update(prescription);
 
             try
@@ -126,8 +128,11 @@ namespace TPharmacy.Server.Controllers
             //Refactored
             //_context.Prescriptions.Add(prescription);
             //await _context.SaveChangesAsync();
+
             await _unitOfWork.Prescriptions.Insert(prescription);
             await _unitOfWork.Save(HttpContext);
+
+
             return CreatedAtAction("GetPrescription", new { id = prescription.ID }, prescription);
         }
 

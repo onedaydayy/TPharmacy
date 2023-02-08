@@ -13,11 +13,6 @@
     [Parameter] public int id { get; set; }
     Prescription prescription = new Prescription();
     
-    protected async override Task OnParametersSetAsync()
-    {
-        prescription = await _client.GetFromJsonAsync<Prescription>($"{Endpoints.PrescriptionsEndpoint}/{id}");
-    }
-
     protected override void OnParametersSet()
     {
         prescription.ConsultationID = id;

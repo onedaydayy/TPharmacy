@@ -1,4 +1,4 @@
-﻿@page "/prescriptions/consultedit/{id:int}"
+﻿@page "/prescriptions/prelistedit/{id:int}"
 @inject HttpClient _client
 @inject NavigationManager _navManager
 
@@ -14,14 +14,13 @@
 
     protected async override Task OnParametersSetAsync()
     {
-
         prescription = await _client.GetFromJsonAsync<Prescription>($"{Endpoints.PrescriptionsEndpoint}/{id}");
     }
 
     async Task EditPrescription()
     {
         await _client.PutAsJsonAsync($"{Endpoints.PrescriptionsEndpoint}/{id}", prescription);
-        _navManager.NavigateTo("/consultations/sedit/" + prescription.ConsultationID);
+        _navManager.NavigateTo("/staffprescriptions");
     }
 }
 
