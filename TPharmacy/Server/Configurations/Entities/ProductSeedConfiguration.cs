@@ -94,6 +94,34 @@ namespace TPharmacy.Server.Configurations.Entities
                         DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "System"
+                    },
+                    new Product
+                    {
+                        ID = 7,
+                        ProdBrand = "Claritin",
+                        ProdName = "Clarityn",
+                        ProdDesc = "CLARITYN - Non - drowsy 24H Allergy Relief Tablets 10's",
+                        ProdPrice = 25.00m,
+                        ProdImg = "Clarityn .jpeg",
+                        ProdCategory = "Prescriptions",
+                        DateCreated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
+                        CreatedBy = "System",
+                        UpdatedBy = "System"
+                    },
+                    new Product
+                    {
+                        ID = 8,
+                        ProdBrand = "Strepsils",
+                        ProdName = "Soothing Relief Lozenges",
+                        ProdDesc = "Lozenges Soothing Relief for Sore Throat Soothing Honey & Lemon 24s",
+                        ProdPrice = 20.00m,
+                        ProdImg = "Strepsils Lozenges .jpeg",
+                        ProdCategory = "Prescriptions",
+                        DateCreated = DateTime.Now,
+                        DateUpdated = DateTime.Now,
+                        CreatedBy = "System",
+                        UpdatedBy = "System"
                     }
                     );        
         }
