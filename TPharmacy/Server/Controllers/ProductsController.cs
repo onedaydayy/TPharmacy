@@ -42,11 +42,6 @@ namespace TPharmacy.Server.Controllers
         //public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         public async Task<ActionResult> GetProducts()
         {
-            var user = await userManager.GetUserAsync(User);
-            if (user != null)
-            {
-                logger.LogInformation($"User.Identity.Name: {user.UserName}");
-            }
             //Refactored
             //return await _context.Products.ToListAsync(); includes: q => q.Include(x => x.OrderItems).Include(x => x.Prescriptions)
             var products = await _unitOfWork.Products.GetAll();
