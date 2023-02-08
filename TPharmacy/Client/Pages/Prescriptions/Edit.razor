@@ -20,7 +20,7 @@
     async Task EditPrescription()
     {
         await _client.PutAsJsonAsync($"{Endpoints.PrescriptionsEndpoint}/{id}", prescription);
-        _navManager.NavigateTo("/consultations/sedit/" + id);
+        _navManager.NavigateTo("/staffprescriptions");
     }
 }
 

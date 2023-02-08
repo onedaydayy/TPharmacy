@@ -20,7 +20,7 @@
     async Task EditConsultation()
     {
         await _client.PutAsJsonAsync($"{Endpoints.ConsultationsEndpoint}/{id}", consultation);
-        _navManager.NavigateTo("/consultations/cindex/");
+        _navManager.NavigateTo("/consultations/updatesuccess/");
     } 
 }
 

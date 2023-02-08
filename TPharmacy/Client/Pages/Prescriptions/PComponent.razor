@@ -26,6 +26,7 @@
                 <div>
                     <InputSelect @bind-Value="@prescription.ProductID" class="form-control">
                         <option value="">-- Select Product --</option>
+
                         @if (products != null)
                         {
                             foreach (var pd in products)
