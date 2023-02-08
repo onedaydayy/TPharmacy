@@ -1,4 +1,8 @@
-﻿@page "/"
+﻿@inject HttpClient Http
+@inject HttpClient _client
+@inject IJSRuntime js
+
+@page "/"
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-12 col-xl-12">
@@ -30,132 +34,49 @@
         Order it for you or for your beloved ones
     </h4>
     <div class="container">
-        <div class="row">
-            <div class="col-sm-6 col-md-3 col-xl-3">
-                <div class="product-card mt-5">
-                    <div class="content-card">
-                        <img src="img/609237-holistic-way-super-lutein-60-vegetarian-capsules--1-800Wx800H.jpeg" class="product-img" />
-                    </div>
-                    <div class="content-text">
-                        <h3>
-                            Holistic Way Super Lutein
-                        </h3>
-                    </div>
-                    <div class="align-bottom">
-                        <h2 class="price float-right">$30.00</h2>
-                    </div>
+        @if (Products == null)
+        {
+            <div class="alert alert-info">Loading Products...</div> }
+        else
+        {
+            int count = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(Products.Count) / Convert.ToDecimal(4)));
+
+            int card = 0;
+            @for (int g = 0; g < count; g++)
+            {
+                <div class="row">
+                    @for (int i = 0; i < 4; i++)
+                    {
+                        if (card < Products.Count)
+                        {
+                            <div class="col-sm-6 col-md-3 col-xl-3">
+                                <div class="product-card mt-5">
+                                    <div class="content-card">
+                                        <img src="img/@Products[card].ProdImg" class="product-img" />
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="content-text">
+                                        <h3>
+                                            @Products[card].ProdName
+                                        </h3>
+                                    </div>
+                                    <div class="align-bottom">
+                                        <h2 class="price float-right">@Products[card].ProdPrice</h2>
+                                    </div>
+                                    <div>
+                                        <a href="/productview/@Products[card].ID" class="btn btn-primary">
+                                            <span class="oi oi-book"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            card++;
+                        }
+                    }
                 </div>
-            </div>
-            <div class="col-sm-6 col-md-3 col-xl-3">
-                <div class="product-card mt-5">
-                    <div class="content-card">
-                        <img src="img/619961-greenlife-evening-primrose-oil-300s-improved-formula-1-800Wx800H.jpeg" class="product-img" />
-                    </div>
-                    <div class="content-text">
-                        <h3>
-                            Greenlife Evening Primrose Oil 
-                        </h3>
-                    </div>
-                    <div class="align-bottom">
-                        <h2 class="price float-right">$30.00</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3 col-xl-3">
-                <div class="product-card mt-5">
-                    <div class="content-card">
-                        <img src="img/621294-vitahealth-vitamins-k2-d3-60s-1-800Wx800H.jpeg" class="product-img" />
-                    </div>
-                    <div class="content-text">
-                        <h3>
-                            Vitahealth Vitamin K2
-                        </h3>
-                    </div>
-                    <div class="align-bottom">
-                        <h2 class="price float-right">$30.00</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3 col-xl-3">
-                <div class="product-card mt-5">
-                    <div class="content-card">
-                        <img src="img/621688-swisse-ub-vitamin-d3-60caps-1-800Wx800H.jpeg" class="product-img" />
-                    </div>
-                    <div class="content-text">
-                        <h3>
-                            Swisse Vitamin D3
-                        </h3>
-                    </div>
-                    <div class="align-bottom">
-                        <h2 class="price float-right">$30.00</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-6 col-md-3 col-xl-3">
-                <div class="product-card mt-5">
-                    <div class="content-card">
-                        <img src="img/126555-shaklee-vita-lea-iron-formula-120-tabs-1-800Wx800H.jpeg" class="product-img" />
-                    </div>
-                    <div class="content-text">
-                        <h3>
-                            Shaklee Vita Lea
-                        </h3>
-                    </div>
-                    <div class="align-bottom">
-                        <h2 class="price float-right">$30.00</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3 col-xl-3">
-                <div class="product-card mt-5">
-                    <div class="content-card">
-                        <img src="img/136320-ocean-health-joint-rx-300-caplets-1-800Wx800H.jpeg" class="product-img" />
-                    </div>
-                    <div class="content-text">
-                        <h3>
-                            Ocean Health Joint Rx
-                        </h3>
-                    </div>
-                    <div class="align-bottom">
-                        <h2 class="price float-right">$30.00</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3 col-xl-3">
-                <div class="product-card mt-5">
-                    <div class="content-card">
-                        <img src="img/172523-blackmores-omega-fish-oil-400-capsules-1-800Wx800H.jpeg" class="product-img" />
-                    </div>
-                    <div class="content-text">
-                        <h3>
-                            Blackmores Omega 3 Fish Oil
-                        </h3>
-                    </div>
-                    <div class="align-bottom">
-                        <h2 class="price float-right">$30.00</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-md-3 col-xl-3">
-                <div class="product-card mt-5">
-                    <div class="content-card">
-                        <img src="img/602544-blackmores-vitamin-c-500mg-1-800Wx800H.jpeg" class="product-img" />
-                    </div>
-                    <div class="content-text">
-                        <h3>
-                            Blackmores Vitamin C 
-                        </h3>
-                    </div>
-                    <div class="align-bottom">
-                        <h2 class="price float-right">$30.00</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
+            }
+        }
     </div>
 </div>
 <div class="container padder mt-5">
@@ -287,66 +208,57 @@
     <h4>
         Our top selling products that you may like
     </h4>
-    <div class="row">
-        <div class="col-sm-6 col-md-3 col-xl-3">
-            <div class="product-card mt-5">
-                <div class="content-card">
-                    <img src="img/126555-shaklee-vita-lea-iron-formula-120-tabs-1-800Wx800H.jpeg" class="product-img" />
-                </div>
-                <div class="content-text">
-                    <h3>
-                        Shaklee Vita Lea
-                    </h3>
-                </div>
-                <div class="align-bottom">
-                    <h2 class="price float-right">$30.00</h2>
-                </div>
+    @if (Products == null)
+    {
+        <div class="alert alert-info">Loading Products...</div> }
+    else
+    {
+        int count = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(Products.Count) / Convert.ToDecimal(4)));
+
+        int card = 0;
+        @for (int g = 0; g < count; g++)
+        {
+            <div class="row">
+                @for (int i = 0; i < 4; i++)
+                {
+                    if (card < Products.Count)
+                    {
+                        <div class="col-sm-6 col-md-3 col-xl-3">
+                            <div class="product-card mt-5">
+                                <div class="content-card">
+                                    <img src="img/@Products[card].ProdImg" class="product-img" />
+                                </div>
+                                <br />
+                                <br />
+                                <div class="content-text">
+                                    <h3>
+                                        @Products[card].ProdName
+                                    </h3>
+                                </div>
+                                <div class="align-bottom">
+                                    <h2 class="price float-right">@Products[card].ProdPrice</h2>
+                                </div>
+                                <div>
+                                    <a href="/productview/@Products[card].ID" class="btn btn-primary">
+                                        <span class="oi oi-book"></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        card++;
+                    }
+                }
             </div>
-        </div>
-        <div class="col-sm-6 col-md-3 col-xl-3">
-            <div class="product-card mt-5">
-                <div class="content-card">
-                    <img src="img/136320-ocean-health-joint-rx-300-caplets-1-800Wx800H.jpeg" class="product-img" />
-                </div>
-                <div class="content-text">
-                    <h3>
-                        Ocean Health Joint Rx
-                    </h3>
-                </div>
-                <div class="align-bottom">
-                    <h2 class="price float-right">$30.00</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3 col-xl-3">
-            <div class="product-card mt-5">
-                <div class="content-card">
-                    <img src="img/172523-blackmores-omega-fish-oil-400-capsules-1-800Wx800H.jpeg" class="product-img" />
-                </div>
-                <div class="content-text">
-                    <h3>
-                        Blackmores Omega 3 Fish Oil
-                    </h3>
-                </div>
-                <div class="align-bottom">
-                    <h2 class="price float-right">$30.00</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3 col-xl-3">
-            <div class="product-card mt-5">
-                <div class="content-card">
-                    <img src="img/602544-blackmores-vitamin-c-500mg-1-800Wx800H.jpeg" class="product-img" />
-                </div>
-                <div class="content-text">
-                    <h3>
-                        Blackmores Vitamin C
-                    </h3>
-                </div>
-                <div class="align-bottom">
-                    <h2 class="price float-right">$30.00</h2>
-                </div>
-            </div>
-        </div>
-    </div>
+        }
+    }
 </div>
+@code {
+    private List<Product> Products;
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}");
+        var numberGroups = Products.GroupBy(i => i.ProdCategory);
+    }
+}

@@ -1,0 +1,149 @@
+﻿@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using TPharmacy.Shared
+@inject HttpClient Http
+@inject HttpClient _client
+@inject IJSRuntime js
+@page "/cusproducts/search/{id?}"
+@inject NavigationManager _navigationManager
+
+
+<div class="lgrayback">
+    <div class="container">
+        <h1 class="title-cate" style="color:green"> Search Result  </h1>
+        <br />
+        <span class="desc-pro">
+        </span>
+    </div>
+</div>
+
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-3">
+            <div class="search-body">
+                <div class="input-group">
+                    <input class="form-control py-2" type="search" placeholder="search" value="@thisvalue" id="example-search-input">
+                    <span class="input-group-append">
+                        <button class="btn btn-outline-secondary" @onclick="@(() => NevigateToBySearch())" @onclick:preventDefault type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            <div class="filter-head">
+                <h4 class="card-title text-center">Category</h4>
+            </div>
+            <div class="filter">
+                @for (int i = 0; i < category.Count; i++)
+                {
+                    var text = @category[i];
+                    <div class="filter-card">
+                        <a href="" @onclick="@(() => NevigateToYourUrl(text))" @onclick:preventDefault>
+                            @category[i]
+                        </a>
+                        <span class="float-right">
+                            @count[i]
+                        </span>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-9">
+            @if (Products == null)
+            {
+                <div class="alert alert-info">Loading Products...</div> }
+
+            else if (Products.Count == 0)
+            {
+                <div class="row">
+                    <h1 class="alert alert-info"> No Search Result!</h1>
+                </div>
+            }
+
+            else
+            {
+            int count = Convert.ToInt32(Math.Ceiling(Convert.ToDecimal(Products.Count) / Convert.ToDecimal(3)));
+
+            int card = 0;
+            @for (int g = 0; g < count; g++)
+            {
+                <div class="row">
+                    @for (int i = 0; i < 3; i++)
+                    {
+                        if (card < Products.Count)
+                        {
+                            <div class="col-sm-6 col-md-4 col-xl-4">
+                                <div class="product-card mt-5">
+                                    <div class="content-card">
+                                        <img src="img/@Products[card].ProdImg" class="product-img" />
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div class="content-text">
+                                        <h3>
+                                            @Products[card].ProdName
+                                        </h3>
+                                    </div>
+                                    <div class="align-bottom">
+                                        <h2 class="price float-right">@Products[card].ProdPrice</h2>
+                                    </div>
+                                    <div>
+                                        <a href="/productview/@Products[card].ID" class="btn btn-primary">
+                                            <span class="oi oi-book"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            card++;
+                        }
+                    }
+                </div>
+            }
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string id { get; set; }
+    private List<Product> Products;
+    private List<string> category = new List<string>();
+    private List<int> count = new List<int>();
+    public string thisvalue = "";
+    public string getvalue { get; set; }
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        Console.WriteLine("Products");
+
+        if (id != null)
+        {
+            Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}/SearchProducts/{id}");
+        }
+        else
+        {
+            _navigationManager.NavigateTo("/cusproducts/", true);
+        }
+        var numberGroups = Products.GroupBy(i => i.ProdCategory);
+        foreach (var grp in numberGroups)
+        {
+            var number = grp.Key;
+            var total = grp.Count();
+            category.Add(number);
+            count.Add(total);
+        }
+    }
+
+    void NevigateToYourUrl(string result)
+    {
+        _navigationManager.NavigateTo("/cusproducts/" + result, true);
+    }
+    void NevigateToBySearch()
+    {
+        getvalue = thisvalue;
+        _navigationManager.NavigateTo("/cusproducts/search/" + thisvalue, true);
+    }
+}

@@ -23,6 +23,16 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-3">
+            <div class="search-body">
+                <div class="input-group">
+                    <input class="form-control py-2" type="search" @bind="@thisvalue" placeholder="search" @oninput="@((e) => { thisvalue=(string)e.Value;})" id="example-search-input">
+                    <span class="input-group-append">
+                        <button class="btn btn-outline-secondary" @onclick="@(() => NevigateToBySearch())" @onclick:preventDefault type="button">
+                            <i class="oi oi-magnifying-glass"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
             <div class="filter-head">
                 <h4 class="card-title text-center">Category</h4>
             </div>
@@ -60,7 +70,7 @@
                                         <div class="col-sm-6 col-md-4 col-xl-4">
                                             <div class="product-card mt-5">
                                                 <div class="content-card">
-                                                    <img src="img/@Products[card].ProdName .jpeg" class="product-img" />
+                                                    <img src="img/@Products[card].ProdImg" class="product-img" />
                                                 </div>
                                                 <br />
                                                 <br />
@@ -94,12 +104,14 @@
             private List<Product> Products;
             private List<string> category = new List<string>();
             private List<int> count = new List<int>();
+            public string thisvalue = "";
+            public string getvalue { get; set; }
 
 
             protected async override Task OnInitializedAsync()
             {
                 Console.WriteLine("Products");
-
+                thisvalue = id;
                 if (id != null)
                 {
                     Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}/GetCategoryProducts/{id}");
@@ -118,9 +130,13 @@
                 }
             }
 
-    void NevigateToYourUrl(string result)
-    {
-        Console.WriteLine(result);
-        _navigationManager.NavigateTo("/cusproducts/" + result, true);
-    }
+            void NevigateToYourUrl(string result)
+            {
+                _navigationManager.NavigateTo("/cusproducts/" + result, true);
+            }
+            void NevigateToBySearch()
+            {
+                getvalue = thisvalue;
+                _navigationManager.NavigateTo("/cusproducts/search/" + getvalue, true);
+            }
 }
