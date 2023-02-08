@@ -95,7 +95,7 @@
     async Task Delete(int pID)
     {
         var p = Prescriptions.First(q => q.ID == pID);
-        var confirm = await js.InvokeAsync<bool>("c3onfirm", $"Do you want to delete {p.ID} - {p.Product.ProdName}?");
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {p.ID} - {p.Product.ProdName}?");
         if (confirm)
         {
             await _client.DeleteAsync($"{Endpoints.PrescriptionsEndpoint}/{pID}");
