@@ -18,6 +18,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ProdName = "Vitamin C",
                         ProdDesc = "BLACKMORES Bio Vitamin C 1000mg 120 Tablets",
                         ProdPrice = 35.00m,
+                        ProdImg = "Vitamin C .jpeg",
                         ProdCategory = "Supplement",
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
@@ -31,6 +32,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ProdName = "Omega 3 Fish Oil",
                         ProdDesc = "Swisse Omega 3 Fish Oil 1500mg 100 Tablets",
                         ProdPrice = 58.00m,
+                        ProdImg = "Omega 3 Fish Oil .jpeg",
                         ProdCategory = "Supplement",
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
@@ -44,6 +46,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ProdName = "Calcium",
                         ProdDesc = "Wastons Calcium 500mg 150 Tablets",
                         ProdPrice = 45.00m,
+                        ProdImg = "Calcium .jpeg",
                         ProdCategory = "Supplement",
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
@@ -57,6 +60,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ProdName = "Panadol",
                         ProdDesc = "Telfast Panadol 10mg",
                         ProdPrice = 20.00m,
+                        ProdImg = "Panadol .jpeg",
                         ProdCategory = "Prescriptions",
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
@@ -70,6 +74,7 @@ namespace TPharmacy.Server.Configurations.Entities
                         ProdName = "Whey Protein Powder",
                         ProdDesc = "Cellucor Whey Protein Powder 5LBS",
                         ProdPrice = 60.00m,
+                        ProdImg = "Whey Protein Powder .jpeg",
                         ProdCategory = "Sports",
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
@@ -83,13 +88,15 @@ namespace TPharmacy.Server.Configurations.Entities
                         ProdName = "Kids Multi Vitamins & Minerals Gummies",
                         ProdDesc = "Solaray Kids Multi Vitamins & Minerals Gummies 120S",
                         ProdPrice = 30.00m,
+                        ProdImg = "Kids Multi Vitamins & Minerals Gummies .jpeg",
                         ProdCategory = "Baby",
                         DateCreated = DateTime.Now,
                         DateUpdated = DateTime.Now,
                         CreatedBy = "System",
                         UpdatedBy = "System"
                     }
-                    );        }
+                    );        
+        }
 
     }
 }

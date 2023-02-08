@@ -18,6 +18,7 @@ namespace TPharmacy.Shared.Domain
         [DataType(DataType.Currency)]
         [Column(TypeName = "decimal(7,2)")]
         public decimal ProdPrice { get; set; }
+        public string ProdImg { get; set; }
         public string ProdCategory { get; set; }
         public virtual List<OrderItem> OrderItems { get; set; }
         public virtual List<Prescription> Prescriptions { get; set; }
