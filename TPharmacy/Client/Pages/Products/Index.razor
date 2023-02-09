@@ -111,7 +111,7 @@
             protected async override Task OnInitializedAsync()
             {
                 Console.WriteLine("Products");
-                thisvalue = id;
+                getvalue = id;
                 if (id != null)
                 {
                     Products = await _client.GetFromJsonAsync<List<Product>>($"{Endpoints.ProductsEndpoint}/GetCategoryProducts/{id}");
