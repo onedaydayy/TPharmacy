@@ -31,6 +31,11 @@
                                 {
                                 <li class="dropdown-menu show" aria-labelledby="navbarDropdown" @onclick="() => expandShopNavSetting = !expandShopNavSetting">
                                 <li class="nav-item px-3">
+                                    <NavLink class="nav-link" href="/cusproducts" Match="NavLinkMatch.All">
+                                        <span class="oi oi-align-left" aria-hidden="true"></span> All Products
+                                    </NavLink>
+                                </li>
+                                <li class="nav-item px-3">
                                     <NavLink class="nav-link" href="" @onclick="@(() => NevigateToYourUrl("Supplement"))">
                                         <span class="oi oi-align-left" aria-hidden="true"></span> Supplements
                                     </NavLink>
