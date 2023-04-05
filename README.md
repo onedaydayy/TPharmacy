@@ -20,8 +20,8 @@ For staff, they can create/update/delete Staff, which will sync with the Identit
 <img src="Photo/Homepage.png" alt="flowchart" width="950" height="1500"><br/>
 
 ### Customer SignIn Homepage
-<img src="Photo/CustomerHome.png" alt="flowchart" width="800" height="3000"><br/>
+<img src="Photo/CustomerHome.png" alt="flowchart" width="600" height="3000"><br/>
 
 ### Customer Staff Homepage
-<img src="Photo/StaffHome.jpg" alt="flowchart" width="700" height="700"><br/>
+<img src="Photo/StaffHome.jpg" alt="flowchart" width="700" height="500"><br/>
 
