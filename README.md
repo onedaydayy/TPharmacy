@@ -8,10 +8,20 @@ TPharmacy online pharmacy website is built using Visual Studio 2019 and .Net 5 B
 For this project, I created entities for Staff, Order, OrderItem, and Payment and implemented Unit of Works (Repository & IRepository) for all entities. I also performed seeding for User, UseRole, Role, Staff, Order, OrderItem, and Payment entities. I completed the Staff Landing Page and Staff NavBar, along with the controller for Staff, Order, OrderItem, and Payment. I tested these controllers using Postman.
 
 ### Customer Features
-For customers, they can purchase any supplements of their choice, which will create the Order, OrderId session and create an Orderitem. They can also update/delete their OrderItem only and view their Order Details only. Customers can view their summary of the OrderItem with the Product Details only and check out their order which would update the Order Status to Completed. They can also make payment for orders that haven’t been paid, which would update the Order Status to Paid. Customers can also edit their Payment Details and view the summary of the Payment Details.
+- Purchase supplements to create an Order, OrderId session, and OrderItem
+- Update/delete OrderItem and view Order Details
+- View summary of OrderItem with Product Details
+- Checkout order to update Order Status to Completed
+- Make payment for unpaid orders to update Order Status to Paid
+- Edit Payment Details and view summary of Payment Details
 
 ### Staff Features
-For staff, they can create/update/delete Staff, which will sync with the Identity User and Identity Role. They can also update the Order Status and Staff ID to completed or another staff. The Staff Home page is a dashboard that is based on the count for each entity that will update accordingly. Staff can view all the customer Orders with Details, all the customer OrderItem with Product Details, and all the customer Payment with Details. They can view the entire Order & Payment Summary, along with the details of the individual Order, OrderItem, and Payment. Staff can also view a summary of total orders and sales amount earned, along with a summary of orders for order processing.
+- Create/update/delete Staff, sync with Identity User and Identity Role
+- Update Order Status and Staff ID to Completed or another staff
+- Staff Home page dashboard based on entity count that updates accordingly
+- View all customer Orders with Details, OrderItem with Product Details, and Payment with Details
+- View entire Order & Payment Summary and details of individual Order, OrderItem, and Payment
+- View summary of total orders and sales amount earned, and summary of orders for order processing
 
 ### ERD
 <img src="Photo/ERD.png" alt="flowchart" width="900" height="500"><br/>
